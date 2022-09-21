@@ -78,9 +78,9 @@ DataPool
 
 DataSchemeDistribution
 
-Map of Files
+Map of Balls
 
-Map of DataContainer
+Map of Bins
 http://127.0.0.1:8080/api/v1/containers/
 
 Allocation
