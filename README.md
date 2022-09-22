@@ -32,8 +32,8 @@ Para obtener el contexto computacional se despliegan los siguientes módulos, en
 
 ```
 docker run \
-  --label distribution_scheme \
-  --label distribution_scheme=launcher \
+  --label chaac \
+  --label chaac=launcher \
   --name=launcher \
   --network=my-net \
   --publish=5000:5000 \
@@ -79,8 +79,8 @@ docker run \
     --env URL_DB=influxdb \
     --env URL_LAUNCHER=launcher:5000 \
     --env LOG_PATH=/app/logs \
-    --label distribution_scheme \
-    --label distribution_scheme=middleware \
+    --label chaac \
+    --label chaac=middleware \
     --name=middleware \
     --network=my-net \
     --publish=8081:80 \
@@ -89,8 +89,8 @@ docker run \
     alfredobarron/middleware:1.8
 
 docker run \
-  --label distribution_scheme \
-  --label distribution_scheme=launcher \
+  --label chaac \
+  --label chaac=launcher \
   --name=launcher \
   --network=my-net \
   --publish=5000:5000 \
