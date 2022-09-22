@@ -1,0 +1,5 @@
+flask
+Flask-API
+flask-cors
+simplejson
+docker
