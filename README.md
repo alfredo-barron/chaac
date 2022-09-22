@@ -5,8 +5,8 @@ _Chaac es una herramienta para construir esquemas de distribución de datos sens
 ## Tabla de contenido
 1. [Componentes](#componentes)
 2. [Data Context](#data-context)
-3. [Chaac Client](#chaac-client)
-4. [Middleware](#middleware)
+3. [Middleware](#middleware)
+4. [Chaac Client](#chaac-client)
 5. [Data Pool](#data-pool)
 6. [Data Container](#data-container)
 7. [Data Client](#data-client)
@@ -16,8 +16,8 @@ _Chaac es una herramienta para construir esquemas de distribución de datos sens
 Chaac esta compuesto de 6 módulos que son los siguientes:
 
 - Data Context
-- Chaac Client
 - Middleware
+- Chaac Client
 - Data Pool
 - Data Container
 - Data Client
