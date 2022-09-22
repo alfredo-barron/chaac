@@ -64,11 +64,6 @@ docker run \
   gcr.io/cadvisor/cadvisor:latest
 ```
 
-
-## Chaac Client
-
-Chaac client
-
 ## Middleware
 
 Es un software intermediario entre los microservicios y el almacenamiento en la nube. 
@@ -106,6 +101,10 @@ docker run \
   --device=/dev/kmsg \
   alfredobarron/launcher:1
 ```
+
+## Chaac Client
+
+Chaac client
 
 ## Data Pool
 
