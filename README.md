@@ -7,7 +7,7 @@ _Chaac es una herramienta para construir esquemas de distribución de datos sens
 
 ## Tabla de contenido
 1. [Componentes](#componentes)
-2. [Data Context](#data-context)
+2. [Contextual Data Monitor](#data-context)
 3. [Middleware](#middleware)
 4. [Chaac Client](#chaac-client)
 5. [Data Pool](#data-pool)
@@ -18,7 +18,7 @@ _Chaac es una herramienta para construir esquemas de distribución de datos sens
 
 Chaac esta compuesto de 6 módulos que son los siguientes:
 
-- Data Context
+- Contextual Data Monitor
 - Middleware
 - Chaac Client
 - Data Pool
@@ -27,7 +27,7 @@ Chaac esta compuesto de 6 módulos que son los siguientes:
 
 ![Arquitectura middleware](/images/Chaac.png)
 
-## Data Context
+## Contextual Data Monitor
 
 Para obtener el contexto computacional se despliegan los siguientes módulos, en los hosts donde van a construir los esquemas de distribución:
 
@@ -48,7 +48,7 @@ docker run \
   alfredobarron/launcher:2
 ```
 
-### Monitor de datos contextuales
+### Monitor
 
 cAdvisor
 
