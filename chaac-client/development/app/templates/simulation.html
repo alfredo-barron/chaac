@@ -1,0 +1,234 @@
+{% extends 'base.html' %} {% block title %} Simulation {% endblock %} {% block head %} {{ super() }} {% endblock %}
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="h2">5) Simulation</h1>
+
+                <p>The following shows the Id of node, S-CDS the storage, Ideal load the best load balance (according to
+                    the load balancer), and the percent of difference between S-CDS and Ideal Load.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+
+            <div id="rootwizard">
+                <div class="card ">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#start">
+                                    Storage
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#graph">Graph</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="start">
+                            <div class="card-body">
+
+                                <h5 class="card-title text-center">Load balancing</h5>
+                                <p class="card-text">
+
+                                    <table class="table table-striped" id="table_results">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Node #</th>
+                                                <th scope="col">S-CDS (MB)</th>
+                                                <th scope="col">Load Ideal (MB)</th>
+                                                <th scope="col">Difference between S-CDS <br> and Load Ideal (%)</th>
+                                                <!--<th scope="col">Global (MB) </th>
+                                                <th scope="col">Downloads (MB)</th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="graph">
+                            <div class="card-body">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <h5 class="card-title text-center">Graph S-CDS</h5>
+                                        <div class="col-md-12">
+                                            <canvas id="myChart"></canvas>
+                                
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="card-title text-center">Graph Difference between S-CDS and Load Ideal</h5>
+                                        <div class="col-md-12">
+                                            <canvas id="myChartbar"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-success mb-3 text-center" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h6 class="card-title">4) Classification of Users and Topics</h6>
+                    <a href="/analysis" class="btn btn-dark">Previous</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card text-white bg-danger mb-3 text-center" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h6 class="card-title">*) Main<br></h6>
+                    <a href="/" class="btn btn-dark">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+{% endblock %} {% block footer %} {{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script type="text/javascript">
+
+    var update = function () {
+        $.getJSON("getresults").done(function (data, textStatus, jqXHR) {
+
+            if (console && console.log) {
+                console.log("Request success");
+            }
+
+            var output;
+            var n = 0;
+            $.each(data.nodes, function (key, value) {
+                output += '<tr>';
+                output += '<th scope="row">' + value['id'] + '</th>';
+                output += '<td>' + value['upload'] + '</td>';
+                output += '<td>' + value['ideal'] + '</td>';
+                output += '<td>' + value['difference'].toFixed(4) + '</td>';
+            });
+
+
+            $("#table_results tbody").html(output);
+            //console.log(n);
+
+            var labels = data.nodes.map(function (e) {
+                return e.id;
+            });
+            
+            var data1 = data.nodes.map(function (e) {
+                return e.upload;
+            });
+
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var config = {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Load balancing',
+                        data: data1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Megabytes (MB)',
+                                
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Nodes'
+                            }
+                        }]
+                    }
+                }
+
+            };
+
+            var myChart = new Chart(ctx, config);
+
+            var data2 = data.nodes.map(function (e) {
+                return e.difference;
+            });
+
+            var ctx1 = document.getElementById("myChartbar").getContext("2d");
+            var config1 = {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Percentage (%)',
+                        data: data2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Percentage (%)',
+
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Nodes'
+                            }
+                        }]
+                    }
+                }
+
+            };
+
+            var myChartbar = new Chart(ctx1, config1);
+
+        })
+            .fail(function (jqXHR, textStatus, errorThrow) {
+                if (console && console.log) {
+                    console.log("Request fail: " + textStatus);
+                }
+            });
+    }
+
+    update();
+    var refInterval = window.setInterval('update()', 60000);
+
+</script>
+
+{% endblock %}

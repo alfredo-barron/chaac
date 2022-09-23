@@ -1,0 +1,1146 @@
+{% extends 'base.html' %} {% block title %} Classification of Users and Topics {% endblock %} {% block head %}
+{{ super() }}
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+{% endblock %} {%
+block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="h2">4) Classification of Users and Topics</h1>
+                <p>This simulator implements our classification model and allows users to modify configuration tests, workloads and
+                replication policies.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+
+            <div id="rootwizard">
+                <div class="card ">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tab_index">
+                                    Model
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab_users">
+                                    Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab_topics">
+                                    Topics
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_index">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Classification modelling of users and topics of contents in CDS systems</h5>
+                        
+                                <p class="card-text">
+                                    Two metrics were defined to classify content suppliers and content topics according to their level of activity: Volume
+                                    and Density. Volume <span lang="latex">($V$)</span> represents the storage activity in the CDS system when serving a set of download requests
+                                    during a period of time (workload). Density <span lang="latex">($D$)</span> refers to the average inter-arrival time of download requests during a
+                                    workload.
+                                    <br><br>
+                                    Content suppliers <span lang="latex">($S$)</span> are classified according to the consumption/demand patterns of their contents in the following
+                                    classes:
+
+                                    <ul>
+                                        <li><b>Content Supplier <span lang="latex">($S\gamma$)</span></b>: A <span lang="latex">$S_{i}$</span> content supplier becomes Gamma supplier if <span lang="latex">$V_{S_{i}} \leq AV_{S}$</span>, i.e., the volume of bytes served, in download requests, of contents uploaded by supplier <span lang="latex">$S_{i}$ ($V_{S_{i}}$)</span>
+                                        is less than or equal to the average volume of bytes served during the workload <span lang="latex">($AV_{S}$)</span>. Content suppliers whose contents do not receive any download request will also be considered of this type.</li>
+                                        <li><b>Beta Content Supplier <span lang="latex">($S\beta$)</span></b>: A <span lang="latex">$S_{i}$</span> content supplier becomes Beta supplier if the following restriction is reached: <span lang="latex">$S\beta = \{S_{i} | S_{i} \in S \wedge V_{S_{i}} > AV_{S}\}$</span>.</li>
+                                        <li><b>Alpha Content Supplier <span lang="latex">($S\alpha$)</span></b>: A <span lang="latex">$S_{i}$</span> content supplier becomes Alfa content supplier if the following condition is met: <span lang="latex">$S\alpha = \{S_{i} | S_{i} \in S\beta \wedge Di < D_{S}\}$</span>, i.e., the average inter-arrival time of download requests <span lang="latex">($Di$)</span> for content uploaded by supplier <span lang="latex">$S_{i}$</span> is less than the average inter-arrival time of download requests for content produced by all content suppliers <span lang="latex">($D_{S}$)</span>.</li>
+                                    </ul>
+
+                                    The set of topics is used in the availability schemes of the CDS systems for establishing the replication factor to be
+                                    applied to each sharing information operation. In the context of content topics, the classes are defined as follows:
+
+                                    <ul>
+                                        <li><b>Gamma Content Topic <span lang="latex">($CT\gamma$)</span></b>: A <span lang="latex">$CT_{i}$</span> content topic is considered Gamma if <span lang="latex">$V_{CT_{i}} \leq AV_{CT}$</span>, i.e., the volume of bytes downloaded of contents with topic <span lang="latex">$i$ ($V_{CT_{i}}$)</span> is less than or equal to the average volume of bytes served in download requests for content of all content topics <span lang="latex">($AV_{CT}$)</span>. Content topics whose contents do not receive any download request will be also considered of this type.</li>
+                                        <li><b>Content Topic <span lang="latex">($CT\beta$)</span></b>: A <span lang="latex">$CT_{i}$</span> content topic becomes Beta if <span lang="latex">$V_{CT_{i}} > AV_{CT}$</span>.</li>
+                                        <li><b>Alpha Content Topic <span lang="latex">($CT\alpha$)</span></b>: A <span lang="latex">$CT_{i}$</span> content topic becomes Alfa if <span lang="latex">$CT_{i}$</span> is a Beta content topic and <span lang="latex">$D_{CT_{i}} < D_{CT}$</span>. Since Alfa content topics <span lang="latex">($CT\alpha$)</span> are classified using only the Beta content topic set  <span lang="latex">($CT\beta$)</span>, the space of search and processing is reduced.</li>
+                                    </ul>
+
+                                    <h6>Data replication</h6>
+
+                                    Content supplier classification allows storage system to adapt the replication factor <span lang="latex">($RF$)</span> based on content activity
+                                    (Density and Volume). <span lang="latex">$RF$</span> indicates the number of copies that the storage system has to generate for each uploaded
+                                    content in order to distribute them in the $n$ nodes available in the storage pool. Different <span lang="latex">$RFs$</span> produce different impacts on storage resource determined by the type of content supplier and the number of nodes in the storage pool. To evaluate the content supplier impact <span lang="latex">($SI$)</span> in a storage service, we have assigned a
+                                    value to <span lang="latex">$SI$</span> that is in the range of <span lang="latex">$(0,1]$</span>, according to the following equation:
+                                    
+                                    <div lang="latex">
+                                    SI = \frac{RF}{n}
+                                    </div>
+                                    
+                                    Where <span lang="latex">$RF$</span> is the replication factor for a content supplier and <span lang="latex">$n$</span> is the number of nodes in a storage pool.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_users">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Classification of Users</h5>
+
+                                <p class="card-text">
+                                    <div id="accordion_u">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne_u">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseOne_u" aria-expanded="true"
+                                                        aria-controls="collapseOne_u">
+                                                        Step #1: Identifying betas.
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapseOne_u" class="collapse show" aria-labelledby="headingOne_u"
+                                                data-parent="#accordion_u">
+                                                <div class="card-body">
+                                                    Get the volume of the users.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-outline-primary" id="user1">Start</a>
+                                                    <div id="div_user1">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo_u">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseTwo_u" aria-expanded="false"
+                                                        aria-controls="collapseTwo_u">
+                                                        Step #2: Identifying alphas.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo_u" class="collapse" aria-labelledby="headingTwo_u"
+                                                data-parent="#accordion_u">
+                                                <div class="card-body">
+                                                    Gets the density of the users.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-outline-secondary" id="user2">Start</a>
+                                                    <div id="div_user2">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree_t">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree_u" aria-expanded="false"
+                                                        aria-controls="collapseThree_u">
+                                                        Step #3: Selecting replication and load balancing policies.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree_u" class="collapse" aria-labelledby="headingThree_t"
+                                                data-parent="#accordion_u">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center">Load balancing</h5>
+                                                    Select the load balancer of your preference:
+                                                    <hr>
+                                                    <form>
+                                                        <fieldset class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_user" id="lb_user1" value="1"
+                                                                            >
+                                                                        <label class="form-check-label" for="lb_user1">
+                                                                            TwoChoices.
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_user" id="lb_user2" value="2">
+                                                                        <label class="form-check-label" for="lb_user2">
+                                                                            UF (Utilization factor).
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                    <h5 class="card-title text-center">Replication</h5>
+                                                    Assign the number of replicas to the user categories.
+                                                    <hr>
+
+                                                    <form action="" method="post" role="form">
+                                                        <div class="form-group row">
+                                                            <label for="nodes_total_u"
+                                                                class="col-sm-5 col-form-label">Storage nodes</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control"
+                                                                    id="nodes_total_u" name="nodes_total_u"
+                                                                     disabled>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label for="nodes_total_u"
+                                                                    class="col-sm-12 col-form-label">Factor of replication</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="alpha_u"
+                                                                class="col-sm-5 col-form-label">Alpha</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="alpha_u"
+                                                                    name="alpha_u" value="1" min="1">
+                                                            </div>
+                                
+                                                            <div class=" col-sm-3">
+                                                                <input type="number" class="form-control" id="fia_u"
+                                                                    name="fia_u" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="beta_u"
+                                                                class="col-sm-5 col-form-label">Beta</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="beta_u"
+                                                                    name="beta_u" value="1" min="1" >
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="number" class="form-control" id="fib_u"
+                                                                    name="fib_u" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="gamma_u"
+                                                                class="col-sm-5 col-form-label">Gamma</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="gamma_u"
+                                                                    name="gamma_u" value="1" min="1">
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="number" class="form-control" id="fig_u"
+                                                                    name="fig_u" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <a class="btn btn-outline-success"
+                                                                    id="compute_u">Compute</a>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <a href="#" class="btn btn-outline-success" id="user3">Assign</a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div id="div_user3">
+                                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingFour_u">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour_u" aria-expanded="false"
+                                                    aria-controls="collapseFour_u">
+                                                        Step #4: Start simulation.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapseFour_u" class="collapse" aria-labelledby="headingFour_u" data-parent="#accordion_u">
+                                                <div class="card-body">
+                                                    Begin simulation.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-primary btn-lg btn-block" id="user4">Start now</a>
+                                                    <div id="div_user4">
+                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            
+                        </div>
+                        <!--End tap-->
+                        <div class="tab-pane" id="tab_topics">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Classification of Topics</h5>
+                                
+                                <p class="card-text">
+                                    <div id="accordion_t">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne_t">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseOne_t" aria-expanded="true"
+                                                        aria-controls="collapseOne_t">
+                                                        Step #1: Identifying betas.
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapseOne_t" class="collapse show" aria-labelledby="headingOne_t"
+                                                data-parent="#accordion_t">
+                                                <div class="card-body">
+                                                    Get the volume of the topics.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-outline-primary" id="topic1">Start</a>
+                                                    <div id="div_topic1">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo_t">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseTwo_t" aria-expanded="false"
+                                                        aria-controls="collapseTwo_t">
+                                                        Step #2: Identifying alphas.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo_t" class="collapse" aria-labelledby="headingTwo_t"
+                                                data-parent="#accordion_t">
+                                                <div class="card-body">
+                                                    Gets the density of the topics.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-outline-secondary" id="topic2">Start</a>
+                                                    <div id="div_topic2">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree_t">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree_u" aria-expanded="false"
+                                                        aria-controls="collapseThree_u">
+                                                        Step #3: Selecting replication and load balancing policies.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree_u" class="collapse" aria-labelledby="headingThree_t"
+                                                data-parent="#accordion_t">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center">Load balancing</h5>
+                                                    Select the load balancer of your preference:
+                                                    <hr>
+                                                    <form>
+                                                        <fieldset class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_topic" id="lb_topic1" value="1"
+                                                                            >
+                                                                        <label class="form-check-label" for="lb_topic1">
+                                                                            TwoChoices.
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_topic" id="lb_topic2" value="2">
+                                                                        <label class="form-check-label" for="lb_topic2">
+                                                                            UF (Utilization factor).
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_topic" id="lb_topic3" value="3">
+                                                                        <label class="form-check-label" for="lb_topic3">
+                                                                            UF Topical (Utilization factor).
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="lb_topic" id="lb_topic4" value="4">
+                                                                        <label class="form-check-label" for="lb_topic4">
+                                                                            UF Top K Topical (Utilization factor).
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+
+                                                    <h5 class="card-title text-center">Replication</h5>
+
+                                                    Assign the number of replicas to the topic categories.
+                                                    <hr>
+
+                                                    <form action="" method="post" role="form">
+                                                        <div class="form-group row">
+                                                            <label for="nodes_total_t"
+                                                                class="col-sm-5 col-form-label">Storage nodes</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control"
+                                                                    id="nodes_total_t" name="nodes_total_t"
+                                                                     disabled>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label for="nodes_total_t"
+                                                                    class="col-sm-12 col-form-label">
+                                                                    Factor of replication</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="alpha_t"
+                                                                class="col-sm-5 col-form-label">Alpha</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="alpha_t"
+                                                                    name="alpha_t" value="1" min="1">
+                                                                </div>
+
+                                                                <div class=" col-sm-3">
+                                                                <input type="number" class="form-control" id="fia_t"
+                                                                    name="fia_t" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="beta_t"
+                                                                class="col-sm-5 col-form-label">Beta</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="beta_t"
+                                                                    name="beta_t" value="1" min="1">
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="number" class="form-control" id="fib_t"
+                                                                    name="fib_t" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="gamma_t"
+                                                                class="col-sm-5 col-form-label">Gamma</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="number" class="form-control" id="gamma_t"
+                                                                    name="gamma_t" value="1" min="1">
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="number" class="form-control" id="fig_t"
+                                                                    name="fig_t" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6">
+                                                                <a class="btn btn-outline-success"
+                                                                    id="compute_t">Compute</a>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <a class="btn btn-outline-success"
+                                                                    id="topic3">Assign</a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div id="div_topic3">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingFour_t">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour_t" aria-expanded="false"
+                                                        aria-controls="collapseFour_t">
+                                                        Step #4: Start simulation.
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapseFour_t" class="collapse" aria-labelledby="headingFour_t" data-parent="#accordion_t">
+                                                <div class="card-body">
+                                                Begin simulation.
+                                                    <hr>
+                                                    <a href="#" class="btn btn-primary btn-lg btn-block" id="topic4">Start now</a>
+                                                    <div id="div_topic4">
+                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                        <!--End TAP-->
+                    </div>
+                    <!--END-->
+                
+                </div>
+                <!--End Card-->
+            </div>
+                <!--End root-->
+        </div>
+
+        <div class="col-md-5">
+            <h4>Selected settings</h4>
+            <hr>
+            <br>
+            <p>
+                <b>Storage pool:</b>
+                <span id="pool_view"></span> 
+            </p>
+            <p>
+                <b>Synthetic trace:</b>
+                <span id="trace_view"></span>
+            </p>
+            <p>
+                <b>Corpus:</b>
+                <span id="corpus_view"></span>
+            </p>
+            <p>
+                <b>Load balancing:</b>
+                <span id="lb_view"> </span>
+            </p>
+            <p>
+                <b>Replication polices:</b>
+                <span id="configuration_view"></span>
+            </p>
+        
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card text-white bg-info mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">3) Selecting Corpus</h6>
+                            <a href="/thematic" class="btn btn-dark">Previous</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-white bg-secondary mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">5) Simulation</h6>
+                            <a href="/simulation" class="btn btn-dark">View</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+
+        
+    </div>
+
+</main>
+{% endblock %} {% block footer %} {{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var trace_id;
+
+        $.getJSON("config").done(function (data, textStatus, jqXHR) {
+
+            if (console && console.log) {
+                console.log("Request success");
+            }
+
+
+            if (data['nodes'] != null) {
+                $("#pool_view").html(data['nodes'] + ' nodes');
+                $("#nodes_total_u").val(data['nodes']);
+                $("#nodes_total_t").val(data['nodes']);
+                $("#alpha_u").attr('max', data['nodes']);
+                $("#alpha_t").attr('max', data['nodes']);
+                $("#beta_u").attr('max', data['nodes']);
+                $("#beta_t").attr('max', data['nodes']);
+                $("#gamma_u").attr('max', data['nodes']);
+                $("#gamma_t").attr('max', data['nodes']);
+            } else {
+                $("#pool_view").html('None');
+            }
+
+            if (data['trace_id'] != null) {
+                $("#trace_view").html('Trace #' + data['trace_id']);
+                trace_id = data['trace_id'];
+            } else {
+                $("#trace_view").html('None');
+            }
+
+            if (data['corpus'] != null) {
+                $("#corpus_view").html(data['corpus']);
+            }
+            else {
+                $("#corpus_view").html('None');
+            }
+
+            $("#lb_view").html('None');
+            $("#configuration_view").html('None');
+        })
+            .fail(function (jqXHR, textStatus, errorThrow) {
+                if (console && console.log) {
+                    console.log("Request fail: " + textStatus);
+                }
+            });
+
+        $('#compute_u').click(function () {
+            var a = parseInt($("#alpha_u").val(), 10);
+            var b = parseInt($("#beta_u").val(), 10);
+            var c = parseInt($("#gamma_u").val(), 10);
+
+            var n = parseInt($("#nodes_total_u").val(), 10);
+
+            var at = a / n;
+            var bt = b / n;
+            var ct = c / n;
+
+            $("#fia_u").val(at);
+            $("#fib_u").val(bt);
+            $("#fig_u").val(ct);
+
+        });
+
+        $("#user1").click(function (e) {
+
+            e.preventDefault();
+
+            $("#div_user1").html('<br><p>Compute volume...</p>');
+
+            $.getJSON("volumeusers", { "trace_id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                var mean_topic_volume = [];
+                $.each(data.users, function (key, value) {
+                    output += '<ul>';
+                    output += '<li> user: ' + value['id'] + ', volume: ' + value['volume'] + ', class: ' + value['class'] + '</li>';
+                    output += '</ul>';
+                     mean_topic_volume.push(data.mean);
+                });
+
+                $("#div_user1").html(output);
+                $("#div_user1").html('<canvas id="myChart_user1"></canvas>');
+
+                var labels = data.users.map(function (e) {
+                    return e.id;
+                });
+
+                var data_topic1 = data.users.map(function (e) {
+                    return e.volume;
+                });
+
+                var data_topic2 = mean_topic_volume;
+
+                var ctx = document.getElementById("myChart_user1").getContext("2d");
+                var config = {
+                    type: 'bar',
+                    data: {
+
+                        datasets: [{
+                            label: 'Volume',
+                            data: data_topic1,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                            label: 'Mean',
+                            data: data_topic2,
+                            type: 'line',
+                            backgroundColor: 'rgb(153, 102, 255)'
+                        }],
+                        labels: labels
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Volume (MB)',
+
+                                },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Users'
+                                }
+                            }]
+                        }
+                    }
+
+                };
+
+                var myChart = new Chart(ctx, config);
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_user1").html("<br><p>Error try again</p>");
+                });
+        });
+
+        $("#user2").click(function (e) {
+            e.preventDefault();
+
+            $("#div_user2").html('<br><p>Compute density...</p>');
+
+            $.getJSON("densityusers", { "trace_id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                 var mean_topic_density = [];
+                $.each(data.users, function (key, value) {
+                    output += '<ul>';
+                    output += '<li> user: ' + value['id'] + ', density: ' + value['mean'] + ', class: ' + value['class'] + '</li>';
+                    output += '</ul>';
+                     mean_topic_density.push(data.mean);
+                });
+
+                $("#div_user2").html(output);
+                $("#div_user2").html('<canvas id="myChart_user2"></canvas>');
+
+                var labels = data.users.map(function (e) {
+                    return e.id;
+                });
+
+                var data_topic1 = data.users.map(function (e) {
+                    return e.mean;
+                });
+
+                var data_topic2 = mean_topic_density;
+
+                var ctx = document.getElementById("myChart_user2").getContext("2d");
+                var config = {
+                    type: 'bar',
+                    data: {
+
+                        datasets: [{
+                            label: 'Density',
+                            data: data_topic1,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                            label: 'Mean',
+                            data: data_topic2,
+                            type: 'line',
+                            backgroundColor: 'rgb(153, 102, 255)'
+                        }],
+                        labels: labels
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Inter-arrival time of download operations (Sec)',
+
+                                },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Users'
+                                }
+                            }]
+                        }
+                    }
+
+                };
+
+                var myChart = new Chart(ctx, config);
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_user2").html("<br><p>Error try again</p>");
+                });
+
+        });
+
+        $("#user3").click(function (e) {
+            
+            e.preventDefault();
+
+            $("#div_user3").html('<br><p>Wait</p><hr><h6>Assigning the impact factor to the users....</h6>');
+
+            var a = $("#fia_u").val();
+            var b = $("#fib_u").val();
+            var c = $("#fig_u").val();
+
+            $.getJSON("traceusers", { "alfa": a, "beta": b, "gamma": c, "id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                output += '<ul>';
+                output += '<li> <i>Alpha</i>: ' + a + '</li>';
+                output += '<li> <i>Beta</i>: ' + b + '</li>';
+                output += '<li> <i>Gamma</i>: ' + c + '</li>';
+                output += '</ul>';
+
+                $("#configuration_view").html(output);
+                $("#div_user3").html('<h6>All set to begin simulation</h6>');
+                alert("Assigned impact factor");
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_user3").html("<br><p>Error try again</p>");
+                });
+
+        });
+
+        $('#compute_t').click(function () {
+            var a = parseInt($("#alpha_t").val(), 10);
+            var b = parseInt($("#beta_t").val(), 10);
+            var c = parseInt($("#gamma_t").val(), 10);
+
+            var n = parseInt($("#nodes_total_t").val(), 10);
+
+            var at = a / n;
+            var bt = b / n;
+            var ct = c / n;
+
+            $("#fia_t").val(at);
+            $("#fib_t").val(bt);
+            $("#fig_t").val(ct);
+
+        });
+
+        $("#topic1").click(function (e) {
+
+            e.preventDefault();
+
+            $("#div_topic1").html('<br><p>Compute volume...</p>');
+
+            $.getJSON("volumetopics", { "trace_id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                var mean_topic_volume = [];
+                $.each(data.topics, function (key, value) {
+                    output += '<ul>';
+                    output += '<li> topic: ' + value['id'] + ', volume: ' + value['volume'] + ', class: ' + value['class'] + '</li>';
+                    output += '</ul>';
+                    mean_topic_volume.push(data.mean);
+                });
+
+                $("#div_topic1").html(output);
+                $("#div_topic1").html('<canvas id="myChart_topic1"></canvas>');
+
+                var labels = data.topics.map(function (e) {
+                    return e.id;
+                });
+
+                var data_topic1 = data.topics.map(function (e) {
+                    return e.volume;
+                });
+
+                var data_topic2 = mean_topic_volume;
+
+                var ctx = document.getElementById("myChart_topic1").getContext("2d");
+                var config = {
+                    type: 'bar',
+                    data: {
+                        
+                        datasets: [{
+                            label: 'Volume',
+                            data: data_topic1,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                            label: 'Mean',
+                            data: data_topic2,
+                            type: 'line',
+                            backgroundColor: 'rgb(153, 102, 255)'
+                        }],
+                        labels: labels
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Volume (MB)',
+
+                                },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Topics'
+                                }
+                            }]
+                        }
+                    }
+
+                };
+
+                var myChart = new Chart(ctx, config);
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_topic1").html("<br><p>Error try again</p>");
+                });
+
+        });
+
+        $("#topic2").click(function (e) {
+            e.preventDefault();
+
+            $("#div_topic2").html('<br><p>Compute density...</p>');
+
+            $.getJSON("densitytopics", { "trace_id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                 var mean_topic_density = [];
+                $.each(data.topics, function (key, value) {
+                    output += '<ul>';
+                    output += '<li> topic: ' + value['id'] + ', density: ' + value['mean'] + ', class: ' + value['class'] + '</li>';
+                    output += '</ul>';
+                    mean_topic_density.push(data.mean);
+                });
+
+                $("#div_topic2").html(output);
+                $("#div_topic2").html('<canvas id="myChart_topic2"></canvas>');
+
+                var labels = data.topics.map(function (e) {
+                    return e.id;
+                });
+
+                var data_topic1 = data.topics.map(function (e) {
+                    return e.mean;
+                });
+
+                var data_topic2 = mean_topic_density;
+
+                var ctx = document.getElementById("myChart_topic2").getContext("2d");
+                var config = {
+                    type: 'bar',
+                    data: {
+
+                        datasets: [{
+                            label: 'Density',
+                            data: data_topic1,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                            label: 'Mean',
+                            data: data_topic2,
+                            type: 'line',
+                            backgroundColor: 'rgb(153, 102, 255)'
+                        }],
+                        labels: labels
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Inter-arrival time of download operations (Sec)',
+
+                                },
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Topics'
+                                }
+                            }]
+                        }
+                    }
+
+                };
+
+                var myChart = new Chart(ctx, config);
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_topic2").html("<br><p>Error try again</p>");
+                });
+
+        });
+
+        $("#topic3").click(function (e) {
+
+            e.preventDefault();
+
+            $("#div_topic3").html('<br><p>Wait</p><hr><h6>Assigning the impact factor to the topics....</h6>');
+
+            var a = $("#fia_t").val();
+            var b = $("#fib_t").val();
+            var c = $("#fig_t").val();
+
+            $.getJSON("tracetopics", { "alfa": a, "beta": b, "gamma": c, "id": trace_id }).done(function (data, textStatus, jqXHR) {
+
+                var output = '<br>';
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                output += '<ul>';
+                output += '<li> <i>Alpha</i>: ' + a + '</li>';
+                output += '<li> <i>Beta</i>: ' + b + '</li>';
+                output += '<li> <i>Gamma</i>: ' + c + '</li>';
+                output += '</ul>';
+
+                $("#configuration_view").html(output);
+                $("#div_topic3").html('<h6>All set to begin simulation</h6>');
+                alert("Assigned impact factor");
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    $("#div_topic3").html("<br><p>Error try again</p>");
+                });
+
+        });
+
+        //$("#trace_user").click(function () {
+        //    var id_u = parseInt($("#trace_user").val(), 10);
+        //    var lb_u = $("input:radio[name=lb_user]:checked").val();
+        //    var link_u = "/simulation?id=" + id_u + '&lb=' + lb_u;
+            //$('#next_u').attr('href', link_u);
+        //});
+
+        $("input:radio[name=lb_user]").click(function () {
+            var id_u = parseInt($("#trace_user").val(), 10);
+            var lb_u = $("input:radio[name=lb_user]:checked").val();
+            var text = $("label[for='lb_user" + lb_u + "']").text();
+            var link_u = "/simulation?id=" + id_u + '&lb=' + lb_u;
+            //$('#next_u').attr('href', link_u);
+            $("#lb_view").html(text);
+        });
+
+        //$("#trace_topic").click(function () {
+        //    var id_t = parseInt($("#trace_topic").val(), 10);
+        //    var lb_t = $("input:radio[name=lb_topic]:checked").val();
+        //    var link_t = "/simulation?id=" + id_t + '&lb=' + lb_t;
+            //$('#next_t').attr('href', link_t);
+        //});
+
+        $("input:radio[name=lb_topic]").click(function () {
+            var id_t = parseInt($("#trace_topic").val(), 10);
+            var lb_t = $("input:radio[name=lb_topic]:checked").val();
+            var text = $("label[for='lb_topic" + lb_t + "']").text();
+            var link_t = "/simulation?id=" + id_t + '&lb=' + lb_t;
+            //$('#next_t').attr('href', link_t);
+            $("#lb_view").html(text);
+        });
+
+
+        $("#user4").click(function (e) {
+            e.preventDefault();
+            
+            var type = $("input:radio[name=lb_user]:checked").val();
+
+            $("#div_user4").html('<br><h6>Running the simulation, to see results next link....</h6><hr><a href="/simulation">Results.</a>');
+
+            $.getJSON("simulate", { "id": trace_id, "type": type }).done(function (data, textStatus, jqXHR) {
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                alert("Simulation completed");
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    alert("Error try again");
+                });
+        });
+
+        $("#topic4").click(function (e) {
+            e.preventDefault();
+
+            var type = $("input:radio[name=lb_topic]:checked").val();
+
+            $("#div_topic4").html('<br><h6>Running the simulation, to see results next link....</h6><hr><a href="/simulation">Results.</a>');
+
+            $.getJSON("simulate", { "id": trace_id, "type": type}).done(function (data, textStatus, jqXHR) {
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                alert("Simulation completed");
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                    alert("Error try again");
+                });
+
+        });
+
+
+    });
+</script>
+{% endblock %}

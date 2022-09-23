@@ -1,0 +1,246 @@
+{% extends 'base.html' %} {% block title %} Selecting Synthetic Traces {% endblock %} {% block head %} {{ super() }}
+{% endblock %} {%
+block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="h2">2) Selecting Synthetic Traces</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+            <div id="rootwizard">
+                <div class="card ">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#start">Available traces</a>
+                            </li>
+                            <!--<li class="nav-item">
+                                <a class="nav-link disabled" data-toggle="tab" href="#newtrace">New trace</a>
+                            </li>-->
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="start">
+                            <div class="card-body">
+                                <p class="card-text">
+
+                                    <table class="table table-striped" id="table_traces">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Requests total</th>
+                                                <th scope="col">Average file size</th>
+                                                <th scope="col">Average interarribo</th>
+                                                <th scope="col">Average requests</th>
+                                                <th scope="col">Select</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if status == 200: %} {% for t in trace %}
+                                            <tr>
+                                                <th scope="row">{{ loop.index }}</th>
+                                                <td>{{ t.name }}</td>
+                                                <td>{{ t.total_requests }}</td>
+                                                <td>{{ t.size_avg }}</td>
+                                                <td>{{ t.avg_interarribo }}</td>
+                                                <td>{{ t.avg_requests }}</td>
+                                                <td><input class="form-check-input" type="radio" name="trace" id="trace_{{ t.id }}" value="{{ t.id }}"></td>
+                                            </tr>
+                                            {% endfor %} {% else %} {% if trace: %}
+                                            <tr>
+                                                <th scope="row"></th>
+                                                <td>{{ trace.error }}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            {% endif %} {% endif %}
+
+                                        </tbody>
+                                    </table>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="newtrace">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Create trace</h5>
+                                <p class="card-text">
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6">
+                                            <form action="/newtrace" method="post" role="form">
+                                                <div class="form-group row">
+                                                    <label for="total_requests" class="col-sm-5 col-form-label">Requests
+                                                        total</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" id="total_requests"
+                                                            name="total_requests" placeholder="2500" min=2500
+                                                            required>(operations)
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="size_avg" class="col-sm-5 col-form-label">Average file
+                                                        size</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" id="size_avg"
+                                                            name="size_avg" placeholder="5" min=1 required>(megabytes)
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="avg_interarribo" class="col-sm-5 col-form-label">Average
+                                                        interarribo</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" id="avg_interarribo"
+                                                            name="avg_interarribo" placeholder="1" min=1
+                                                            required>(seconds)
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="avg_requests" class="col-sm-5 col-form-label">Average
+                                                        requests</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="number" class="form-control" id="avg_requests"
+                                                            name="avg_requests" placeholder="5" min=1
+                                                            required>(operations/seconds)
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="name" class="col-sm-5 col-form-label">Name</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="name" name="name"
+                                                            placeholder="trace 1" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-10">
+                                                        <button class="btn btn-primary" id="save"
+                                                            type="submit">Generate</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <h4>Selected settings</h4>
+            <hr>
+            <br>
+            <p>
+                <b>Storage pool:</b>
+                <span id="pool_view"></span> 
+            </p>
+            <p>
+                <b>Synthetic trace:</b>
+                <span id="trace_view"></span>
+            </p>
+            <p>
+                <b>Corpus:</b>
+                <span id="corpus_view"></span>
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card text-white bg-danger mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">1) Defining Cloud Storage Pool</h6>
+                            <a href="/storage" class="btn btn-dark">Previous</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card text-white bg-info mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">3) Selecting Corpus<br></h6>
+                            <a href="/thematic" class="btn btn-dark">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</main>
+{% endblock %} {% block footer %} {{ super() }}
+<script type="text/javascript">
+    $(function () {
+
+        $.getJSON("config").done(function (data, textStatus, jqXHR) {
+
+            if (console && console.log) {
+                console.log("Request success");
+            }
+
+            if (data['nodes'] != null) {
+                $("#pool_view").html(data['nodes'] + ' nodes');
+            } else {
+                $("#pool_view").html('None');
+            }
+
+            if (data['trace_id'] != null) {
+                $("#trace_view").html('Trace #' + data['trace_id']);
+                $("input:radio[id=trace_" + data['trace_id'] + "]").attr('checked', true);
+            } else {
+                $("#trace_view").html('None');
+            }
+
+            if (data['corpus'] != null) {
+                $("#corpus_view").html(data['corpus']);
+            }
+            else {
+                $("#corpus_view").html('None');
+            }
+
+        })
+            .fail(function (jqXHR, textStatus, errorThrow) {
+                if (console && console.log) {
+                    console.log("Request fail: " + textStatus);
+                }
+            });
+
+        $("input:radio[name=trace]").click(function () {
+            var id = $("input:radio[name=trace]:checked").val();
+            //console.log(id);
+
+            $.getJSON("newconfig", { "trace_id": id }).done(function (data, textStatus, jqXHR) {
+
+                if (console && console.log) {
+                    console.log("Request success");
+                }
+
+                 $("#trace_view").html("Trace #" + id);
+
+            })
+                .fail(function (jqXHR, textStatus, errorThrow) {
+                    if (console && console.log) {
+                        console.log("Request fail: " + textStatus);
+                    }
+                });
+
+        });
+    });
+
+   
+</script>
+
+{% endblock %}

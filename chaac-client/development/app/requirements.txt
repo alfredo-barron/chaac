@@ -1,0 +1,7 @@
+requests
+flask
+flask_json
+json2html
+simplejson
+gevent
+flask-restful

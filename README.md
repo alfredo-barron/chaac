@@ -1,4 +1,7 @@
 # Chaac
+
+<img src="images/logo_chaac.png" width="200">
+
 ***
 _Chaac es una herramienta para construir esquemas de distribución de datos sensibles al contexto computacional para el manejo de los recursos de almacenamiento para aplicaciones que son construidas y desplegadas en el entorno de microservicios._
 
