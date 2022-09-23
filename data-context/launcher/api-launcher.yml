@@ -1,0 +1,413 @@
+openapi: 3.0.0
+info:
+  title: Laucher API
+  description: This is API of component Launcher
+  version: "1.0.0"
+servers:
+- url: https://virtserver.swaggerhub.com/DistributionScheme/Launcher/1.0.0
+  description: swagger hub API Auto Mocking
+tags:
+- name: containers
+  description: Management containers
+- name: networks
+  description: Management networks
+- name: nodes
+  description: Management nodes
+- name: services
+  description: Management services
+paths:
+  /containers:
+    get:
+      tags:
+      - containers
+      description: Returns all containers
+      operationId: get_containers
+      responses:
+        "200":
+          description: All the containers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Container'
+        "400":
+          description: Bad request
+    post:
+      tags:
+      - containers
+      description: Create a container
+      operationId: create_container
+      responses:
+        "201":
+          description: Created container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Container'
+  /containers/{id}/stats:
+    get:
+      tags:
+      - containers
+      description: returns the status of the container
+      operationId: get_containers_stats
+      parameters:
+      - name: id
+        in: path
+        description: container ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Container'
+        "400":
+          description: Bad request
+  /containers/{id}:
+    get:
+      tags:
+      - containers
+      description: returns the id and name the container
+      operationId: get_container
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the container
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: the container selected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Container'
+    delete:
+      tags:
+      - containers
+      description: remove the container
+      operationId: remove_container
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the container
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Restarted container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Container'
+  /containers/{id}/restart:
+    get:
+      tags:
+      - containers
+      description: restart the container
+      operationId: restart_container
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the container
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Restarted container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Container'
+  /containers/{id}/stop:
+    get:
+      tags:
+      - containers
+      description: stops the container
+      operationId: stop_container
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the container
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Restarted container
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Container'
+  /networks:
+    get:
+      tags:
+      - networks
+      description: show all networks
+      operationId: get_networks
+      responses:
+        "200":
+          description: available networks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Network'
+    post:
+      tags:
+      - networks
+      description: create the network
+      operationId: create_network
+      responses:
+        "200":
+          description: the network has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Network'
+  /networks/{id}:
+    get:
+      tags:
+      - networks
+      description: shows the selected network with the id
+      operationId: get_network
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the network
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: network available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Network'
+    delete:
+      tags:
+      - networks
+      description: remove network
+      operationId: remove_network
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the network
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: the network has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Network'
+  /nodes:
+    get:
+      tags:
+      - nodes
+      description: show all nodes
+      operationId: get_nodes
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Node'
+  /services:
+    get:
+      tags:
+      - services
+      description: show all services
+      operationId: get_services
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+    post:
+      tags:
+      - services
+      description: create the services
+      operationId: create_service
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+  /services/{id}:
+    get:
+      tags:
+      - services
+      description: show all services
+      operationId: get_service
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+    delete:
+      tags:
+      - services
+      description: remove services
+      operationId: remove_service
+      parameters:
+      - name: id
+        in: path
+        description: the identifier the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+components:
+  schemas:
+    Container:
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the container
+        short_id:
+          type: string
+          description: the unique identifier for the container
+        name:
+          type: string
+          description: the name for the container
+        status:
+          type: boolean
+          description: the status for the container
+        image:
+          type: string
+          example: alfredobarron/datapool:1.2
+        network:
+          type: array
+          items:
+            $ref: '#/components/schemas/Network'
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Port'
+        env:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{"NODE_LB":"TC"}'
+        volume:
+          type: array
+          items:
+            $ref: '#/components/schemas/Volume'
+    Port:
+      type: object
+      properties:
+        expose:
+          type: string
+          example: "80"
+        port:
+          type: string
+          example: "8080"
+    Volume:
+      type: object
+      properties:
+        volume:
+          type: string
+          example: /home/abarron/folder
+        bind:
+          type: string
+          example: /app/folder
+        mode:
+          type: string
+          example: rw
+    Network:
+      properties:
+        name:
+          type: string
+        driver:
+          type: string
+        atachable:
+          type: string
+        id:
+          type: string
+        short_id:
+          type: string
+        message:
+          type: string
+    Node:
+      properties:
+        id:
+          type: string
+        short_id:
+          type: string
+    Service:
+      properties:
+        image:
+          type: string
+        name:
+          type: string
+        endpoint_spec:
+          type: object
+        env:
+          type: string
+        networks:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Network'
+        mounts:
+          type: string
+        id:
+          type: string
+        short_id:
+          type: string
+        mesage:
+          type: string
