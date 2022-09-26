@@ -17,14 +17,16 @@ docker run \
     alfredobarron/middleware:1.8
 
 docker run \
-  --label chaac \
-  --label chaac=launcher \
-  --name=launcher \
-  --network=my-net \
-  --publish=5000:5000 \
-  --detach=true \
-  --restart=always \
-  --volume=/var/run/docker.sock:/var/run/docker.sock:ro \
-  --privileged \
-  --device=/dev/kmsg \
-  alfredobarron/launcher:1
+    --detach=true \
+    --name influxdb \
+    --network=my-net \
+    --env DOCKER_INFLUXDB_INIT_USERNAME=root \
+    --env DOCKER_INFLUXDB_INIT_PASSWORD=root \
+    --env DOCKER_INFLUXDB_INIT_ORG=my-org \
+    --env DOCKER_INFLUXDB_INIT_BUCKET=my-bucket \
+    --label chaac \
+    --label chaac=middleware \
+    --publish 8086:8086 \
+    --restart=always \
+    --volume=$(pwd)/db:/var/lib/influxdb \
+    influxdb:1.8.4-alpine
