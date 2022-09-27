@@ -899,7 +899,7 @@ components:
         id:
           type: string
           example: cd1
-        url:
+        name:
           type: string
           example: bin1
         hostId:
