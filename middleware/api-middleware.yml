@@ -857,15 +857,15 @@ components:
         id:
           type: string
           example: pcd1
+        name:
+          type: string
+          example: pool-1
         image:
           type: string
           example: alfredobarron/data_pool:2.4
         network:
           type: string
           example: my-net
-        url:
-          type: string
-          example: pool-1
         publicPort:
           type: integer
           format: int32
@@ -890,7 +890,7 @@ components:
         - id
         - image
         - network
-        - url
+        - name
         - port
         - lb
     Bin:
@@ -898,32 +898,22 @@ components:
       properties:
         id:
           type: string
-          example: cache-0
+          example: cd1
+        url:
+          type: string
+          example: bin1
+        hostId:
+          type: string
+          example: host01
         poolId:
           type: string
           example: pool-0
         image:
           type: string
-          example: alfredobarron/datacontainer:1.6
+          example: alfredobarron/data_container:2
         network:
           type: string
           example: my-net
-        url:
-          type: string
-          example: pool-0
-        port:
-          type: integer
-          format: int32
-          example: 80
-        type:
-          type: string
-          example: CACHE
-        input:
-          type: string
-          example: LOCAL
-        output:
-          type: string
-          example: CLOUD
         cacheSize:
           type: integer
           format: int32
@@ -931,14 +921,18 @@ components:
         cachePolicy:
           type: string
           example: LFU
-        capacity:
+        levels:
           type: integer
           format: int32
-          example: 40
+          example: 1
         memory:
           type: integer
           format: int32
-          example: 2
+          example: 2GB
+        capacity:
+          type: integer
+          format: int32
+          example: 40GB
         container:
           readOnly: true
           oneOf:
@@ -954,15 +948,16 @@ components:
           example: '2016-08-29T09:12:33.001Z'
       required:
         - id
+        - name
+        - hostId
         - poolId
         - image
         - network
-        - url
-        - port
         - type
         - input
         - output
         - cacheSize
         - cachePolicy
-        - capacity
+        - levels
         - memory
+        - capacity
