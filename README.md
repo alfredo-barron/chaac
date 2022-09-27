@@ -76,20 +76,20 @@ Para desplegar este componente se hace uso de los siguientes comandos:
 ```
 docker run \
     --detach=true \
-    --env NODE_ID=middle1 \
-    --env NODE_URL=middleware \
-    --env NODE_PORT=80 \
-    --env URL_DB=influxdb \
-    --env URL_LAUNCHER=launcher:5000 \
+    --env NODE_ID=chaac \
+    --env NODE_URL=127.0.0.1 \
+    --env WEB_PORT=80 \
+    --env DB_URL=influxdb \
+    --env LAUNCHER_URL=launcher:5000 \
     --env LOG_PATH=/app/logs \
     --label chaac \
     --label chaac=middleware \
     --name=middleware \
     --network=my-net \
-    --publish=8081:80 \
+    --publish=80:80 \
     --restart=always \
     --volume=$(pwd)/logs:/app/logs:rw \
-    alfredobarron/middleware:1.8
+    alfredobarron/middleware:2
 
 docker run \
     --detach=true \

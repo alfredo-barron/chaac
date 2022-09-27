@@ -1,0 +1,75 @@
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.71.2 Chrome/102.0.5005.167 Electron/19.0.12 Safari/537.36
+Accept: application/json
+Accept-Language: es
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: curl/7.68.0
+Accept: application/json
+Accept-Language: null
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.71.2 Chrome/102.0.5005.167 Electron/19.0.12 Safari/537.36
+Accept: application/json
+Accept-Language: es
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.71.2 Chrome/102.0.5005.167 Electron/19.0.12 Safari/537.36
+Accept: application/json
+Accept-Language: es
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.71.2 Chrome/102.0.5005.167 Electron/19.0.12 Safari/537.36
+Accept: application/json
+Accept-Language: es
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.71.2 Chrome/102.0.5005.167 Electron/19.0.12 Safari/537.36
+Accept: application/json
+Accept-Language: es
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: application/json
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+GET /api/v1/acquisition/hosts/ HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: application/json
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: application/json
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+GET /api/v1/acquisition/pools HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: application/json
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+POST /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: */*
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+POST /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: curl/7.68.0
+Accept: */*
+Accept-Language: null
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0
+Accept: application/json
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+GET /api/v1/acquisition/hosts HTTP/1.1
+Host: 172.18.0.1
+User-Agent: curl/7.68.0
+Accept: application/json
+Accept-Language: null
