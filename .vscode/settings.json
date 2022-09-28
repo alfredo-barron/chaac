@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "middleware/development/Middleware/src",
+        "middleware"
+    ]
+}
