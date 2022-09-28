@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Middleware API
-    url: http://localhost:8080/api/v1
+    url: http://localhost/api/v1
 info:
   description: This is API of component Middleware
   version: "1.0.0"
