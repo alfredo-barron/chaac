@@ -1,3 +1,4 @@
+from crypt import methods
 import sys
 import time
 import datetime
@@ -74,6 +75,61 @@ def getMemory(id):
     else:
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'Sorry, hosts aren\'t available at this time.'})
+
+#pools
+@app.route('/middleware/pools', methods=['GET'])
+def getPools ():
+    try:
+        url='http://creation:45000/pools'
+        res= requests.get(url)
+    except:
+        res = None
+    if res and res.status_code== 200:
+        return jsonify(res.json)
+    else:
+        status = (res.status_code if res != None and res.status_code else 500)
+        return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
+
+@app.route('/middleware/pools', methods=['POST'])
+def createPools(json):
+    try:
+        
+        url='http://middleware:45000/api/v1/pools/'
+        res=requests.post(url,json)
+    except :
+        res = None
+    if res and res.status_code == 201:
+        return jsonify(res.json)
+    else:
+        status = (res.status_code if res != None and res.status_code else 500)
+        return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
+#containers / bins 
+@app.route('/middleware/pools/<int:idpool>/containers',methods=['Get'])
+def getContainers(idpool):
+    try:
+        url='http://middleware:45000/api/v1/bins'
+        res=requests.get(url)
+    except :
+        res = None
+    if res and res.status_code == 201:
+        return jsonify(res.json)
+    else:
+        status = (res.status_code if res != None and res.status_code else 500)
+        return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
+
+@app.route('/middleware/bins',methods=['POST'])
+def createContainers(json):
+    try:
+        url='http://middleware:45000/api/v1/pools/bins'
+        res=requests.post(url,json)
+    except :
+        res = None
+    if res and res.status_code == 201:
+        return jsonify(res.json)
+    else:
+        status = (res.status_code if res != None and res.status_code else 500)
+        return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
