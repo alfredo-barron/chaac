@@ -3,7 +3,7 @@ docker run \
   --label chaac \
   --label chaac=launcher \
   --name=launcher \
-  --network=my-net \
+  --network=chaac \
   --publish=5000:5000 \
   --detach=true \
   --restart=always \
@@ -23,6 +23,7 @@ docker run \
   --publish=8081:8080 \
   --detach=true \
   --name=cadvisor \
+  --network=chaac \
   --privileged \
   --device=/dev/kmsg \
   gcr.io/cadvisor/cadvisor:latest

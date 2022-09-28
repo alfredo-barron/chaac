@@ -10,7 +10,7 @@ docker run \
     --label chaac \
     --label chaac=middleware \
     --name=middleware \
-    --network=my-net \
+    --network=chaac \
     --publish=80:80 \
     --restart=always \
     --volume=$(pwd)/logs:/app/logs:rw \
@@ -19,7 +19,7 @@ docker run \
 docker run \
     --detach=true \
     --name influxdb \
-    --network=my-net \
+    --network=chaac \
     --env DOCKER_INFLUXDB_INIT_USERNAME=root \
     --env DOCKER_INFLUXDB_INIT_PASSWORD=root \
     --env DOCKER_INFLUXDB_INIT_ORG=my-org \
