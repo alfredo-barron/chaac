@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Middleware API
-    url: http://localhost:8080/api/v1
+    url: http://localhost/api/v1
 info:
   description: This is API of component Middleware
   version: "1.0.0"
@@ -15,8 +15,7 @@ tags:
     description: Data analisys 
   - name: creation
     description: Creation of data distribution scheme
-  - name: visualization
-    description: Visualization of data distribution scheme
+  
 paths:
   /hosts:
     post:
@@ -38,7 +37,7 @@ paths:
           description: Bad request
     get:
       tags: 
-        - visualization
+        - acquisition
       summary: Gets all hosts
       operationId: getAllHosts
       responses:
@@ -76,7 +75,7 @@ paths:
   /hosts/{id}:
     get:
       tags:
-        - visualization
+        - acquisition
       summary: Represents a host
       operationId: getHostById
       parameters:
@@ -101,7 +100,7 @@ paths:
   /hosts/{id}/microservices:
     get:
       tags:
-        - visualization
+        - acquisition
       summary: Represents all microservice on host
       operationId: getMicroservicesByHost
       parameters:
@@ -126,7 +125,7 @@ paths:
   /hosts/{hostId}/microservices/{microserviceId}:
     get:
       tags:
-        - visualization
+        - acquisition
       summary: Represents a microservice on host
       parameters:
         - name: hostId
@@ -157,7 +156,7 @@ paths:
   /hosts/{hostId}/microservices/{microserviceId}/attributes:
     get:
       tags:
-        - visualization
+        - acquisition
       summary: Represents a microservice on host
       parameters:
         - name: hostId
@@ -232,7 +231,7 @@ paths:
           description: Bad request
     get:
       tags: 
-        - visualization
+        - creation
       summary: Gets all pools
       operationId: getAllPools
       responses:
@@ -249,7 +248,7 @@ paths:
   /pools/{id}:
     get:
       tags:
-        - visualization
+        - creation
       summary: Represents a pool
       operationId: getPoolById
       parameters:
@@ -285,61 +284,6 @@ paths:
       responses:
         '404': 
           description: Not found
-        '400':
-          description: Bad request
-  /pools/{id}/bins:
-    get:
-      tags:
-        - visualization
-      summary: Represents all bins into pool
-      operationId: getBinIntoPoolById
-      parameters:
-        - name: id
-          in: path
-          description: Bin ID
-          required: true
-          schema:
-            type: string
-            example: cache-0
-      responses:
-        '200': 
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Bin'
-        '400':
-          description: Bad request
-  /pools/{poolId}/bins/{binId}:
-    get:
-      tags:
-        - visualization
-      summary: Represents a bin into pool
-      operationId: getBinByIdIntoPool
-      parameters:
-        - name: poolId
-          in: path
-          description: Pool ID
-          required: true
-          schema:
-            type: string
-            example: pcd1
-        - name: binId
-          in: path
-          description: Bin ID
-          required: true
-          schema:
-            type: string
-            example: cd1
-      responses:
-        '200': 
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Bin'
         '400':
           description: Bad request
   /pools/{id}/create:
@@ -495,7 +439,45 @@ paths:
           description: Created
         '400':
           description: Bad request
+    get:
+      tags: 
+        - creation
+      summary: Gets all bins
+      operationId: getAllBins
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bin'
+        '400':
+          description: Bad request
   /bins/{id}:
+    get:
+      tags:
+        - creation
+      summary: Represents a bin
+      operationId: getBinById
+      parameters:
+        - name: id
+          in: path
+          description: Bin ID
+          required: true
+          schema:
+            type: string
+            example: cache-0
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bin'
+        '400':
+          description: Bad request
     delete:
       tags:
         - creation
@@ -875,9 +857,9 @@ components:
         id:
           type: string
           example: pcd1
-        containerHost:
+        name:
           type: string
-          example: localhost:8081
+          example: pool-1
         image:
           type: string
           example: alfredobarron/data_pool:2.4
