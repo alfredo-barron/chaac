@@ -3,7 +3,7 @@ docker run \
     --detach=true \
     --env MIDDLEWARE_ID=chaac \
     --env MIDDLEWARE_URL=middleware \
-    --env WEB_PORT=80 \
+    --env PUBLIC_PORT=80 \
     --env DB_URL=influxdb \
     --env LAUNCHER_URL=launcher:5000 \
     --env LOG_PATH=/app/logs \
