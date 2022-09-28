@@ -98,7 +98,7 @@ def create_container():
             vols_dic[vol['volume']] = bind_mode
     else:
         vols_dic = {}
-    container = client.containers.run(image=image, name=name, ports=ports_dic, environment=environments, network=network, tmpfs=tmps_dic, volumes=vols_dic, detach=True)
+    container = client.containers.create(image=image, name=name, ports=ports_dic, environment=environments, network=network, tmpfs=tmps_dic, volumes=vols_dic, detach=True)
     r = {}
     r['id'] = container.id
     r['short_id'] = container.short_id

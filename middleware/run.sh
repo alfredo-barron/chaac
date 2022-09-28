@@ -1,8 +1,8 @@
 #!/bin/sh
 docker run \
     --detach=true \
-    --env NODE_ID=chaac \
-    --env NODE_URL=127.0.0.1 \
+    --env MIDDLEWARE_ID=chaac \
+    --env MIDDLEWARE_URL=middleware \
     --env WEB_PORT=80 \
     --env DB_URL=influxdb \
     --env LAUNCHER_URL=launcher:5000 \

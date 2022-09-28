@@ -4,8 +4,8 @@ info:
   description: This is API of component Launcher
   version: "1.0.0"
 servers:
-- url: https://virtserver.swaggerhub.com/DistributionScheme/Launcher/1.0.0
-  description: swagger hub API Auto Mocking
+  - description: Launcher API
+    url: http://localhost:5000/api
 tags:
 - name: containers
   description: Management containers
