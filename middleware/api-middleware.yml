@@ -873,6 +873,9 @@ components:
         distribuitor:
           type: string
           example: ROUND_ROBIN
+          # RANDOM
+          # SORT_UF
+          # TWO_CHOICES
         container:
           readOnly: true
           oneOf:
