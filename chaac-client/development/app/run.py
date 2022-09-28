@@ -90,7 +90,7 @@ def getPools ():
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 
-@app.route('/middleware/pools',methods['POST'])
+@app.route('/middleware/pools', methods=['POST'])
 def createPools(json):
     try:
         
@@ -104,8 +104,8 @@ def createPools(json):
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 #containers / bins 
-@app.route('/middleware/containers',methods['Get'])
-def getContainers():
+@app.route('/middleware/pools/<int:idpool>/containers',methods=['Get'])
+def getContainers(idpool):
     try:
         url='http://middleware:45000/api/v1/bins'
         res=requests.get(url)
@@ -117,7 +117,7 @@ def getContainers():
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
 
-@app.route('/middleware/bins',methods['POST'])
+@app.route('/middleware/bins',methods=['POST'])
 def createContainers(json):
     try:
         url='http://middleware:45000/api/v1/pools/bins'
