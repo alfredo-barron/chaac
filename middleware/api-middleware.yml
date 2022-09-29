@@ -40,7 +40,6 @@ paths:
       tags: 
         - Visualization
       summary: Get all hosts
-      operationId: getAllHosts
       responses:
         '200': 
           description: OK
@@ -77,7 +76,6 @@ paths:
       tags:
         - Visualization
       summary: Get a host
-      operationId: getHostById
       parameters:
         - name: id
           in: path
@@ -102,7 +100,6 @@ paths:
       tags:
         - Visualization
       summary: Get all microservices from a host
-      operationId: getMicroservicesByHost
       parameters:
         - name: id
           in: path
@@ -233,7 +230,6 @@ paths:
       tags: 
         - Visualization
       summary: Get all pools
-      operationId: getAllPools
       responses:
         '200': 
           description: OK
@@ -250,7 +246,6 @@ paths:
       tags:
         - Visualization
       summary: Get a pool
-      operationId: getPoolById
       parameters:
         - name: id
           in: path
@@ -291,7 +286,6 @@ paths:
       tags:
         - Creation
       summary: Create a virtual container as pool
-      operationId: createPoolbyId
       parameters:
         - name: id
           in: path
@@ -318,7 +312,6 @@ paths:
       tags:
         - Creation
       summary: Start a virtual container as pool
-      operationId: startPoolbyId
       parameters:
         - name: id
           in: path
@@ -345,7 +338,6 @@ paths:
       tags:
         - Creation
       summary: Restart a virtual container as pool
-      operationId: restartPoolbyId
       parameters:
         - name: id
           in: path
@@ -372,7 +364,6 @@ paths:
       tags:
         - Creation
       summary: Stop a virtual container as pool
-      operationId: stopPoolbyId
       parameters:
         - name: id
           in: path
@@ -399,7 +390,6 @@ paths:
       tags:
         - Creation
       summary: Remove a virtual container as pool
-      operationId: removePoolbyId
       parameters:
         - name: id
           in: path
@@ -426,7 +416,6 @@ paths:
       tags: 
         - Visualization
       summary: Get all bins into a pool
-      operationId: getAllBinsIntoPool
       parameters:
         - name: poolId
           in: path
@@ -451,7 +440,6 @@ paths:
       tags:
         - Visualization
       summary: Get a bin into a pool
-      operationId: getBinByIdIntoPool
       parameters:
         - name: poolId
           in: path
@@ -474,6 +462,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Bin'
+        '400':
+          description: Bad request
+  /pools/{poolId}/bins/{binId}/balls:
+    get:
+      tags:
+        - Visualization
+      summary: Get all balls into bin from a pool
+      parameters:
+        - name: poolId
+          in: path
+          description: Pool ID
+          required: true
+          schema:
+            type: string
+            example: pcd1
+        - name: binId
+          in: path
+          description: Bin ID
+          required: true
+          schema:
+            type: string
+            example: cd1   
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ball'
         '400':
           description: Bad request
   /bins:
@@ -518,7 +537,6 @@ paths:
       tags:
         - Creation
       summary: Create a virtual container as bin
-      operationId: createBinById
       parameters:
         - name: id
           in: path
@@ -545,7 +563,6 @@ paths:
       tags:
         - Creation
       summary: Start a virtual container as bin
-      operationId: startBinById
       parameters:
         - name: id
           in: path
@@ -572,7 +589,6 @@ paths:
       tags:
         - Creation
       summary: Restart a virtual container as bin
-      operationId: restartBinById
       parameters:
         - name: id
           in: path
@@ -599,7 +615,6 @@ paths:
       tags:
         - Creation
       summary: Stop a virtual container as bin
-      operationId: stopBinById
       parameters:
         - name: id
           in: path
@@ -626,7 +641,6 @@ paths:
       tags:
         - Creation
       summary: Remove a virtual container as bin
-      operationId: removeBinById
       parameters:
         - name: id
           in: path
@@ -946,12 +960,10 @@ components:
           format: int32
           example: 1
         memory:
-          type: integer
-          format: int32
+          type: string
           example: 2GB
         capacity:
-          type: integer
-          format: int32
+          type: string
           example: 40GB
         container:
           readOnly: true
@@ -981,3 +993,19 @@ components:
         - levels
         - memory
         - capacity
+    Ball:
+      type: object
+      properties: 
+        id: 
+          type: string
+          example: ball1
+        name: 
+          type: string
+          example: ball
+        hash:
+          type: string
+          example: 7a10ea1b9b2872da9f375002c44ddfce
+        size: 
+          type: integer
+          format: int64
+          example: 200000
