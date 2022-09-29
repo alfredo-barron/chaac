@@ -9,20 +9,20 @@ info:
   contact:
     email: alfredo.barron@cinvestav.mx
 tags:
-  - name: acquisition
-    description: Acquisition of contextual attributes
-  - name: analisys
-    description: Data analisys 
-  - name: creation
-    description: Creation of data distribution scheme
-  - name: visualization
-    description: Visualization of data distribution scheme
+  - name: Acquisition
+    description: Contextual data acquisition
+  - name: Analisys
+    description: Contextual data analysis
+  - name: Creation
+    description: Creation of the data distribution schema
+  - name: Visualization
+    description: Visualization of the data distribution scheme
 paths:
   /hosts:
     post:
       tags:
-        - acquisition
-      summary: Add a new host
+        - Acquisition
+      summary: Add a host and microservices 
       operationId: createHost
       requestBody:
         description: 'Host object that needs to be added'
@@ -38,8 +38,8 @@ paths:
           description: Bad request
     get:
       tags: 
-        - visualization
-      summary: Gets all hosts
+        - Visualization
+      summary: Get all hosts
       operationId: getAllHosts
       responses:
         '200': 
@@ -55,9 +55,9 @@ paths:
   /attributes:
     post:
       tags:
-        - acquisition
-      summary: Add a new context attributes
-      operationId: createContextAttribute
+        - Acquisition
+      summary: Adds new contextual data attributes
+      operationId: createContextualDataAttribute
       requestBody:
         description: Host object that needs to be added
         required: true
@@ -72,12 +72,11 @@ paths:
           description: Created
         '400':
           description: Bad request
-
   /hosts/{id}:
     get:
       tags:
-        - visualization
-      summary: Represents a host
+        - Visualization
+      summary: Get a host
       operationId: getHostById
       parameters:
         - name: id
@@ -101,8 +100,8 @@ paths:
   /hosts/{id}/microservices:
     get:
       tags:
-        - visualization
-      summary: Represents all microservice on host
+        - Visualization
+      summary: Get all microservices from a host
       operationId: getMicroservicesByHost
       parameters:
         - name: id
@@ -126,8 +125,8 @@ paths:
   /hosts/{hostId}/microservices/{microserviceId}:
     get:
       tags:
-        - visualization
-      summary: Represents a microservice on host
+        - Visualization
+      summary: Get a microservice from a host
       parameters:
         - name: hostId
           in: path
@@ -157,8 +156,8 @@ paths:
   /hosts/{hostId}/microservices/{microserviceId}/attributes:
     get:
       tags:
-        - visualization
-      summary: Represents a microservice on host
+        - Visualization
+      summary: Get all contextual data attributes one microservice from a host
       parameters:
         - name: hostId
           in: path
@@ -190,7 +189,7 @@ paths:
   /ranking/{k}:
     get:
       tags:
-        - analisys
+        - Analisys
       summary: Ranking of microservices
       parameters:
         - name: k
@@ -215,7 +214,7 @@ paths:
   /pools:
     post:
       tags:
-        - creation
+        - Creation
       summary: Add a new pool
       operationId: createPool
       requestBody:
@@ -232,8 +231,8 @@ paths:
           description: Bad request
     get:
       tags: 
-        - visualization
-      summary: Gets all pools
+        - Visualization
+      summary: Get all pools
       operationId: getAllPools
       responses:
         '200': 
@@ -249,8 +248,8 @@ paths:
   /pools/{id}:
     get:
       tags:
-        - visualization
-      summary: Represents a pool
+        - Visualization
+      summary: Get a pool
       operationId: getPoolById
       parameters:
         - name: id
@@ -271,7 +270,7 @@ paths:
           description: Bad request
     delete:
       tags:
-        - creation
+        - Creation
       summary: Delete a pool
       operationId: deletePoolById
       parameters:
@@ -290,8 +289,8 @@ paths:
   /pools/{id}/create:
     get:
       tags:
-        - creation
-      summary: Create one Data Pool
+        - Creation
+      summary: Create a virtual container as pool
       operationId: createPoolbyId
       parameters:
         - name: id
@@ -300,7 +299,7 @@ paths:
           required: true
           schema:
             type: string
-            example: pool-0
+            example: pcd1
       responses:
         '200': 
           description: OK
@@ -317,8 +316,8 @@ paths:
   /pools/{id}/start:
     get:
       tags:
-        - creation
-      summary: Start one Data Pool
+        - Creation
+      summary: Start a virtual container as pool
       operationId: startPoolbyId
       parameters:
         - name: id
@@ -327,7 +326,7 @@ paths:
           required: true
           schema:
             type: string
-            example: pool-0
+            example: pcd1
       responses:
         '200': 
           description: OK
@@ -344,8 +343,8 @@ paths:
   /pools/{id}/restart:
     get:
       tags:
-        - creation
-      summary: Restart one Data Pool
+        - Creation
+      summary: Restart a virtual container as pool
       operationId: restartPoolbyId
       parameters:
         - name: id
@@ -371,8 +370,8 @@ paths:
   /pools/{id}/stop:
     get:
       tags:
-        - creation
-      summary: Stop one Data Pool
+        - Creation
+      summary: Stop a virtual container as pool
       operationId: stopPoolbyId
       parameters:
         - name: id
@@ -398,8 +397,8 @@ paths:
   /pools/{id}/remove:
     get:
       tags:
-        - creation
-      summary: Remove one Data Pool
+        - Creation
+      summary: Remove a virtual container as pool
       operationId: removePoolbyId
       parameters:
         - name: id
@@ -425,8 +424,8 @@ paths:
   /pools/{poolId}/bins:
     get:
       tags: 
-        - visualization
-      summary: Gets all bins of a pool
+        - Visualization
+      summary: Get all bins into a pool
       operationId: getAllBinsIntoPool
       parameters:
         - name: poolId
@@ -450,8 +449,8 @@ paths:
   /pools/{poolId}/bins/{binId}:
     get:
       tags:
-        - visualization
-      summary: Represents a bin into pool
+        - Visualization
+      summary: Get a bin into a pool
       operationId: getBinByIdIntoPool
       parameters:
         - name: poolId
@@ -480,7 +479,7 @@ paths:
   /bins:
     post:
       tags:
-        - creation
+        - Creation
       summary: Add a new bin
       operationId: createBin
       requestBody:
@@ -498,7 +497,7 @@ paths:
   /bins/{id}:
     delete:
       tags:
-        - creation
+        - Creation
       summary: Delete a bin
       operationId: deleteBinById
       parameters:
@@ -517,8 +516,8 @@ paths:
   /bins/{id}/create:
     get:
       tags:
-        - creation
-      summary: Create one Bin
+        - Creation
+      summary: Create a virtual container as bin
       operationId: createBinById
       parameters:
         - name: id
@@ -544,8 +543,8 @@ paths:
   /bins/{id}/start:
     get:
       tags:
-        - creation
-      summary: Start one Bin
+        - Creation
+      summary: Start a virtual container as bin
       operationId: startBinById
       parameters:
         - name: id
@@ -571,8 +570,8 @@ paths:
   /bins/{id}/restart:
     get:
       tags:
-        - creation
-      summary: Restart one Bin
+        - Creation
+      summary: Restart a virtual container as bin
       operationId: restartBinById
       parameters:
         - name: id
@@ -598,8 +597,8 @@ paths:
   /bins/{id}/stop:
     get:
       tags:
-        - creation
-      summary: Stop one Bin
+        - Creation
+      summary: Stop a virtual container as bin
       operationId: stopBinById
       parameters:
         - name: id
@@ -625,8 +624,8 @@ paths:
   /bins/{id}/remove:
     get:
       tags:
-        - creation
-      summary: Remove one Bin
+        - Creation
+      summary: Remove a virtual container as bin
       operationId: removeBinById
       parameters:
         - name: id
