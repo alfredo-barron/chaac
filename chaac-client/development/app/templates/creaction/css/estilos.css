@@ -75,7 +75,34 @@ nav ul li a:hover {
 	margin-bottom: 0;
 
 }
+<<<<<<< HEAD
 
+=======
+.contenedor-area h1 {
+	text-transform: uppercase;
+	font-size: 20px;
+	background: #9DB9DF;
+	color: white;
+	height: 100px;
+	align-items: center;
+	padding: 40px;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+
+}
+.contenedor-area {
+	text-align: center;
+	background: #F3F5FA;
+	height: 700px;
+	width: 1200px;
+	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
+	border-radius: 10px;
+}
+.contenedor-area.items{
+	padding: 40px;
+	width: 50px;
+}
+>>>>>>> 9ac30bee6934ac462e0cad59ab59cebfaaffcaa9
 .lista {
 	padding: 40px;
 	width: 100%;
