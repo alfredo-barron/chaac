@@ -4,7 +4,7 @@ const lista=document.getElementById("lista");
 const modelo=document.getElementById("modelo");
 
 
-Sortable.create(lista,{
+const listaComponentes=Sortable.create(lista,{
 	chosenClass: "seleccion",
 	ghostClass: "fantasma",
 
@@ -19,9 +19,14 @@ Sortable.create(lista,{
 	,
 	 sort: false
 });
-Sortable.create(modelo,{
+const listaModelo=Sortable.create(modelo,{
 	chosenClass: "seleccion",
 	ghostClass: "fantasma",
-	group: "lista-items"
+	group: "lista-items",
+	onAdd: function(Sortable){
+		if (Sortable.getElementById=='pool'){
+			console.log("entro una pool")
+		}
+	}
 
 });
