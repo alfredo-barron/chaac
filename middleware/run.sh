@@ -11,7 +11,7 @@ docker run \
     --label chaac=middleware \
     --name=middleware \
     --network=chaac \
-    --publish=80:80 \
+    --publish=8080:80 \
     --restart=always \
     --volume=$(pwd)/logs:/app/logs:rw \
     alfredobarron/middleware:2

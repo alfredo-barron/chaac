@@ -526,7 +526,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '404': 
           description: Not found
@@ -544,7 +544,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '200': 
           description: OK
@@ -570,7 +570,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '200': 
           description: OK
@@ -596,7 +596,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '200': 
           description: OK
@@ -622,7 +622,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '200': 
           description: OK
@@ -648,7 +648,7 @@ paths:
           required: true
           schema:
             type: string
-            example: cache-0
+            example: cd1
       responses:
         '200': 
           description: OK
