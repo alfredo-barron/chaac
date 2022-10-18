@@ -7,6 +7,7 @@
 	<title>chaac_client</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.css"> 
 </head>
 <body>
 	<header id="main-header">
@@ -14,8 +15,8 @@
 		 <!-- / #logo-header -->
 		<nav>
 			<ul>
-				<li><a href="#">Inicio</a></li>
-				<li><a href="#">informacion</a></li>
+				<li><a href="#">beginning</a></li>
+				<li><a href="#">information</a></li>
 				
 			</ul>
 		</nav><!-- / nav -->
@@ -23,23 +24,49 @@
 
 
 	<section>
-		<div class="contenedor">
-			<div class="contenedor-lista "  >
-				<h1 style="color: white;">Componentes</h1>
+		<div class="contenedor ">
+			<div class="contenedor-lista" id="blocklist" >
+				<h1 style="color: white;">Components</h1>
 				<div class="lista" id="lista">
 					<!-- Persona #1 -->
-					<div class="items" data-id="pool">
-						<h2>pool</h2>
+					<div class="blockelem create-flowy noselect">
+						<input type="hidden" name='blockelemtype' class="blockelemtype" value="1">
+                		<div class="grabme">
+							<img class="blockicon icon" src="img/icons/suelto.png">
+						</div>
+						<div class="blockin">
+							<div class="blocktext">
+								<h2 class="no-seleccionable">Cenotes</h2>
+                        		<spam class="blocktitle no-seleccionable">new Cenote</spam>
+                        		<p class="blockdesc no-seleccionable">this blocke is to add a new container pool</p>
+                        	</div>
+                		</div>
 					</div>
 				
 					<!-- Persona #2 -->
-					<div class="items" data-id="bin">
-						<h2>bin</h2>
+					<div class="blockelem create-flowy noselect">
+						<input type="hidden" name='blockelemtype' class="blockelemtype" value="2">
+                		<div class="grabme">
+							<img class="icon" src="img/icons/suelto.png">
+						</div>
+						<div class="blockin">
+								<h2 class="no-seleccionable">Bins</h2>
+                        		<spam class="blocktitle no-seleccionable">new Bin</spam>
+                        		<p class="blockdesc no-seleccionable">this blocke is to add a new container</p>
+                		</div>
 					</div>
 
 					<!-- Persona #3 -->
-					<div class="items" data-id="ball">
-						<h2>ball</h2>
+					<div class="blockelem create-flowy noselect">
+						<input type="hidden" name='blockelemtype' class="blockelemtype" value="3">
+                		<div class="grabme">
+							<img class="icon" src="img/icons/suelto.png">
+						</div>
+						<div class="blockin">
+								<h2 class="no-seleccionable">Balls</h2>
+                        		<spam class="blocktitle no-seleccionable">new Ball</spam>
+                        		<p class="blockdesc no-seleccionable">this blocke is to add a new ball</p>
+                		</div>
 					</div>
 
 				</div>
@@ -47,15 +74,18 @@
 		</div>
 		<div class="contenedor">
 			<div class="contenedor-area "  >
-				<h1 style="color: white;">Area de trabajo</h1>
-				<div class="lista" id="modelo">
-				
-
+				<h1 style="color: white;">work area</h1>
+				<nav>
+					<ul>
+						<li><div class="iconbutton" id="removeblock"><span></span><img class='icon' src='img/icons/eliminar.png'></div></li>
+					</ul>
+				</nav>
+				<div class="lista" id="canvas">
 				</div>
 			</div>
 		</div>
 	</section>
-	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>
