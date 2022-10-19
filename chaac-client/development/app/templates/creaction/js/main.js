@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(){
     var tempblock;
     var tempblock2;
 // Initialize Flowy
-	flowy(document.getElementById("canvas"), onGrab, onRelease,onSnapping,spacing_x, spacing_y);
+	flowy(document.getElementById("canvas"), onGrab, onRelease,onSnapping,spacing_x,spacing_y);
 		function addEventListenerMulti(type, listener, capture, selector) {
         	var nodes = document.querySelectorAll(selector);
         	for (var i = 0; i < nodes.length; i++) {
@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", function(){
         	var blockin = drag.querySelector(".blockin");
         	blockin.parentNode.removeChild(blockin);
         	if(drag.querySelector('.blockelemtype').value=="1"){
-        		drag.innerHTML+="<div class='blockyleft'> <div><img class='icon' src='img/icons/suelto.png'></div><h2 class='blocktitle no-seleccionable' >cenote</h2> </div>";
+        		drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
         	}
         	if(drag.querySelector('.blockelemtype').value=="2"){
-        		drag.innerHTML+="<div class='blockyleft'> <div><img class='icon' src='img/icons/suelto.png'></div><h2 class='blocktitle no-seleccionable' >bin</h2> </div>";
+        		drag.innerHTML+="<div class='blockyleft noselect'> <div><img class='icon' src='img/icons/suelto.png'></div><h2 class='blocktitle no-seleccionable' >bin</h2> </div>";
         	}
         	if(drag.querySelector('.blockelemtype').value=="3"){
-        		drag.innerHTML+="<div class='blockyleft'> <div><img class='icon' src='img/icons/suelto.png'></div><h2 class='blocktitle' >ball</h2> </div>";
+        		drag.innerHTML+="<div class='blockyleft noselect'> <div><img class='icon' src='img/icons/suelto.png'></div><h2 class='blocktitle' >ball</h2> </div>";
         	}
         	return true;
     	}

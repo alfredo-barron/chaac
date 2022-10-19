@@ -7,7 +7,6 @@
 body {
 	background: #E3E5EB;
     font-family: 'Open Sans', sans-serif;
-	min-height: 100vh;
 }
 header{
 	background: #619BE9;
@@ -26,7 +25,7 @@ nav ul {
 
 nav ul li {
 	display: inline-block;
-	line-height: 80px;
+	line-height:auto;
 }
 			
 nav ul li a {
@@ -37,7 +36,9 @@ nav ul li a {
 	text-decoration: none;
 	border-radius: 10px;
 }
-			
+div{
+	margin: 1px;
+}		
 nav ul li a:hover {
 	color: white;
 	font-size: 20px;
@@ -50,9 +51,7 @@ nav ul li a:hover {
 }
 
 .contenedor {
-	width: 70%;
-	max-width: 600px;
-
+	max-width:auto;
 	float: left;
 }
 
@@ -60,6 +59,7 @@ nav ul li a:hover {
 	background: #F3F5FA;
 	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
 	border-radius: 10px;
+	width: 100%;
 }
 
 .contenedor-lista h1 {
@@ -81,9 +81,7 @@ nav ul li a:hover {
 	font-size: 20px;
 	background: #9DB9DF;
 	color: white;
-	height: 100px;
 	align-items: center;
-	padding: 40px;
 	border-radius: 10px 10px 0 0;
 	margin-bottom: 0;
 
@@ -91,18 +89,17 @@ nav ul li a:hover {
 .contenedor-area {
 	text-align: center;
 	background: #F3F5FA;
-	height: 700px;
-	width: 1200px;
+	align-items: center;
+	height: 90%;
+	width: 100%;
 	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
 	border-radius: 10px;
 }
 .contenedor-area.create-flowy{
 	padding: 40px;
-	width: 50px;
 }
 .lista {
 	padding: 40px;
-	width: 100%;
 }
 
 .blockelem:first-child {
@@ -110,7 +107,7 @@ nav ul li a:hover {
 }
 .blockelem {
     padding-top: 10px;
-    width: 318px;
+    width: 300px;
     border: 1px solid transparent;
     transition-property: box-shadow, height;
     transition-duration: .2s;
@@ -125,14 +122,16 @@ nav ul li a:hover {
     background-color: #FFF;
     cursor: pointer;
 }
-.grabme, .blockico {
+.grabme .blockico {
     display: inline-block;
 }
 .grabme {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: -14px;
-    width: 15px;
+    width: 10px;
+    margin: 5px;
+    align-items: center;
 }
 .block {
     background-color: #FFF;
@@ -198,13 +197,24 @@ nav ul li a:hover {
     opacity: .5;
 }
 #canvas {
+	align-items: center;
     position: absolute;
-    width: calc(100% - 361px);
-    height: calc(100% - 71px);
-    top: 71px;
-    left: 361px;
+    width:65%;
+    height:80%;
+    top:20%;
+    left: 33%;
     z-index: 0;
     overflow: auto;
+}
+.subheader{
+	height: 71px;
+    background-color:#ABCBF6;
+    border: 1px solid #E8E8EF;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    top: 1;
+
 }
 .itson {
     z-index: 2!important;
@@ -217,8 +227,8 @@ nav ul li a:hover {
 }
 
 .icon{
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	align: left;
 } 
 .iconbutton{
@@ -232,6 +242,9 @@ nav ul li a:hover {
 	width: 50px;
 	height: 50px;
 	cursor: selection;
+}
+.bloque{
+	display: inline-block;
 }
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -268,10 +281,9 @@ nav ul li a:hover {
 /* ? ------- */
 
 
-
 .lista .label {
 	text-transform: uppercase;
-	font-weight: 600;
+	font-weight: 600px;
 	margin-bottom: 5px;
 	color: #5173CF;
 }
@@ -282,7 +294,6 @@ nav ul li a:hover {
 }
 
 .lista .imagen img {
-	width: 70px;
-	border-radius: 100%;
-	margin-right: 40px;
+	border-radius: 10px;
+	margin-right: 10px;
 }

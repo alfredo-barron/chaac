@@ -25,20 +25,28 @@
 
 	<section>
 		<div class="contenedor ">
+			<div class="subheader">
+			<h1 style="color: white;">Components</h1>
+				<nav>
+					<ul>
+						<li> <button class="iconbutton" id="removeblock"> <img class='icon' src='img/icons/eliminar.png'> </button> </li>
+					</ul>
+				</nav>
+			</div>
 			<div class="contenedor-lista" id="blocklist" >
-				<h1 style="color: white;">Components</h1>
 				<div class="lista" id="lista">
 					<!-- Persona #1 -->
 					<div class="blockelem create-flowy noselect">
 						<input type="hidden" name='blockelemtype' class="blockelemtype" value="1">
-                		<div class="grabme">
+                		<div class="grabme"> 
+                			<span></span>
 							<img class="blockicon icon" src="img/icons/suelto.png">
 						</div>
 						<div class="blockin">
-							<div class="blocktext">
+							<div class="blocktext blockyright">
 								<h2 class="no-seleccionable">Cenotes</h2>
-                        		<spam class="blocktitle no-seleccionable">new Cenote</spam>
-                        		<p class="blockdesc no-seleccionable">this blocke is to add a new container pool</p>
+                        		<spam class="blocktitle">new Cenote</spam>
+                        		<p class="blockdesc">this blocke is to add a new container pool</p>
                         	</div>
                 		</div>
 					</div>
@@ -51,8 +59,8 @@
 						</div>
 						<div class="blockin">
 								<h2 class="no-seleccionable">Bins</h2>
-                        		<spam class="blocktitle no-seleccionable">new Bin</spam>
-                        		<p class="blockdesc no-seleccionable">this blocke is to add a new container</p>
+                        		<spam class="blocktitle">new Bin</spam>
+                        		<p class="blockdesc">this blocke is to add a new container</p>
                 		</div>
 					</div>
 
@@ -63,7 +71,7 @@
 							<img class="icon" src="img/icons/suelto.png">
 						</div>
 						<div class="blockin">
-								<h2 class="no-seleccionable">Balls</h2>
+								<h2 class="noselect">Balls</h2>
                         		<spam class="blocktitle no-seleccionable">new Ball</spam>
                         		<p class="blockdesc no-seleccionable">this blocke is to add a new ball</p>
                 		</div>
@@ -73,13 +81,8 @@
 			</div>
 		</div>
 		<div class="contenedor">
-			<div class="contenedor-area "  >
-				<h1 style="color: white;">work area</h1>
-				<nav>
-					<ul>
-						<li><div class="iconbutton" id="removeblock"><span></span><img class='icon' src='img/icons/eliminar.png'></div></li>
-					</ul>
-				</nav>
+			<div class="subheader"><h1 style="color: white;">work area</h1></div>
+			<div class="contenedor-area"  >
 				<div class="lista" id="canvas">
 				</div>
 			</div>
