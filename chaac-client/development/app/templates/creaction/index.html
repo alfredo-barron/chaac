@@ -22,10 +22,10 @@
 		</nav><!-- / nav -->
 	</header>
 	<section>
-		<div class="contenedor ">
+		<div class="contenedor" style="width:30%;">
 			<div class="subheader">
 			<h1 style="color: white;">Components</h1>
-				<nav>
+				<nav style="margin-left: 10px;">
 					<ul>
 						<li> <button class="iconbutton" id="removeblock"> <img class='icon' src='img/icons/eliminar.png'> </button> </li>
 					</ul>
@@ -33,9 +33,9 @@
 			</div>
 			<div class="contenedor-lista" id="blocklist" >
 				<div class="lista" id="lista">
-					<!-- Persona #1 -->
-					<div class="blockelem create-flowy noselect">
-						<input type="hidden" name='blockelemtype' class="blockelemtype" value="1" id="Schema">
+					<!-- item #1 -->
+					<div class="blockelem-2 create-flowy noselect" id="Schema">
+						<input type="hidden" name='blockelemtype' class="blockelemtype" value="1" >
                 		<div class="grabme"> 
                 			<span></span>
 							<img class="blockicon icon" src="img/icons/suelto.png">
@@ -49,8 +49,8 @@
                 		</div>
 					</div>
 				
-					<!-- Persona #2 -->
-					<div class="blockelem create-flowy noselect">
+					<!-- item #2 -->
+					<div class="blockelem-2 create-flowy noselect" id="Cenote">
 						<input type="hidden" name='blockelemtype' class="blockelemtype" value="2">
                 		<div class="grabme"> 
                 			<span></span>
@@ -65,8 +65,8 @@
                 		</div>
 					</div>
 
-					<!-- Persona #3 -->
-					<div class="blockelem create-flowy noselect">
+					<!-- item #3 -->
+					<div class="blockelem-2  noselect" id="Bin">
 						<input type="hidden" name='blockelemtype' class="blockelemtype" value="3">
                 		<div class="grabme"> 
                 			<span></span>
@@ -84,8 +84,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="contenedor">
-			<div class="subheader"><h1 style="color: white;">work area</h1></div>
+		<div class="contenedor" style="width: 70%;">
+			<div class="subheader" style="width:auto"><h1 style="color: white;">work area</h1></div>
 			<div class="contenedor-area"  >
 				<div class="lista" id="canvas">
 				</div>

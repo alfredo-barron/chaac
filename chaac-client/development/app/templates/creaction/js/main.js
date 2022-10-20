@@ -19,14 +19,15 @@ document.addEventListener("DOMContentLoaded", function(){
         	grab.parentNode.removeChild(grab);
         	var blockin = drag.querySelector(".blockin");
         	blockin.parentNode.removeChild(blockin);
+        	drag.classList.remove("blockelem-2");
+        	drag.classList.add("blockelem");
         	if(first){
         		if(drag.querySelector('.blockelemtype').value=="1"){
         			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Schema</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
-        		
-        		}
-        		if(drag.querySelector('.blockelemtype').value=="2"){
+        		}else if(drag.querySelector('.blockelemtype').value=="2"){
         			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
         		}
+        		document.getElementById("Bin").classList.add("create-flowy");
         		return true;
         	}else{
         		if(drag.querySelector('.blockelemtype').value=="2"){
@@ -49,7 +50,9 @@ document.addEventListener("DOMContentLoaded", function(){
         			return false;
         		}else if(drag.querySelector('.blockelemtype').value=="1"&&parent.querySelector('.blockelemtype').value=="2"){
         			return false;
-        		}else return true;
+        		}else{ 
+        			return true;
+        		}
         	}
         	
     	}
@@ -72,5 +75,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 		document.getElementById("removeblock").addEventListener("click", function(){
  			flowy.deleteBlocks();
-}		);
+ 			document.getElementById("Bin").classList.remove("create-flowy");
+
+		});
 });
