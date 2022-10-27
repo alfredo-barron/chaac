@@ -1,0 +1,129 @@
+version: '3'
+
+services:
+  cenote-1:
+    container_name: cenote-1
+    image: alfredobarron/data_pool:2.3
+    restart: always
+    networks:
+      - server-1
+      - server-2
+      - server-3
+      - chaac
+    environment:
+      - NODE_ID=c1
+      - HOST_ID=server-1
+      - CONTAINER_HOST=cenote-1
+      - DISTRIBUITOR=ROUND_ROBIN
+      - LOG_PATH=logs
+      - CHAAC=chaac
+      - ACCESS_TOKEN=733d6e39a6ff8e0978924d64a7525e99
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/abarron/prototipo/demo/logs:/app/logs:rw
+
+  bin-1:
+    container_name: bin-1
+    image: alfredobarron/data_container:2.3
+    restart: always
+    networks:
+      - server-2
+      - chaac
+      - cloud
+    environment:
+      - NODE_ID=b1
+      - HOST_ID=server-2
+      - CONTAINER_HOST=bin-1
+      - BIN_LEVELS=2
+      - MEM_DIR=/mnt/ramdisk
+      - MEM_LEVEL=MEM
+      - MEM_SIZE=2GB
+      - DISK_DIR=/mnt/disk
+      - DISK_LEVEL=DISK
+      - DISK_SIZE=40GB
+      - CACHE_SIZE=40
+      - CACHE_POLICY=LFU
+      - CENOTE=cenote-1
+      - CHAAC=chaac
+      - LOG_PATH=logs
+      - CLOUD_ID = SKYCDS
+      - CLOUD=127.0.0.1:56200 # IP de metadata de Skycds
+    ipc: host
+    tmpfs: /mnt/ramdisk
+    volumes:
+      - /home/abarron/prototipo/demo/logs:/app/logs:rw
+    depends_on:
+      - cenote-1
+
+  bin-2:
+    container_name: bin-2
+    image: alfredobarron/data_container:2.3
+    restart: always
+    networks:
+      - server-3
+      - chaac
+      - cloud
+    environment:
+      - NODE_ID=b2
+      - HOST_ID=server-3
+      - CONTAINER_HOST=bin-2
+      - CACHE_SIZE=40
+      - CACHE_POLICY=LFU
+      - BIN_LEVELS=2
+      - MEM_DIR=/mnt/ramdisk
+      - MEM_LEVEL=MEM
+      - MEM_SIZE=2GB
+      - DISK_DIR=/mnt/disk
+      - DISK_LEVEL=DISK
+      - DISK_SIZE=40GB
+      - CENOTE=cenote-1
+      - CHAAC=chaac
+      - LOG_PATH=logs
+      - CLOUD_ID = SKYCDS 
+      - CLOUD=127.0.0.1:56200 # IP de metadata de Skycds
+    ipc: host
+    tmpfs: /mnt/ramdisk
+    volumes:
+      - /home/abarron/prototipo/demo/logs:/app/logs:rw
+    depends_on:
+      - cenote-1
+
+  data-client-1:
+    container_name: client-py-1
+    image: alfredobarron/data_client_py:1
+    restart: always
+    tty: true
+    networks:
+      - server-2
+    environment:
+      - CLIENT_ID=client-1-py
+      - HOST_ID=server-2
+    ipc: host
+    volumes:
+      - /home/abarron/prototipo/demo/app1:/app:rw
+    
+  data-client-2:
+    container_name: client-py-2
+    image: alfredobarron/data_client_py:1
+    restart: always
+    tty: true
+    networks:
+      - server-3
+    environment:
+      - CLIENT_ID=client-2-py
+      - HOST_ID=server-3
+    ipc: host
+    volumes:
+      - /home/abarron/prototipo/demo/app2:/app:rw
+
+networks:
+  # Network overlay
+  chaac:
+    attachable: true
+  server-1:
+    attachable: true
+  server-2:
+    attachable: true
+  server-3:
+    attachable: true

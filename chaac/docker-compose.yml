@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  chaac:
+    container_name: chaac
+    image: alfredobarron/chaac:1
+    restart: always
+    networks:
+      - chaac
+    environment:
+      - NODE_ID=chaac
+      - CHAAC=chaac
+      - PUBLIC_PORT=80
+      - DB_CHAAC=chaac_db
+      - LAUNCHER_CHAAC=launcher:5000
+      - LOG_PATH=/app/logs
+    ports:
+      - 8080:80
+    volumes:
+      - $(pwd)/logs:/app/logs:rw
+
+  chaac_db:
+    container_name: chaac_db
+    image: influxdb:1.8.4-alpine
+    restart: always
+    networks:
+      - chaac
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=root 
+      - DOCKER_INFLUXDB_INIT_PASSWORD=root
+      - DOCKER_INFLUXDB_INIT_ORG=my-org
+      - DOCKER_INFLUXDB_INIT_BUCKET=my-bucket
+    ports:
+      - 8086:8086
+    volumes:
+      - $(pwd)/chaac_db:/var/lib/influxdb

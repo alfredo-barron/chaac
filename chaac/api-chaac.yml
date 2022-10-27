@@ -1,11 +1,11 @@
 openapi: 3.0.0
 servers:
-  - description: Middleware API
+  - description: Chaac API
     url: http://localhost/api/v1
 info:
-  description: This is API of component Middleware
+  description: This is API of component Chaac
   version: "1.0.0"
-  title: Middleware API
+  title: Chaac API
   contact:
     email: alfredo.barron@cinvestav.mx
 tags:
@@ -208,19 +208,19 @@ paths:
                   $ref: '#/components/schemas/Zone'
         '400':
           description: Bad request
-  /pools:
+  /cenotes:
     post:
       tags:
         - Creation
-      summary: Add a new pool
-      operationId: createPool
+      summary: Add a new cenote
+      operationId: createCenote
       requestBody:
-        description: 'Pool object that needs to be added'
+        description: 'Cenote object that needs to be added'
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pool'
+              $ref: '#/components/schemas/Cenote'
       responses:
         '201':
           description: Created
@@ -229,7 +229,7 @@ paths:
     get:
       tags: 
         - Visualization
-      summary: Get all pools
+      summary: Get all cenotes
       responses:
         '200': 
           description: OK
@@ -238,62 +238,62 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pool'
+                  $ref: '#/components/schemas/Cenote'
         '400':
           description: Bad request
-  /pools/{id}:
+  /cenotes/{id}:
     get:
       tags:
         - Visualization
-      summary: Get a pool
+      summary: Get a cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pool-0
+            example: cenote1
       responses:
         '200': 
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pool'
+                $ref: '#/components/schemas/Cenote'
         '400':
           description: Bad request
     delete:
       tags:
         - Creation
-      summary: Delete a pool
-      operationId: deletePoolById
+      summary: Delete a cenote
+      operationId: deleteCenoteById
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pool-0
+            example: cenote1
       responses:
         '404': 
           description: Not found
         '400':
           description: Bad request
-  /pools/{id}/create:
+  /cenotes/{id}/create:
     get:
       tags:
         - Creation
-      summary: Create a virtual container as pool
+      summary: Create a virtual container as cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pcd1
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -304,22 +304,22 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Create pool
+                    example: Create cenote
         '400':
           description: Bad request
-  /pools/{id}/start:
+  /cenotes/{id}/start:
     get:
       tags:
         - Creation
-      summary: Start a virtual container as pool
+      summary: Start a virtual container as cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pcd1
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -330,22 +330,22 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Start pool
+                    example: Start cenote
         '400':
           description: Bad request
-  /pools/{id}/restart:
+  /cenotes/{id}/restart:
     get:
       tags:
         - Creation
-      summary: Restart a virtual container as pool
+      summary: Restart a virtual container as cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pool-0
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -356,22 +356,22 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Restart pool
+                    example: Restart cenote
         '400':
           description: Bad request
-  /pools/{id}/stop:
+  /cenotes/{id}/stop:
     get:
       tags:
         - Creation
-      summary: Stop a virtual container as pool
+      summary: Stop a virtual container as cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pool-0
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -382,22 +382,22 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Stop pool
+                    example: Stop cenote
         '400':
           description: Bad request
-  /pools/{id}/remove:
+  /cenotes/{id}/remove:
     get:
       tags:
         - Creation
-      summary: Remove a virtual container as pool
+      summary: Remove a virtual container as cenote
       parameters:
         - name: id
           in: path
-          description: DataPool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pool-0
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -408,22 +408,22 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Remove pool
+                    example: Remove cenote
         '400':
           description: Bad request
-  /pools/{poolId}/bins:
+  /cenotes/{cenoteId}/bins:
     get:
       tags: 
         - Visualization
-      summary: Get all bins into a pool
+      summary: Get all bins into a cenote
       parameters:
-        - name: poolId
+        - name: cenoteId
           in: path
-          description: Pool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pcd1
+            example: cenote1
       responses:
         '200': 
           description: OK
@@ -435,26 +435,26 @@ paths:
                   $ref: '#/components/schemas/Bin'
         '400':
           description: Bad request
-  /pools/{poolId}/bins/{binId}:
+  /cenotes/{cenoteId}/bins/{binId}:
     get:
       tags:
         - Visualization
-      summary: Get a bin into a pool
+      summary: Get a bin into a cenote
       parameters:
-        - name: poolId
+        - name: cenoteId
           in: path
-          description: Pool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pcd1
+            example: cenote1
         - name: binId
           in: path
           description: Bin ID
           required: true
           schema:
             type: string
-            example: cd1   
+            example: bin1   
       responses:
         '200': 
           description: OK
@@ -464,26 +464,26 @@ paths:
                 $ref: '#/components/schemas/Bin'
         '400':
           description: Bad request
-  /pools/{poolId}/bins/{binId}/balls:
+  /cenotes/{cenoteId}/bins/{binId}/balls:
     get:
       tags:
         - Visualization
-      summary: Get all balls into bin from a pool
+      summary: Get all balls into bin from a cenote
       parameters:
-        - name: poolId
+        - name: cenoteId
           in: path
-          description: Pool ID
+          description: Cenote ID
           required: true
           schema:
             type: string
-            example: pcd1
+            example: cenote1
         - name: binId
           in: path
           description: Bin ID
           required: true
           schema:
             type: string
-            example: cd1   
+            example: bin1   
       responses:
         '200': 
           description: OK
@@ -882,18 +882,18 @@ components:
         - id
         - image
         - network
-    Pool:
+    Cenote:
       type: object
       properties:
         id:
           type: string
-          example: pcd1
+          example: cenote1
         name:
           type: string
-          example: pool-1
+          example: cenote-1
         image:
           type: string
-          example: alfredobarron/data_pool:2.4
+          example: alfredobarron/chaac-cenote:1
         network:
           type: string
           example: my-net
@@ -926,25 +926,25 @@ components:
         - network
         - name
         - port
-        - lb
+        - distribuitor
     Bin:
       type: object
       properties:
         id:
           type: string
-          example: cd1
+          example: bin1
         name:
           type: string
-          example: bin1
+          example: bin-1
         hostId:
           type: string
-          example: host01
-        poolId:
+          example: host-1
+        cenoteId:
           type: string
-          example: pool-0
+          example: cenote1
         image:
           type: string
-          example: alfredobarron/data_container:2
+          example: alfredobarron/chacc-bin:1
         network:
           type: string
           example: my-net
@@ -982,7 +982,7 @@ components:
         - id
         - name
         - hostId
-        - poolId
+        - cenoteId
         - image
         - network
         - type
