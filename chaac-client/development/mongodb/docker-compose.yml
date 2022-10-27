@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  mongodb_contenedor:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=chaacDB
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - 27017:27017
+  services:
+    chaac:
+      container_name: chaac
+      image: alfredobarron/chaac:1
