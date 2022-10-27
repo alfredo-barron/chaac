@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  chaac_launcher:
+    container_name: chaac_launcher
+    image: alfredobarron/chaac_launcher:1
+    restart: always
+    networks:
+      - chaac
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+
+  chaac_monitor:
+    container_name: chaac_monitor
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: always
+    networks:
+      - chaac
+    ports:
+      - 8081:8080
+    volumes:
+      - /:/rootfs:ro 
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+
+networks:
+  # Network overlay
+  chaac:
+    attachable: true

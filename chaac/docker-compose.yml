@@ -10,9 +10,9 @@ services:
     environment:
       - NODE_ID=chaac
       - CHAAC=chaac
+      - CHAAC_DB=chaac_db
+      - CHAAC_LAUNCHER=chaac_launcher
       - PUBLIC_PORT=80
-      - DB_CHAAC=chaac_db
-      - LAUNCHER_CHAAC=launcher:5000
       - LOG_PATH=/app/logs
     ports:
       - 8080:80
@@ -30,7 +30,10 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=root
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=my-bucket
-    ports:
-      - 8086:8086
     volumes:
       - $(pwd)/chaac_db:/var/lib/influxdb
+
+networks:
+  # Network overlay
+  chaac:
+    attachable: true
