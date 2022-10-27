@@ -24,7 +24,7 @@ nodes = {
 @app.route('/')
 @app.route('/index.html')
 def main():
-    return render_template('index.html')
+    return render_template('creation/index.html')
 
 
 @app.route('/health')

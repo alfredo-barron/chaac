@@ -23,18 +23,18 @@ document.addEventListener("DOMContentLoaded", function(){
         	drag.classList.add("blockelem");
         	if(first){
         		if(drag.querySelector('.blockelemtype').value=="1"){
-        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Schema</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
+        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Schema</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><a href=# class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></a></li></ul> </div>";
         		}else if(drag.querySelector('.blockelemtype').value=="2"){
-        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
+        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
         		}
         		document.getElementById("Bin").classList.add("create-flowy");
         		return true;
         	}else{
         		if(drag.querySelector('.blockelemtype').value=="2"){
-        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
+        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Cenote</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
-        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Bin</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
+        			drag.innerHTML+="<div class='blockyleft noselect'> <div><h2 class='noselect' >Bin</h2></div> <nav><ul><li><img class='icon' src='img/icons/suelto.png'> </li><li><button class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></button></li></ul> </div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="1"&&parent.querySelector('.blockelemtype').value=="1"){
         			return false;

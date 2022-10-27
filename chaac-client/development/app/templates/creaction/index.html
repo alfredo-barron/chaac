@@ -7,6 +7,7 @@
 	<title>chaac_client</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="css/modalStyle.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.css"> 
 </head>
 <body>
@@ -91,8 +92,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal-container" id="edit-pool">
+		<div class="modal modal-close">
+			<p class="close">X</p>
+			<form>
+				<label for="nombre-pool">nombre:</label>
+				<input type="text" name="nombre" id="nombre-pool">
+			</form>
+		</div>
+	</div>
 	</section>
 	<script src="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/modal.js"></script>
 </body>
 </html>
