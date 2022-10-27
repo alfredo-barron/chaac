@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  chaac_launcher:
-    container_name: chaac_launcher
+  chaac-launcher:
+    container_name: chaac-launcher
     image: alfredobarron/chaac_launcher:1
     restart: always
     networks:
@@ -13,8 +13,8 @@ services:
     devices:
       - "/dev/kmsg"
 
-  chaac_monitor:
-    container_name: chaac_monitor
+  chaac-monitor:
+    container_name: chaac-monitor
     image: gcr.io/cadvisor/cadvisor:latest
     restart: always
     networks:
