@@ -1,3 +1,0 @@
-1666912247504 chaac 328 INFO [main] Web Server Chaac starting @ 0.0.0.0/0.0.0.0:8080
-1666912247556 chaac 380 INFO [main] Web Server Chaac started @ 0.0.0.0/0.0.0.0:8080
-1666912247559 chaac 383 INFO [main] http://chaac:8080/

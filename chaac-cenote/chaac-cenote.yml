@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  chaac-cenote:
+    container_name: chaac-cenote
+    image: alfredobarron/chaac_cenote:1
+    restart: always
+    networks:
+      - server-2
+    environment:
+      - CONTAINER_HOST=chaac-cenote
+      - HOST_ID=server-2
+      - NODE_ID=cenote1
+      - DISTRIBUITOR=ROUND_ROBIN
+      # RANDOM, SORT_UF, TWO_CHOICES, ROUND_ROBIN_WEIGHT
+      - LOG_PATH=logs
+      - CHAAC=chaac
+    ports:
+      - 8081:8080
+    volumes:
+      - /home/abarron/chaac/chaac/logs:/app/logs:rw
+
+networks:
+  # Network overlay
+  server-2:
+    attachable: true

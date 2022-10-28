@@ -16,7 +16,7 @@ _Chaac es una herramienta para construir esquemas de distribución de datos sens
 
 ## Componentes
 
-Chaac tiene 5 módulos que lo complementan y son los siguientes:
+Chaac se complementa con son los siguientes módulos:
 
 - Chaac Context Awaraness
 - Chaac Client
@@ -65,43 +65,33 @@ Chaac client
 
 ## Chaac Cenote
 
-DataPool
+Es una piscina de contenedores de datos. Este componente contiene los mapas de recursos y los mapas de datos-recursos que son los esquemas de distribución de datos.
 
-DataSchemeDistribution
+Para iniciar un cenote de manera independiente se hace uso del siguiente comando:
 
-Map of Balls
+```
+docker compose -f chaac-cenote.yml up -d
+```
 
-Map of Bins
-http://127.0.0.1:8080/api/v1/containers/
-
-Allocation
-http://127.0.0.1:8080/allocation
-
-Location
+```
+# Apagar todo
+docker compose -f chaac-cenote.yml down
+```
 
 ## Chaac Bin
 
-DataFlow Read
+Es una unidad de almacenamiento temporal, que solo realiza operaciones de escritura y lectura de datos.
 
-Local Cache Hit
-Remote Cache Hit
-Cache Miss
-Cache Skip
+Para iniciar un contenedor de datos de manera independiente se hace uso del siguiente comando:
 
-DataFlow Write
+```
+docker compose -f chaac-bin.yml up -d
+```
 
-
-            Container FileSystem     |       Host FileSystem
-
-Image FS    /     read-write  ->  (Overlay-    -> /var/lib/docker/overlay/1/x
-            /...              ->    drive)     -> /var/lib/docker/overlay/1/y
-
-In-Memory   /tmp  read-write  ->   tmpfs
-
-Bind-Mount  /etc/default.conf  read            -> /home/currentuser/example.conf
-
-Volume      /var/logs          read-write      -> /var/lib/docker/volumes/_data
-            /data              read-write      -> /home/currentuser/data
+```
+# Apagar todo
+docker compose -f chaac-bin.yml down
+```
 
 
 ## Chaac Client Library
