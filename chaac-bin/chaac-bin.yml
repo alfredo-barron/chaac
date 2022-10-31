@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  chaac-bin:
+    container_name: chaac-bin
+    image: alfredobarron/chaac_bin:1
+    restart: always
+    networks:
+      - server-2
+    environment:
+      - CONTAINER_HOST=chaac-bin
+      - HOST_ID=server-2
+      - NODE_ID=bin1
+      - BIN_LEVELS=2
+      - MEM_DIR=/mnt/ramdisk
+      - MEM_LEVEL=MEM
+      - MEM_SIZE=2GB
+      - DISK_DIR=/mnt/disk
+      - DISK_LEVEL=DISK
+      - DISK_SIZE=40GB
+      - CACHE_SIZE=40
+      - CACHE_POLICY=LFU
+      - CENOTE=chaac-cenote
+      - CHAAC=chaac
+      - LOG_PATH=logs
+      - CLOUD_ID = SKYCDS
+      - CLOUD=127.0.0.1:56200 # IP de metadata de Skycds
+    ipc: host
+    tmpfs: /mnt/ramdisk
+    ports:
+      - 8081:8080
+    volumes:
+      - /home/abarron/chaac/chaac/logs:/app/logs:rw
+
+networks:
+  # Network overlay
+  server-2:
+    attachable: true

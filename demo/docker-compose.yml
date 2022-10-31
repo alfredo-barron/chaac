@@ -17,7 +17,6 @@ services:
       - DISTRIBUITOR=ROUND_ROBIN
       - LOG_PATH=logs
       - CHAAC=chaac
-      - ACCESS_TOKEN=733d6e39a6ff8e0978924d64a7525e99
     ports:
       - "8080:8080"
     volumes:
