@@ -7,7 +7,6 @@
 	<title>chaac_client</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/estilos.css">
-	<link rel="stylesheet" href="css/modalStyle.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.css"> 
 </head>
 <body>
@@ -29,6 +28,7 @@
 				<nav style="margin-left: 10px;">
 					<ul>
 						<li> <button class="iconbutton" id="removeblock"> <img class='icon' src='img/icons/eliminar.png'> </button> </li>
+						<li> <button class="iconbutton" id="crear"> <img class='icon' src='img/icons/editar.png'> </button> </li>
 					</ul>
 				</nav>
 			</div>
@@ -51,7 +51,7 @@
 					</div>
 				
 					<!-- item #2 -->
-					<div class="blockelem-2 create-flowy noselect" id="Cenote">
+					<div class="blockelem-2 noselect" id="Cenote">
 						<input type="hidden" name='blockelemtype' class="blockelemtype" value="2">
                 		<div class="grabme"> 
                 			<span></span>
@@ -85,6 +85,22 @@
 				</div>
 			</div>
 		</div>
+		<div id="propwrap">
+			<div id="properties">
+				<div id="close">
+					<img src="img/icons/close.svg">
+				</div>
+				<div id="form">
+					<div id="formulario"></div>
+				</div>
+				<button id="guardar" class="iconbutton" style="margin: 5px;"><nav > <ul style="align-items: center; text-align: center; margin: 2px;">
+					<li><h1>Save</h1></li> 
+					<li><img src="img/icons/editar.png" class="icon"></li>
+					</ul>
+					</nav>
+				</button>
+			</div>
+		</div>
 		<div class="contenedor" style="width: 70%;">
 			<div class="subheader" style="width:auto"><h1 style="color: white;">work area</h1></div>
 			<div class="contenedor-area"  >
@@ -92,18 +108,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal-container" id="edit-pool">
-		<div class="modal modal-close">
-			<p class="close">X</p>
-			<form>
-				<label for="nombre-pool">nombre:</label>
-				<input type="text" name="nombre" id="nombre-pool">
-			</form>
-		</div>
-	</div>
 	</section>
 	<script src="https://cdn.jsdelivr.net/gh/alyssaxuu/flowy/flowy.min.js"></script>
 	<script src="js/main.js"></script>
-	<script src="js/modal.js"></script>
 </body>
 </html>

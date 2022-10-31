@@ -10,7 +10,13 @@ services:
       - ./mongo-volume:/data/db
     ports:
       - 27017:27017
-  services:
-    chaac:
-      container_name: chaac
-      image: alfredobarron/chaac:1
+  chaac_client:
+    container_name: chaac_client
+    image: fbalderasd/python:3.7-sb 
+    volumes:
+      - ./app:/home/:rw \
+    ports:
+      - 45000:45000
+    restart: always
+    networks:
+      - chaac
