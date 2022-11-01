@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  chaac_client:
+    container_name: chaac_client
+    image: fbalderasd/python:3.7-sb
+    restart: always 
+    networks:
+      - chaac
+    ports:
+      - 45000:45000
+    volumes:
+      - ./app:/home/:rw \
+    entrypoint: python run.py 45000
+
+  mongodb:
+    image: mongo
+    networks:
+      - chaac
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - 27017:27017
+      - 9229:9229
+    volumes:
+      - db-data:/data/db
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+   
+  mongo-express:
+    image: mongo-express
+    restart: always
+    networks:
+      - chaac
+    ports:
+      - 8111:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+    depends_on:
+      - mongodb
+
+volumes:
+  db-data:
+
+networks:
+  # Network overlay
+  chaac:
+    attachable: true

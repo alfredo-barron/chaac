@@ -24,7 +24,7 @@ nodes = {
 @app.route('/')
 @app.route('/index.html')
 def main():
-    return render_template('creation/index.html')
+    return render_template('index.html')
 
 
 @app.route('/health')
@@ -130,7 +130,7 @@ def getContainers(idpool):
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
 
-@app.route('/middleware/pools/<int:idPool/bins',methods=['POST'])
+@app.route('/middleware/pools/<int:idPool>/bins',methods=['POST'])
 def createContainers(json):
     try:
         url='http://middleware:45000/api/v1/bins'
@@ -145,7 +145,7 @@ def createContainers(json):
 
 
 @app.route('/middleware/pools/<int:idpool>/containers/<int:idBin>',methods=['DELETE'])
-def getContainers(idBin):
+def deleteContainer(idBin):
     try:
         url='http://middleware:45000/api/v1/bins/'+idBin
         res=requests.delete(url)

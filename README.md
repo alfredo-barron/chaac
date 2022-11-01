@@ -61,7 +61,16 @@ docker compose -f chaac-context.yml down
 
 ## Chaac Client
 
-Chaac client
+Para iniciar el cliente de Chaac se hace uso del siguiente comando:
+
+```
+docker compose -f chaac-client.yml up -d
+```
+
+```
+# Apagar todo
+docker compose -f chaac-client.yml down
+```
 
 ## Chaac Cenote
 
