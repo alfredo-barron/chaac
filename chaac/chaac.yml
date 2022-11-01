@@ -34,7 +34,10 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=my-bucket
     volumes:
-      - /home/abarron/chaac/chaac/chaac_db:/var/lib/influxdb
+      - chaac_db:/var/lib/influxdb
+
+volumes:
+  chaac_db:
 
 networks:
   # Network overlay
