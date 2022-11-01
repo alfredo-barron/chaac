@@ -1,0 +1,93 @@
+{
+	"userID": "1",
+	"name": "alejandro de la rosa",
+	"user_name":"alejandro_zequeira",
+	"password":"alejandro123",
+	"schema":[{
+		"schema_id":"schema-01",
+		"nombre_schema":"schema-01",
+		"estructura":[{
+			"html": "",
+			"blockarr": [],
+			"blocks": [{
+					"id": 1,
+					"parent": 0,
+					"data": [{
+						"name": "blockid",
+						"value": "1"
+					}],
+					"attr": [{
+						"id": "block-id",
+						"class": "block-class"
+					}]
+				}]
+		}],
+		"data":[{
+			"cenotes":[{
+				"id": "cenote1",
+  				"name": "cenote-1",
+  				"image": "alfredobarron/chaac-cenote:1",
+  				"network": "my-net",
+  				"publicPort": 8081,
+  				"distribuitor": "ROUND_ROBIN",
+  				"bins":[{
+  					 "id": "bin1",
+  					 "name": "bin-1",
+  					 "hostId": "host-1",
+  					 "cenoteId": "cenote1",
+  					 "image": "alfredobarron/chacc-bin:1",
+  					 "network": "my-net",
+  					 "cacheSize": 20,
+  					 "cachePolicy": "LFU",
+  					 "levels": 1,
+  					 "memory": "2GB",
+  					 "capacity": "40GB"
+  				},{
+  					 "id": "bin2",
+  					 "name": "bin-2",
+  					 "hostId": "host-2",
+  					 "cenoteId": "cenote1",
+  					 "image": "alfredobarron/chacc-bin:1",
+  					 "network": "my-net",
+  					 "cacheSize": 20,
+  					 "cachePolicy": "LFU",
+  					 "levels": 1,
+  					 "memory": "2GB",
+  					 "capacity": "40GB"
+  				}]
+			},{
+				"cenote_id": "cenote2",
+  				"cenote_name": "cenote-2",
+  				"image": "alfredobarron/chaac-cenote:1",
+  				"network": "my-net",
+  				"publicPort": 8081,
+  				"distribuitor": "ROUND_ROBIN",
+  				"bins":[{
+  					 "id": "bin1",
+  					 "name": "bin-1",
+  					 "hostId": "host-1",
+  					 "cenoteId": "cenote2",
+  					 "image": "alfredobarron/chacc-bin:1",
+  					 "network": "my-net",
+  					 "cacheSize": 20,
+  					 "cachePolicy": "LFU",
+  					 "levels": 1,
+  					 "memory": "2GB",
+  					 "capacity": "40GB"
+  				},{
+  					 "id": "bin2",
+  					 "name": "bin-2",
+  					 "hostId": "host-2",
+  					 "cenoteId": "cenote2",
+  					 "image": "alfredobarron/chacc-bin:1",
+  					 "network": "my-net",
+  					 "cacheSize": 20,
+  					 "cachePolicy": "LFU",
+  					 "levels": 1,
+  					 "memory": "2GB",
+  					 "capacity": "40GB"
+  				}]
+			}]
+		}]
+	}]
+}

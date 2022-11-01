@@ -4,6 +4,27 @@ document.addEventListener("DOMContentLoaded", function(){
 	var rightcard = false;
     var tempblock;
     var tempblock2;
+	var cont=0;
+	let bin={
+		"id": "bin1",
+		  "name": "bin-1",
+		  "hostId": "host-1",
+		  "cenoteId": "cenote1",
+		  "image": "alfredobarron/chacc-bin:1",
+		  "network": "my-net",
+		  "cacheSize": 20,
+		  "cachePolicy": "LFU",
+		  "levels": 1,
+		  "memory": "2GB",
+		  "capacity": "40GB"
+};
+	var cenote=[];
+	let newCenote=[];
+	let schema={
+		"schema_id":"schema-01",
+		"name_schema":"schema-01",
+		"cenotes": [], 
+	};
 // Initialize Flowy
 	flowy(document.getElementById("canvas"), onGrab, onRelease,onSnapping,spacing_x,spacing_y);
 		function addEventListenerMulti(type, listener, capture, selector) {
@@ -14,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function(){
     	}
 //hange te content to elemt and drag and drop
     	function onSnapping(drag, first,parent){
-    		console.log(drag,"es el hijo","primero:",first);
-    		console.log(parent,"es el padre","primero:",first);
+    		//console.log(drag,"es el hijo","primero:",first);
+    		//console.log(parent,"es el padre","primero:",first);
     		var grab = drag.querySelector(".grabme");
         	grab.parentNode.removeChild(grab);
         	var blockin = drag.querySelector(".blockin");
@@ -27,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 					 	<div><h2 class='noselect' >Schema</h2>\
 						</div>\
+						<h2 class='blocktitle' id='schema_title'> name:"+schema.name_schema+"</h2>\
 					  	<nav>\
 					  		<ul>\
 					  		<li><img class='icon' src='img/icons/suelto.png'> </li>\
@@ -38,22 +60,30 @@ document.addEventListener("DOMContentLoaded", function(){
         		return true;
         	}else{
         		if(drag.querySelector('.blockelemtype').value=="2"){
+					schema.cenotes.push({"id": drag.querySelector('.blockid').value,
+					"name": "cenote-1",
+					"image": "alfredobarron/chaac-cenote:1",
+					"network": "my-net",
+					"publicPort": 8081,
+					"distribuitor": "ROUND_ROBIN",
+				  	"bins": []});
+					console.log(schema.cenotes);
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 					<div><h2 class='noselect' >Cenote</h2></div>\
+					<h2 class='blocktitle' id='cenote_title' >"+schema.cenotes.name+"</h2>\
 					<nav>\
 						<ul>\
 							<li><img class='icon' src='img/icons/suelto.png'> </li>\
-							<li><button class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></button></li>\
 							</ul>\
 					</div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
+					
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
 							<ul>\
 								<li><img class='icon' src='img/icons/suelto.png'> </li>\
-								<li><button class='iconbutton editar'> <img class='icon' src='img/icons/editar.png'></button></li>\
 							</ul>\
 						</div>";
         		}
@@ -72,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		}else if(drag.querySelector('.blockelemtype').value=="1"&&parent.querySelector('.blockelemtype').value=="2"){
         			return false;
         		}else{ 
+					cont++;
         			return true;
         		}
         	}
@@ -84,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 		//reorganize the elemets
 		function onRelease(){
-			console.log(tempblock2);
+			console.log("se solto el bloque",tempblock2);
 			if (tempblock2) {
             	tempblock2.classList.remove("blockdisabled");
         	}
@@ -123,6 +154,12 @@ document.addEventListener("DOMContentLoaded", function(){
             			editar.classList.add("itson");
 						form.innerHTML+="<div id='formulario'>\
 						<p class='header2'>Edit Schema</p>\
+						<form>\
+							<ul>\
+								<li>\
+    								<label for='schema_name'>schema name:</label>\
+    								<input type='text' id='schema_name' name='schema_name' value='"+schema.name_schema+"'>\
+  								</li>\
 						</div>";
 						isSchema=true;
 					}
@@ -245,6 +282,14 @@ document.addEventListener("DOMContentLoaded", function(){
 		});
 		document.getElementById("crear").addEventListener("click", function(){
 			var contenido=flowy.output();
+			console.log(contenido);
 			
+		});
+		document.getElementById("guardar").addEventListener("click", function(){
+			console.log("el dato selecionado es:",tempblock.id);
+			if(tempblock.id=="Schema"){
+				schema.name_schema=document.getElementById("schema_name").value;
+			}
+			console.log("el dato cambiado es:",schema.name_schema);
 		});
 });
