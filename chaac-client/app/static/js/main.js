@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function(){
 					"publicPort": 8081,
 					"distribuitor": "ROUND_ROBIN",
 				  	"bins": []});
+					
 					console.log(schema.cenotes);
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 					<div><h2 class='noselect' >Cenote</h2></div>\
