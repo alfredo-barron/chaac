@@ -1,7 +1,95 @@
 {% extends 'base.html' %} {% block title %} Selecting Synthetic Traces {% endblock %} {% block head %} {{ super() }}
 {% endblock %} {%
 block content %}
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<section>
+    <div class="contenedor" style="width:30%;">
+        <div class="subheader">
+        <h1 style="color: white;">Components</h1>
+            <nav style="margin-left: 10px;">
+                <ul>
+                    <li> <button class="iconbutton" id="removeblock"> <img class='icon' src="{{ url_for('static', filename='img/icons/eliminar.png') }}"> </button> </li>
+                    <li> <button class="iconbutton" id="crear"> <img class='icon' src="{{ url_for('static', filename='img/icons/editar.png') }}"> </button> </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="contenedor-lista" id="blocklist" >
+            <div class="lista" id="lista">
+                <!-- item #1 -->
+                <div class="blockelem-2 create-flowy noselect" id="Schema">
+                    <input type="hidden" name='blockelemtype' class="blockelemtype" value="1" >
+                    <div class="grabme"> 
+                        <span></span>
+                        <img class="blockicon icon" src="{{ url_for('static', filename='img/icons/suelto.png') }}">
+                    </div>
+                    <div class="blockin">
+                        <div class="blocktext blockyright">
+                            <h2 class="no-seleccionable">Schema</h2>
+                            <spam class="blocktitle">new Schema</spam>
+                            <p class="blockdesc">this block is used to create a scheme with several container pools, if you want to use it you must put this block first</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- item #2 -->
+                <div class="blockelem-2 noselect" id="Cenote">
+                    <input type="hidden" name='blockelemtype' class="blockelemtype" value="2">
+                    <div class="grabme"> 
+                        <span></span>
+                        <img class="blockicon icon" src="{{ url_for('static', filename='img/icons/suelto.png') }}">
+                    </div>
+                    <div class="blockin">
+                        <div class="blocktext blockyright">
+                            <h2 class="no-seleccionable">Cenotes</h2>
+                            <spam class="blocktitle">new Cenote</spam>
+                            <p class="blockdesc">this block allows you to attach several containers or bins, which will be your storage nodes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- item #3 -->
+                <div class="blockelem-2  noselect" id="Bin">
+                    <input type="hidden" name='blockelemtype' class="blockelemtype" value="3">
+                    <div class="grabme"> 
+                        <span></span>
+                        <img class="blockicon icon" src="{{ url_for('static', filename='img/icons/suelto.png') }}">
+                    </div>
+                    <div class="blockin">
+                        <div class="blocktext blockyright">
+                            <h2 class="no-seleccionable">Bins</h2>
+                            <spam class="blocktitle">new Bin</spam>
+                            <p class="blockdesc">this block is your node where your data will be stored</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="propwrap">
+        <div id="properties">
+            <div id="close">
+                <img src="{{ url_for('static', filename='img/icons/close.svg') }}">
+            </div>
+            <div id="form">
+                <div id="formulario"></div>
+            </div>
+            <button id="guardar" class="iconbutton" style="margin: 5px;"><nav > <ul style="align-items: center; text-align: center; margin: 2px;">
+                <li><h1>Save</h1></li> 
+                <li><img src="{{ url_for('static', filename='img/icons/editar.png') }}" class="icon"></li>
+                </ul>
+                </nav>
+            </button>
+        </div>
+    </div>
+    <div class="contenedor" style="width: 70%;">
+        <div class="subheader" style="width:auto"><h1 style="color: white;">work area</h1></div>
+        <div class="contenedor-area"  >
+            <div class="lista" id="canvas">
+            </div>
+        </div>
+    </div>
+</section>
+<!--<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div class="row">
@@ -20,9 +108,9 @@ block content %}
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#start">Available traces</a>
                             </li>
-                            <!--<li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link disabled" data-toggle="tab" href="#newtrace">New trace</a>
-                            </li>-->
+                            </li>
                         </ul>
                     </div>
 
@@ -180,9 +268,9 @@ block content %}
 
     </div>
     </div>
-</main>
+</main>-->
 {% endblock %} {% block footer %} {{ super() }}
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(function () {
 
         $.getJSON("config").done(function (data, textStatus, jqXHR) {
@@ -241,6 +329,6 @@ block content %}
     });
 
    
-</script>
+</script>-->
 
 {% endblock %}
