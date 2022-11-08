@@ -5,6 +5,7 @@ import datetime
 import requests
 import simplejson as json
 import os
+from user.models import User
 
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, escape
 
@@ -25,6 +26,10 @@ nodes = {
 @app.route('/index.html')
 def main():
     return render_template('index.html')
+#login
+@app.route('/user/signup',methods=['POST'])
+def singup():
+    return User().singup()
 
 
 @app.route('/health')
@@ -77,10 +82,10 @@ def getMemory(id):
         return jsonify({'error': 'Sorry, hosts aren\'t available at this time.'})
 
 #pools
-@app.route('/middleware/pools', methods=['GET'])
+@app.route('/cenotes', methods=['GET'])
 def getPools ():
     try:
-        url='http://creation:45000/pools'
+        url='http://creation:45000/cenotes'
         res= requests.get(url)
     except:
         res = None
@@ -90,11 +95,11 @@ def getPools ():
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 
-@app.route('/middleware/pools', methods=['POST'])
+@app.route('/cenotes', methods=['POST'])
 def createPools(json):
     try:
         
-        url='http://middleware:45000/api/v1/pools/'
+        url='http://middleware:45000/api/v1/cenote/'
         res=requests.post(url,json)
     except :
         res = None
@@ -104,10 +109,10 @@ def createPools(json):
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 
-@app.route('/middleware/pools/<int:idPool>/ delete',methods=['DELETE'])
+@app.route('/cenotes/<int:idPool>/ delete',methods=['DELETE'])
 def deletePool(idPool):
     try:    
-        url='http://middleware:45000/api/v1/pools/'+idPool
+        url='http://middleware:45000/api/v1/cenotes/'+idPool
         res=requests.delete(url)
     except :
         res = None

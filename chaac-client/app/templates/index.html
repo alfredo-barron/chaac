@@ -1,22 +1,24 @@
 {% extends 'base.html' %} {% block title %} Chaac {% endblock %} {% block head %} {{ super() 
 }}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
 {% endblock %} {% block content %}
 <section>
     <div class="card-wrapper">
         <div class="card">
             <h1 class="center">Create an Account</h1>
-            <form name="singup_form">
+           
+            <form name="signup_form">
                 <label for="Name_user">Name:</label>
                 <input type="text" name="Name_user" class="field" required>
                 <label for="UserName">User Name:</label>
                 <input type="text" name="UserName" class="field" required>
                 <label for="Password">Password:</label>
-                <input type="text" name="Password" class="field" required>
+                <input type="password" name="Password" class="field" required>
 
                 <p class="error error--hidden"></p>
 
-                <input type="submit" value="sign up" class="btn">
+                <input type="submit" value="Sign up" class="btn">
             </form>
         </div>
     </div>
@@ -75,5 +77,6 @@
 </main>-->
 {% endblock %}
 {% block footer %} {{ super() }}
-
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
  {% endblock %}

@@ -1,56 +1,20 @@
-from flask import Flask
+from flask import Flask, jsonify
+import uuid
 
 #user
 
 class User:
-    def singup(self):
+    def signup(self):
         user:{
-            "userID": "",
-	        "name": "",
-	        "user_name":"",
-	        "password":"",
+            "userID": uuid.uuid4().hex,
+	        "name": request.form.get('Name_user'),
+	        "user_name":request.form.get('UserName'),
+	        "password":request.form.get('Password'),
 	        "schema":[{
 		        "schema_id":"",
-		        "nombre_schema":"",
-		        "estructura":[{
-			        "html": "",
-			        "blockarr": [],
-			        "blocks": [{
-					    "id": "",
-					    "parent": "",
-					    "data": [{
-						    "name": "",
-						    "value": ""
-					    }],
-					    "attr": [{
-						    "id": "",
-						    "class": ""
-					    }]
-				    }]
-		        }],
-		        "data":[{
-			            "cenotes":[{
-				        "id": "",
-  				        "name": "",
-  				        "image": "",
-  				        "network": "",
-  				        "publicPort": "",
-  				        "distribuitor": "",
-  				        "bins":[{
-  					        "id": "",
-  					        "name": "",
-  					        "hostId": "",
-  					        "cenoteId": "",
-  					        "image": "",
-  					        "network": "",
-  					        "cacheSize": "",
-  					        "cachePolicy": "",
-  					        "levels": "",
-  					        "memory": "",
-  					        "capacity": ""
-  				        }]
-			            }]
-		        }]
+		        "name_schema":"",
+		        "structure":[],
+		        "data":[]
 	        }]
         }
-        return jsonify(user)
+        return jsonify(user),200
