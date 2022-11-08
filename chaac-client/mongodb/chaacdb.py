@@ -2,13 +2,14 @@ import json
 from flask import Flask, request, jsonify
 from flask.ext.login import (current_user, LoginManager,login_user, logout_user, login_required)
 from flask_mongoengine import MongoEngine
-app = Flask(__name__)
+from app import app
+
+
 app.config['MONGODB_SETTINGS'] = {
     'db': 'chaacDB',
     'host': 'localhost',
     'port': 27017
 }
-app.secret_key = 'some key'
 db = MongoEngine()
 login_manager = LoginManager()
 db.init_app(app)
