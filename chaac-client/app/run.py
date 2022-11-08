@@ -5,9 +5,9 @@ import datetime
 import requests
 import simplejson as json
 import os
-from user.models import User
 
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, escape
+
 
 app = Flask(__name__)
 app.secret_key = 'jupiter'
@@ -26,6 +26,7 @@ nodes = {
 @app.route('/index.html')
 def main():
     return render_template('index.html')
+
 #login
 @app.route('/user/signup',methods=['POST'])
 def singup():
