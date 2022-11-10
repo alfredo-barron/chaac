@@ -5,21 +5,7 @@ document.addEventListener("DOMContentLoaded", function(){
     var tempblock;
     var tempblock2;
 	var cont=0;
-	let bin={
-		"id": "bin1",
-		  "name": "bin-1",
-		  "hostId": "host-1",
-		  "cenoteId": "cenote1",
-		  "image": "alfredobarron/chacc-bin:1",
-		  "network": "my-net",
-		  "cacheSize": 20,
-		  "cachePolicy": "LFU",
-		  "levels": 1,
-		  "memory": "2GB",
-		  "capacity": "40GB"
-};
 	var cenote=[];
-	let newCenote=[];
 	let schema={
 		"schema_id":"schema-01",
 		"name_schema":"schema-01",
@@ -79,7 +65,19 @@ document.addEventListener("DOMContentLoaded", function(){
 					</div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
-					
+					schema.cenotes[schema.cenotes.findIndex(schema => schema.cenotes === parent.querySelector('.blockid').value)].bins.push({
+						"id": drag.querySelector('.blockid').value,
+		  				"name": "bin-1",
+		  				"hostId": "host-1",
+		  				"cenoteId": parent.querySelector('.blockid').value,
+		  				"image": "alfredobarron/chacc-bin:1",
+		  				"network": "my-net",
+		  				"cacheSize": 20,
+		  				"cachePolicy": "LFU",
+		  				"levels": 1,
+		  				"memory": "2GB",
+		  				"capacity": "40GB"
+					});
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
@@ -167,33 +165,34 @@ document.addEventListener("DOMContentLoaded", function(){
 					if(tempblock.querySelector('.blockelemtype').value=="2"){
 						propiedades.classList.add("expanded");
             			editar.classList.add("itson");
+						cenote=schema.cenotes[schema.cenotes.findIndex(schema.cenotes.id==tempblock.querySelector('.blockid').value)];
 						form.innerHTML+="<div id='formulario'>\
 							<p class='header2'>Edit Cenote</p>\
 							<form>\
 							<ul>\
 								<li>\
     								<label for='id_cenote'>id:</label>\
-    								<input type='text' id='id_cenote' name='id_cenote'>\
+    								<label  name='id_cenote' value='"+cenote.id+"'>\
   								</li>\
   								<li>\
     								<label for='name_cenote'>Nombre:</label>\
-    								<input type='text' id='name_cenote' name='cenote_name'>\
+    								<input type='text' id='name_cenote' name='cenote_name' value='"+cenote.name+"'>\
   								</li>\
   								<li>\
     								<label for='image_cenote'>image:</label>\
-    								<input type='text' id='image_cenote' name='cenote_image'>\
+    								<input type='text' id='image_cenote' name='cenote_image' value='"+cenote.image+"'>\
   								</li>\
   								<li>\
 								  <label for='network'>network:</label>\
-								  <input type='text' id='network' name='network'>\
+								  <input type='text' id='network' name='network' value='"+cenote.network+"'>\
   								</li>\
 								<li>\
 								  <label for='port'>public port:</label>\
-								  <input type='integer' id='port' name='port'>\
+								  <input type='integer' id='port' name='port' value='"+cenote.publicPort+"'>\
   								</li>\
 								<li>\
 								  <label for='distribuidor'>distribuidor:</label>\
-								  <input type='text' id='distribuidor' name='distribuidor'>\
+								  <input type='text' id='distribuidor' name='distribuidor' value='"+cenote.distribuitor+"'>\
   								</li>\
  							</ul>\
 							\
@@ -275,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		addEventListener("mousedown", beginTouch, false);
 		addEventListener("mousemove", checkTouch, false);
 		addEventListener("mouseup", doneTouch, false);
-		//boton borrar todos los bloques
+		//btn delete all blocks
 		document.getElementById("removeblock").addEventListener("click", function(){
  			flowy.deleteBlocks();
  			document.getElementById("Bin").classList.remove("create-flowy");
@@ -286,11 +285,22 @@ document.addEventListener("DOMContentLoaded", function(){
 			console.log(contenido);
 			
 		});
+		//btn save form
 		document.getElementById("guardar").addEventListener("click", function(){
 			console.log("el dato selecionado es:",tempblock.id);
 			if(tempblock.id=="Schema"){
 				schema.name_schema=document.getElementById("schema_name").value;
 			}
-			console.log("el dato cambiado es:",schema.name_schema);
+			if(tempblock.id=="Cenote"){
+				for(i =0; i<=schema.cenotes.length;i++){
+					if(schema.cenotes[i].id==tempblock.querySelector('.blockid').value){
+						schema.cenotes[i].name=document.getElementById("name_cenote").value;
+						schema.cenotes[i].image=document.getElementById("image_cenote").value;
+						schema.cenotes[i].network= document.getElementById("network").value;
+						schema.cenotes[i].publicPort= document.getElementById("port").value,
+						schema.cenotes[i].distribuitor=document.getElementById("distribuidor").value;
+					}
+				}
+			}
 		});
 });
