@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
 						<h2 class='blocktitle' id='schema_title'> name:"+schema.name_schema+"</h2>\
 					  	<nav>\
 					  		<ul>\
-					  		<li><img class='icon' src='img/icons/suelto.png'> </li>\
+					  		<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 					</div>"; 
 				}
@@ -74,17 +74,16 @@ document.addEventListener("DOMContentLoaded", function(){
 					<h2 class='blocktitle' id='cenote_title' >"+schema.cenotes.name+"</h2>\
 					<nav>\
 						<ul>\
-							<li><img class='icon' src='img/icons/suelto.png'> </li>\
+							<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 					</div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
-					
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
 							<ul>\
-								<li><img class='icon' src='img/icons/suelto.png'> </li>\
+								<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 						</div>";
         		}
