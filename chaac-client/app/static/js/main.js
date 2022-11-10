@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function(){
 					</div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
-<<<<<<< HEAD
 					schema.cenotes[schema.cenotes.findIndex(schema => schema.cenotes === parent.querySelector('.blockid').value)].bins.push({
 						"id": drag.querySelector('.blockid').value,
 		  				"name": "bin-1",
@@ -79,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function(){
 		  				"memory": "2GB",
 		  				"capacity": "40GB"
 					});
-=======
->>>>>>> 3d3b0e618d0987509c78c553c01739967748b163
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
