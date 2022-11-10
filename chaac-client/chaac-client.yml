@@ -1,17 +1,17 @@
 version: '3'
 
 services:
-  chaac_client:
-    container_name: chaac_client
-    image: fbalderasd/python:3.7-sb
-    restart: always 
-    networks:
-      - chaac
-    ports:
-      - 45000:45000
-    volumes:
-    - ./app:/home/
-    entrypoint: python run.py 45000
+  #chaac_client:
+  #  container_name: chaac_client
+  #  image: fbalderasd/python:3.7-sb
+  #  restart: always 
+  #  networks:
+  #    - chaac
+  #  ports:
+  #    - 45000:45000
+  #  volumes:
+  #  - ./app:/home/
+  #  entrypoint: python run.py 45000
 
   mongodb:
     image: mongo

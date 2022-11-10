@@ -5,3 +5,5 @@ json2html
 simplejson
 gevent
 flask-restful
+flask_login
+flask_mongoengine

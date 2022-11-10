@@ -5,9 +5,18 @@ import datetime
 import requests
 import simplejson as json
 import os
-
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, escape
+from flask_login import current_user, LoginManager, login_user, logout_user, login_required
+from flask_mongoengine import MongoEngine
 
+# Variables de configuracion
+# Middleware
+chaac_url = "chaac"
+# DB
+db_name = 'chaacDB'
+db_url = "localhost"
+
+# Config Flask
 app = Flask(__name__)
 app.secret_key = 'jupiter'
 app.config.update(
@@ -15,8 +24,21 @@ app.config.update(
     JSON_SORT_KEYS=True
 )
 
+# Config connection MongoDB
+db = MongoEngine()
+app.config['MONGODB_DB'] = db_name
+app.config['MONGODB_HOST'] = db_url
+app.config['MONGODB_PORT'] = 27017
+app.config['MONGODB_USERNAME'] = 'root'
+app.config['MONGODB_PASSWORD'] = 'root'
+
+login_manager = LoginManager()
+db.init_app(app)
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 nodes = {
-    "name": "http://acquisition:45000",
+    "name": "http://" + chaac_url,
     "endpoint": "hosts"
 }
 
@@ -26,14 +48,109 @@ nodes = {
 def main():
     return render_template('creation.html')
 
-
 @app.route('/health')
 def health():
     return 'Web is healthy'
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.objects(id=user_id).first()
+
+@app.route('/login', methods=['POST'])
+def login():
+    info = json.loads(request.data)
+    username = info.get('username', 'guest')
+    password = info.get('password', '')
+    user = User.objects(name=username,
+                        password=password).first()
+    if user:
+        login_user(user)
+        return jsonify(user.to_json())
+    else:
+        return jsonify({"status": 401,
+                        "reason": "Username or Password Error"})
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return jsonify(**{'result': 200,
+                      'data': {'message': 'logout success'}})
+
+@app.route('/user_info', methods=['POST'])
+def user_info():
+    if current_user.is_authenticated:
+        resp = {"result": 200,
+                "data": current_user.to_json()}
+    else:
+        resp = {"result": 401,
+                "data": {"message": "user no login"}}
+    return jsonify(**resp)
+
+class User(db.Document):   
+    name = db.StringField()
+    password = db.StringField()
+    email = db.StringField()                                                                                                 
+    def to_json(self):        
+        return {"name": self.name,
+                "email": self.email}
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):   
+        return True           
+
+    def is_anonymous(self):
+        return False          
+
+    def get_id(self):       
+        return str(self.id)
+
+@app.route('/users', methods=['GET'])
+def query_records():
+    name = request.args.get('name')
+    user = User.objects(name=name).first()
+    if not user:
+        return jsonify({'error': 'data not found'})
+    else:
+        return jsonify(user.to_json())
+
+@app.route('/users', methods=['POST'])
+def update_record():
+    record = json.loads(request.data)
+    user = User.objects(name=record['name']).first()
+    if not user:
+        return jsonify({'error': 'data not found'})
+    else:
+        user.update(email=record['email'],
+                    password=record['password'])
+    return jsonify(user.to_json())
+
+@app.route('/', methods=['PUT'])
+@login_required
+def create_record():
+    record = json.loads(request.data)
+    user = User(name=record['name'],
+                password=record['password'],
+                email=record['email'])
+    user.save()
+    return jsonify(user.to_json())
+
+@app.route('/users', methods=['DELETE'])
+@login_required
+def delte_record():
+    record = json.loads(request.data)
+    user = User.objects(name=record['name']).first()
+    if not user:
+        return jsonify({'error': 'data not found'})
+    else:
+        user.delete()
+    return jsonify(user.to_json())
+
 @app.route('/monitor')
 def monitor():
     return render_template('monitor.html')
+
 
 @app.route('/getnodes', methods=['GET'])
 def getNodes():
