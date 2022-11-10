@@ -3,7 +3,7 @@ import sys
 import time
 import datetime
 import requests
-import simplejson as json
+import json as simplejson
 import os
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, escape
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
@@ -46,16 +46,16 @@ nodes = {
 @app.route('/')
 @app.route('/index.html')
 def main():
-    return render_template('creation.html')
+    return render_template('index.html')
 
 @app.route('/health')
 def health():
     return 'Web is healthy'
-
+#manejador de logins
 @login_manager.user_loader
 def load_user(user_id):
     return User.objects(id=user_id).first()
-
+#login 
 @app.route('/login', methods=['POST'])
 def login():
     info = json.loads(request.data)
@@ -69,13 +69,13 @@ def login():
     else:
         return jsonify({"status": 401,
                         "reason": "Username or Password Error"})
-
+#logout
 @app.route('/logout', methods=['POST'])
 def logout():
     logout_user()
     return jsonify(**{'result': 200,
                       'data': {'message': 'logout success'}})
-
+#user information
 @app.route('/user_info', methods=['POST'])
 def user_info():
     if current_user.is_authenticated:
@@ -85,14 +85,16 @@ def user_info():
         resp = {"result": 401,
                 "data": {"message": "user no login"}}
     return jsonify(**resp)
-
+#class user in DB
 class User(db.Document):   
     name = db.StringField()
     password = db.StringField()
-    email = db.StringField()                                                                                                 
+    email = db.StringField() 
+    user_name=db.StringField()                                                                                                
     def to_json(self):        
         return {"name": self.name,
-                "email": self.email}
+                "email": self.email,
+                "user_name":self.user_name}
 
     def is_authenticated(self):
         return True
@@ -105,7 +107,7 @@ class User(db.Document):
 
     def get_id(self):       
         return str(self.id)
-
+#get user
 @app.route('/users', methods=['GET'])
 def query_records():
     name = request.args.get('name')
@@ -114,7 +116,7 @@ def query_records():
         return jsonify({'error': 'data not found'})
     else:
         return jsonify(user.to_json())
-
+#update dates of users
 @app.route('/users', methods=['POST'])
 def update_record():
     record = json.loads(request.data)
@@ -123,6 +125,7 @@ def update_record():
         return jsonify({'error': 'data not found'})
     else:
         user.update(email=record['email'],
+                    user_name=record['user_name'],
                     password=record['password'])
     return jsonify(user.to_json())
 
@@ -131,6 +134,7 @@ def update_record():
 def create_record():
     record = json.loads(request.data)
     user = User(name=record['name'],
+                user_name=record['user_name'],
                 password=record['password'],
                 email=record['email'])
     user.save()
@@ -197,7 +201,7 @@ def getMemory(id):
 @app.route('/cenotes', methods=['GET'])
 def getPools ():
     try:
-        url='http://creation:45000/cenotes'
+        url= chaac_url +'/cenotes'
         res= requests.get(url)
     except:
         res = None

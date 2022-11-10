@@ -13,11 +13,11 @@
                 <input type="text" name="Name_user" class="field" required>
                 <label for="UserName">User Name:</label>
                 <input type="text" name="UserName" class="field" required>
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="field" required>
                 <label for="Password">Password:</label>
                 <input type="password" name="Password" class="field" required>
-
                 <p class="error error--hidden"></p>
-
                 <input type="submit" value="Sign up" class="btn">
             </form>
         </div>
@@ -77,4 +77,6 @@
 </main>-->
 {% endblock %}
 {% block footer %} {{ super() }}
- {% endblock %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script> 
+{% endblock %}
