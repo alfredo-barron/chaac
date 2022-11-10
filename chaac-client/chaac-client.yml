@@ -14,7 +14,7 @@ services:
   #  entrypoint: python run.py 45000
 
   mongodb:
-    image: mongo
+    image: mongo:4.4.6
     networks:
       - chaac
     environment:
@@ -25,7 +25,7 @@ services:
       - 9229:9229
     volumes:
       - db-data:/data/db
-      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
    
   mongo-express:
     image: mongo-express
