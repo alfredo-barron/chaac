@@ -140,6 +140,8 @@ def create_record():
     user.save()
     return jsonify(user.to_json())
 
+
+#delete users
 @app.route('/users', methods=['DELETE'])
 @login_required
 def delte_record():
@@ -150,6 +152,11 @@ def delte_record():
     else:
         user.delete()
     return jsonify(user.to_json())
+
+
+
+
+
 
 @app.route('/monitor')
 def monitor():

@@ -14,6 +14,5 @@ $("form[name=signup_for").submit(function(e){
         }
 
     });
-
     e.preventDefault();
 });
