@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(){
 						<h2 class='blocktitle' id='schema_title'> name:"+schema.name_schema+"</h2>\
 					  	<nav>\
 					  		<ul>\
-					  		<li><img class='icon' src='img/icons/suelto.png'> </li>\
+					  		<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 					</div>"; 
 				}
@@ -60,11 +60,12 @@ document.addEventListener("DOMContentLoaded", function(){
 					<h2 class='blocktitle' id='cenote_title' >"+schema.cenotes.name+"</h2>\
 					<nav>\
 						<ul>\
-							<li><img class='icon' src='img/icons/suelto.png'> </li>\
+							<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 					</div>";
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"){
+<<<<<<< HEAD
 					schema.cenotes[schema.cenotes.findIndex(schema => schema.cenotes === parent.querySelector('.blockid').value)].bins.push({
 						"id": drag.querySelector('.blockid').value,
 		  				"name": "bin-1",
@@ -78,11 +79,13 @@ document.addEventListener("DOMContentLoaded", function(){
 		  				"memory": "2GB",
 		  				"capacity": "40GB"
 					});
+=======
+>>>>>>> 3d3b0e618d0987509c78c553c01739967748b163
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
 							<ul>\
-								<li><img class='icon' src='img/icons/suelto.png'> </li>\
+								<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
 							</ul>\
 						</div>";
         		}
