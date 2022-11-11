@@ -37,6 +37,9 @@ nav ul li a {
 	text-decoration: none;
 	border-radius: 10px;
 }	
+div{
+    margin: auto;
+}
 nav ul li a:hover {
 	color: white;
 	font-size: 20px;
@@ -74,7 +77,15 @@ nav ul li a:hover {
 	margin-bottom: 0;
 
 }
-
+.login{
+   height: 400px;
+   width: 400px;
+}
+.container{
+    flex-direction: row;
+    margin: auto;
+    display: flex;
+}
 .contenedor-area h1 {
 	text-transform: uppercase;
 	font-size: 20px;

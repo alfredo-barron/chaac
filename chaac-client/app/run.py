@@ -8,6 +8,7 @@ import os
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, escape
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
 from flask_mongoengine import MongoEngine
+import json
 
 # Variables de configuracion
 # Middleware
@@ -117,7 +118,7 @@ def query_records():
     else:
         return jsonify(user.to_json())
 #update dates of users
-@app.route('/users', methods=['POST'])
+@app.route('/users/update', methods=['POST'])
 def update_record():
     record = json.loads(request.data)
     user = User.objects(name=record['name']).first()
@@ -129,7 +130,7 @@ def update_record():
                     password=record['password'])
     return jsonify(user.to_json())
 
-@app.route('/', methods=['PUT'])
+@app.route('/users', methods=['PUT'])
 @login_required
 def create_record():
     record = json.loads(request.data)
@@ -140,6 +141,22 @@ def create_record():
     user.save()
     return jsonify(user.to_json())
 
+@app.route('/users', methods=['POST'])
+def create_user():
+    record = json.loads(request.data)
+    user=User.objects(name=record['name']).first
+    if  user:
+        user=User(name=record['name'],
+                user_name=record['user_name'],
+                password=record['password'],
+                email=record['email'])
+        if(user.email==record['email']):
+            return jsonify({'error':'the user exist'})
+        else:
+            user.save()
+            return jsonify({'ok': 'the user created'})
+    else:
+        return jsonify({'error': 'data not found'})
 
 #delete users
 @app.route('/users', methods=['DELETE'])
@@ -292,4 +309,4 @@ if __name__ == '__main__':
 
     p = int(sys.argv[1])
     #print "start at port %s" % (p)
-    app.run(host='0.0.0.0', port=p, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=45000, debug=True, threaded=True)

@@ -1,9 +1,12 @@
-$("form[name=signup_for").submit(function(e){
+$("form[name=signup_for]").submit(function(e){
+    console.log("entraste");
     var $form=$(this);
-    var data= $form.serialize();
-    $.ajax({
-        url: "/",
-        type: "PUT",
+    var data= $form.serializeArray();
+    console.log(data);
+    var url="localhost:45000/users"
+    /*$.ajax({
+        url: url,
+        type: "POST",
         data: data,
         dataType: "json",
         success: function(resp){
@@ -13,6 +16,6 @@ $("form[name=signup_for").submit(function(e){
             console.log(resp);
         }
 
-    });
+    });*/
     e.preventDefault();
 });
