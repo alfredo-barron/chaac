@@ -48,7 +48,9 @@ nodes = {
 @app.route('/index.html')
 def main():
     return render_template('index.html')
-
+@app.route('/creation')
+def creation():
+    return render_template('creation.html')
 @app.route('/health')
 def health():
     return 'Web is healthy'
