@@ -45,15 +45,24 @@ nodes = {
 
 # Root
 @app.route('/')
-@app.route('/index.html')
+@app.route('/index')
 def main():
     return render_template('index.html')
+
+
 @app.route('/creation')
 def creation():
     return render_template('creation.html')
+
+@app.route('/visualize')
+def visualize():
+    return render_template('visualize.html')
+
 @app.route('/health')
 def health():
     return 'Web is healthy'
+
+
 #manejador de logins
 @login_manager.user_loader
 def load_user(user_id):
@@ -62,13 +71,14 @@ def load_user(user_id):
 @app.route('/login', methods=['POST'])
 def login():
     info = json.loads(request.data)
-    username = info.get('username', 'guest')
-    password = info.get('password', '')
-    user = User.objects(name=username,
+    email = info.get('email')
+    password = info.get('password')
+    user = User.objects(email=email,
                         password=password).first()
     if user:
-        login_user(user)
-        return jsonify(user.to_json())
+        login_user(user, remember= True)
+        next= url_for('visualize')
+        return redirect(next)
     else:
         return jsonify({"status": 401,
                         "reason": "Username or Password Error"})
@@ -93,7 +103,8 @@ class User(db.Document):
     name = db.StringField()
     password = db.StringField()
     email = db.StringField() 
-    user_name=db.StringField()                                                                                                
+    user_name=db.StringField()
+    schemas=db.StringField()                                                                                                
     def to_json(self):        
         return {"name": self.name,
                 "email": self.email,
@@ -145,20 +156,22 @@ def create_record():
 
 @app.route('/users', methods=['POST'])
 def create_user():
-    record = json.loads(request.data)
-    user=User.objects(name=record['name']).first
-    if  user:
+    record= json.loads(request.data)
+    user=User.objects(email=record['email']).first()
+    if  not user :
         user=User(name=record['name'],
-                user_name=record['user_name'],
-                password=record['password'],
-                email=record['email'])
-        if(user.email==record['email']):
-            return jsonify({'error':'the user exist'})
-        else:
-            user.save()
-            return jsonify({'ok': 'the user created'})
+            user_name=record['user_name'],
+            password=record['password'],
+            email=record['email'])
+        user.save()
+        return jsonify({'ok': 'the user created'})
     else:
-        return jsonify({'error': 'data not found'})
+        return jsonify({'error': 'the user exist'})
+
+#prueba para la interfaz
+@app.route('/prueba', methods=['POST'])
+def prueba():
+    return json.loads( request.data)
 
 #delete users
 @app.route('/users', methods=['DELETE'])
@@ -173,9 +186,11 @@ def delte_record():
     return jsonify(user.to_json())
 
 
-
-
-
+#return schemas
+@app.route('/users/schemas', methods=['GET'])
+@login_required
+def schemas():
+    return user.schemas
 
 @app.route('/monitor')
 def monitor():

@@ -7,7 +7,16 @@
     <div class="card-wrapper">
         <div class="card">
             <div class="container"> 
-                <img class="login" src="{{ url_for('static', filename='img/logo chaac-1.png') }}">	
+                <div>
+                    <img class="login" src="{{ url_for('static', filename='img/logo chaac-1.png') }}">	
+                    <form id="login">
+                        <label for="email_user">Email:</label>
+                        <input type="text" name="email_user" class="field" required>
+                        <label for="password_user">Password:</label>
+                        <input type="password" name="password_user" class="field" required>
+                        <button type="submit" class="btn">login</button>
+                    </form>
+                </div>
                 <div >
                     <h1 class="center">Create an Account</h1>
                     <form id="signup_form">
@@ -19,8 +28,7 @@
                         <input type="text" name="email" class="field" required>
                         <label for="Password">Password:</label>
                         <input type="password" name="Password" class="field" required>
-                        <p class="error error--hidden"></p>
-                        <input type="submit" value="Sign up" class="btn">
+                        <button type="submit" class="btn"> sign up</button>
                     </form>
                 </div>
             </div>
@@ -81,6 +89,5 @@
 </main>-->
 {% endblock %}
 {% block footer %} {{ super() }}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='js/login.js') }}"></script> 
+
 {% endblock %}
