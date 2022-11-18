@@ -14,13 +14,32 @@ $("#signup_form").submit(function(e){
             "Content-Type":"application/json"
         },
         "body":JSON.stringify ( dataJson),
-
     }).then(response=>{
         if(response.ok){
-            response.json()
+            response.text()
             .then(response=>{
                 //get response the server
-                console.log(response)
+                json= JSON.parse(response);
+                console.log(json);
+                if(json.status==200){
+                    fetch('/login',{
+                        "method":"POST",
+                        "headers":{
+                            "Content-Type":"application/json"
+                        },
+                        "body":JSON.stringify({
+                            "email": dataJson.email,
+                            "password": dataJson.password,
+                        })
+                    }).then(res=>{
+                        res.text()
+                    .then(res=>{
+                        const json2=JSON.parse(res);
+                        if(json2.status==200){
+                            window.location.href = "/visualize";
+                        }
+                    });})
+                }
             });
         }
     })
@@ -40,6 +59,13 @@ $("#login").submit(function(e){
             "email": data2[0].value,
             "password": data2[1].value,
         }),
-    })
+    }).then(response => response.text())
+    .then(data => {
+      const json = JSON.parse(data);
+        if(json.status==200){
+           window.location.href = "/visualize";
+        }else console.log(json);
+    });
+   
     e.preventDefault();
 });

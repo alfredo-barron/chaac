@@ -7,6 +7,7 @@
 body {
 	background: #E3E5EB;
     font-family: 'Open Sans', sans-serif;
+    min-height: 100%;
 }
 header{
 	background: #619BE9;
@@ -37,9 +38,6 @@ nav ul li a {
 	text-decoration: none;
 	border-radius: 10px;
 }	
-div{
-    margin: auto;
-}
 nav ul li a:hover {
 	color: white;
 	font-size: 20px;
@@ -51,20 +49,15 @@ nav ul li a:hover {
 	height: 90px;
 }
 
-.contenedor {
-	width: 90%;
-	max-width:1024px;
-	float: left;
-}
-
-.contenedor-lista {
+.container-list {
+    margin: 2px;
 	background: #F3F5FA;
 	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
 	border-radius: 10px;
 	width: 100%;
 }
 
-.contenedor-lista h1 {
+.container-list h1 {
 	text-transform: uppercase;
 	font-size: 20px;
 	background: #ABCBF6;
@@ -81,12 +74,7 @@ nav ul li a:hover {
    height: 400px;
    width: 400px;
 }
-.container{
-    flex-direction: row;
-    margin: auto;
-    display: flex;
-}
-.contenedor-area h1 {
+.container-area h1 {
 	text-transform: uppercase;
 	font-size: 20px;
 	background: #9DB9DF;
@@ -96,19 +84,16 @@ nav ul li a:hover {
 	margin-bottom: 0;
 
 }
-.contenedor-area {
+.container-area {
 	text-align: center;
 	background: #F3F5FA;
-	align-items: center;
-	height: 90%;
-	width: 100%;
 	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
 	border-radius: 10px;
 }
-.contenedor-area.create-flowy{
-	padding: 5px;
+.container-area.create-flowy{
+	padding: 1px;
 }
-.lista {
+.list {
 	padding: 40px;
 }
 
@@ -223,25 +208,22 @@ nav ul li a:hover {
 }
 #canvas {
 	align-items: center;
-    position: absolute;
-    width:70%;
-    height:70%;
-    top:auto;
-    left:auto;
-    z-index: 0;
+    width:95%;
+    height:100%;
     overflow: auto;
     background-color: #C6EAFA;
+    position: absolute;
 }
 .subheader{
 	height: 71px;
     background-color:#ABCBF6;
-    border: 1px solid #E8E8EF;
-    display: flex;
     text-align: center;
     align-items: center;
     box-sizing: border-box;
-    top: 1;
 
+}
+.subheader h2{
+    color: white;
 }
 .itson {
     z-index: 2!important;
@@ -284,7 +266,7 @@ nav ul li a:hover {
 	background-color: #FB7E29;
 	color: #fff;
 }
-.lista .create-flowy {
+.list .create-flowy {
 	background: #fff;
 	display: grid;
 	grid-template-columns: auto 1fr 1fr 1fr;
@@ -302,7 +284,7 @@ li{
     padding-top: 5px;
 }
 /* ? Clases para los estilos en los diferentes estados del drag and drop */
-.lista .create-flowy.seleccion{
+.list .create-flowy.seleccion{
 	transform: scale(1.0) rotate(-1deg);
 	box-shadow: 0px 0px 20px rgba(149, 153, 159, .16);
 	background: grey;
@@ -310,19 +292,19 @@ li{
 /* ? ------- */
 
 
-.lista .label {
+.list .label {
 	text-transform: uppercase;
 	font-weight: 600px;
 	margin-bottom: 5px;
 	color: #5173CF;
 }
 
-.lista .dato {
+.list .date {
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.lista .imagen img {
+.list .image img {
 	border-radius: 10px;
 	margin-right: 10px;
 }
@@ -330,20 +312,18 @@ li{
 #propwrap {
     right: 0;
     top: 1;
-    width: 15%;
-    height: 70%;
     overflow: hidden;
     z-index: -2;
 }
 #properties {
     position: absolute;
+    overflow: hidden;
     height: 70%;
     width: 15%;
     background-color: #FFF;
     right: 0;
     opacity: 0;
     z-index: 2;
-    top: 1;
     box-shadow: -4px 0px 40px rgba(26, 26, 73, 0);
     padding-left: 10px;
     transition: all .25s cubic-bezier(.05,.03,.35,1);
@@ -374,5 +354,7 @@ li{
     font-family: Roboto;
     font-weight: bold;
     color: #393C44;
-    margin-top: 10px;
+}
+.row{
+    vertical-align: top;
 }

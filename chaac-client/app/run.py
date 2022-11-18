@@ -51,12 +51,19 @@ def main():
 
 
 @app.route('/creation')
+@login_required
 def creation():
-    return render_template('creation.html')
-
-@app.route('/visualize')
-def visualize():
-    return render_template('visualize.html')
+    if current_user.is_active:
+        user=User.objects(name=current_user.name).first()
+        if user:  
+            return render_template('creation.html')
+        
+@app.route('/visualize/')
+@login_required
+def visualize():   
+        if current_user.is_active:
+            return render_template('visualize.html')
+        else: return jsonify({"error": "debes iniciar sesion"})
 
 @app.route('/health')
 def health():
@@ -77,8 +84,7 @@ def login():
                         password=password).first()
     if user:
         login_user(user, remember= True)
-        next= url_for('visualize')
-        return redirect(next)
+        return jsonify({"status": 200,"user": user.to_json()})
     else:
         return jsonify({"status": 401,
                         "reason": "Username or Password Error"})
@@ -157,16 +163,19 @@ def create_record():
 @app.route('/users', methods=['POST'])
 def create_user():
     record= json.loads(request.data)
-    user=User.objects(email=record['email']).first()
+    user=User.objects(email=record['email'], user_name = record['user_name']).first()
     if  not user :
-        user=User(name=record['name'],
+        user=User.objects( user_name = record['user_name']).first()
+        if not user:
+            user=User(name=record['name'],
             user_name=record['user_name'],
             password=record['password'],
             email=record['email'])
-        user.save()
-        return jsonify({'ok': 'the user created'})
+            user.save()
+            return jsonify({'ok': 'the user created','status':"200"})
+        else: return jsonify({'error': 'the user name exist',"status":"400"})
     else:
-        return jsonify({'error': 'the user exist'})
+        return jsonify({'error': 'the user exist',"el usuario": user,"status":"400"})
 
 #prueba para la interfaz
 @app.route('/prueba', methods=['POST'])

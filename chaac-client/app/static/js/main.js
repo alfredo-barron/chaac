@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	var cont=0;
 	var cenote=[];
 	let schema={
-		"schema_id":"schema-01",
 		"name_schema":"schema-01",
 		"cenotes": [], 
 	};
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(){
 						<h2 class='blocktitle' id='schema_title'> name:"+schema.name_schema+"</h2>\
 					  	<nav>\
 					  		<ul>\
-					  		<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
+					  		<li><img class='icon' src='/static/img/icons/suelto.png'> </li>\
 							</ul>\
 					</div>"; 
 				}
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
         		document.getElementById("Bin").classList.add("create-flowy");
         		return true;
         	}else{
-        		if(drag.querySelector('.blockelemtype').value=="2"){
+        		if(drag.querySelector('.blockelemtype').value=="2"&&parent.querySelector('.blockelemtype').value!="2"){
 					schema.cenotes.push({"id": drag.querySelector('.blockid').value,
 					"name": "cenote-1",
 					"image": "alfredobarron/chaac-cenote:1",
@@ -53,19 +52,18 @@ document.addEventListener("DOMContentLoaded", function(){
 					"publicPort": 8081,
 					"distribuitor": "ROUND_ROBIN",
 				  	"bins": []});
-					
-					console.log(schema.cenotes);
+					console.log(schema.cenotes[indexCenote(drag.querySelector('.blockid').value)]);
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 					<div><h2 class='noselect' >Cenote</h2></div>\
-					<h2 class='blocktitle' id='cenote_title' >"+schema.cenotes.name+"</h2>\
+					<h2 class='blocktitle' id='cenote_title' >"+schema.cenotes[indexCenote(drag.querySelector('.blockid').value)].name+"</h2>\
 					<nav>\
 						<ul>\
-							<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
-							</ul>\
+							<li><img class='blockicon icon' src='/static/img/icons/suelto.png'></li>\
+						</ul>\
 					</div>";
         		}
-        		if(drag.querySelector('.blockelemtype').value=="3"){
-					schema.cenotes[schema.cenotes.findIndex(schema => schema.cenotes === parent.querySelector('.blockid').value)].bins.push({
+        		if(drag.querySelector('.blockelemtype').value=="3"&&parent.querySelector('.blockelemtype').value!="3"){
+					schema.cenotes[indexCenote(parent.querySelector('.blockid').value)].bins.push({
 						"id": drag.querySelector('.blockid').value,
 		  				"name": "bin-1",
 		  				"hostId": "host-1",
@@ -78,11 +76,12 @@ document.addEventListener("DOMContentLoaded", function(){
 		  				"memory": "2GB",
 		  				"capacity": "40GB"
 					});
+					//console.log(indexBin(drag.querySelector('.blockid').value))
         			drag.innerHTML+="<div class='blockyleft noselect'>\
 						<div><h2 class='noselect' >Bin</h2></div>\
 						<nav>\
 							<ul>\
-								<li><img class='icon' src='{{ url_for('static', filename='img/icons/suelto.png') }}'> </li>\
+								<li><img class='icon' src='/static/img/icons/suelto.png'> </li>\
 							</ul>\
 						</div>";
         		}
@@ -107,6 +106,24 @@ document.addEventListener("DOMContentLoaded", function(){
         	}
         	
     	}
+		//function search cenote
+		function indexCenote(id){
+			for(var j=0;j<=schema.cenotes.length;j++){
+				if(schema.cenotes[j].id==id){
+					return j;
+				}
+			}
+			 
+		}
+		function indexBin(id,idParent){
+		 	j=indexCenote(idParent);
+				for(var k=0; k<=schema.cenotes[j].bins.length;k++){
+					if(schema.cenotes[j].bins[k].id==id){
+						return k;
+					}
+				}
+			 
+		}
 		// when grab a elemet
 		function onGrab(block){
 			block.classList.add("blockdisabled");
@@ -165,7 +182,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					if(tempblock.querySelector('.blockelemtype').value=="2"){
 						propiedades.classList.add("expanded");
             			editar.classList.add("itson");
-						cenote=schema.cenotes[schema.cenotes.findIndex(schema.cenotes.id==tempblock.querySelector('.blockid').value)];
+						//search cenote 
+						cenote=schema.cenotes[indexCenote(tempblock.querySelector('.blockid').value)]
 						form.innerHTML+="<div id='formulario'>\
 							<p class='header2'>Edit Cenote</p>\
 							<form>\
@@ -292,15 +310,16 @@ document.addEventListener("DOMContentLoaded", function(){
 				schema.name_schema=document.getElementById("schema_name").value;
 			}
 			if(tempblock.id=="Cenote"){
-				for(i =0; i<=schema.cenotes.length;i++){
-					if(schema.cenotes[i].id==tempblock.querySelector('.blockid').value){
-						schema.cenotes[i].name=document.getElementById("name_cenote").value;
-						schema.cenotes[i].image=document.getElementById("image_cenote").value;
-						schema.cenotes[i].network= document.getElementById("network").value;
-						schema.cenotes[i].publicPort= document.getElementById("port").value,
-						schema.cenotes[i].distribuitor=document.getElementById("distribuidor").value;
-					}
-				}
+					index=indexCenote(tempblock.querySelector('.blockid').value)
+						schema.cenotes[index].name=document.getElementById("name_cenote").value;
+						schema.cenotes[index].image=document.getElementById("image_cenote").value;
+						schema.cenotes[index].network= document.getElementById("network").value;
+						schema.cenotes[index].publicPort= document.getElementById("port").value,
+						schema.cenotes[index].distribuitor=document.getElementById("distribuidor").value;
+			}
+			if(tempblock.id=="Bin"){
+				index=indexBin(tempblock.querySelector('blockid').id);
+
 			}
 		});
 });
