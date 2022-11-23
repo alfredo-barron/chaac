@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify, abort, render_template, redirect, url
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
 from flask_mongoengine import MongoEngine
 import json
-
+import bson
 # Variables de configuracion
 # Middleware
 chaac_url = "chaac"
@@ -63,7 +63,7 @@ def creation():
 def visualize():   
         if current_user.is_active:
             return render_template('visualize.html')
-        else: return jsonify({"error": "debes iniciar sesion"})
+        else: redirect('/')
 
 @app.route('/health')
 def health():
@@ -92,7 +92,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     logout_user()
-    return jsonify(**{'result': 200,
+    return jsonify(**{'status': 200,
                       'data': {'message': 'logout success'}})
 #user information
 @app.route('/user_info', methods=['POST'])
@@ -114,7 +114,8 @@ class User(db.Document):
     def to_json(self):        
         return {"name": self.name,
                 "email": self.email,
-                "user_name":self.user_name}
+                "user_name":self.user_name,
+                "schemas":self.schemas}
 
     def is_authenticated(self):
         return True
@@ -170,7 +171,8 @@ def create_user():
             user=User(name=record['name'],
             user_name=record['user_name'],
             password=record['password'],
-            email=record['email'])
+            email=record['email'],
+            schemas=[])
             user.save()
             return jsonify({'ok': 'the user created','status':"200"})
         else: return jsonify({'error': 'the user name exist',"status":"400"})
@@ -200,6 +202,20 @@ def delte_record():
 @login_required
 def schemas():
     return user.schemas
+
+@app.route('/users/schemas', methods=['POST'])
+@login_required
+def createSchemas():
+    record= json.loads(request.data)
+    user = User.objects(id=current_user.id).first()
+    if user:
+        user.schemas={
+            "id": bson.ObjectId(),
+            "schema_name": record['schema_name'],
+            "structure": record['structure'],
+        }
+        user.save()
+        return jsonify({"status" : 201, "schema": user.schemas})
 
 @app.route('/monitor')
 def monitor():

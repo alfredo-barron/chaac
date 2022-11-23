@@ -4,10 +4,39 @@
 <section>
     <div class="row">
         <div class="col-lg-4">
-            <h2>schemas {{ current_user.name }}</h2>
+            <div class="subheader center">
+                <h2>schemas</h2>
+                <nav>
+                    <ul>
+                        
+                        <li>
+                            <button type="submit" class="iconbutton" id="create"> create schema</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="blocklist">
+             <ul>
+                    {%if current_user.schemas%}
+                        {%for schemas in current_user.schemas%}
+                        <li>
+                            <div>
+                                <h1>
+                                    {{current_user.schemas.name}}
+                                </h1>
+                            </div>
+                        </li>
+                        {%endfor%}
+                    {%else%}
+                        <h2>you don't have schemas created</h2>
+                    {%endif%}
+                </ul>
+            </div>
         </div>
         <div class="col">
-            <h2>view schemas</h2>
+            <div class="subheader">
+                <h2>view schemas</h2>
+            </div>
             <div id="canvas"></div>
         </div>
     </div>

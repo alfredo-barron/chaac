@@ -69,3 +69,18 @@ $("#login").submit(function(e){
    
     e.preventDefault();
 });
+$("#logout").click(function(e){
+    fetch('/logout',{
+        "method":"POST",
+        "headers":{
+            "Content-Type":"application/json"
+        },
+    }).then(response => response.text())
+    .then(data=>{
+        res=JSON.parse(data);
+        if(res.status==200){
+            window.location.href = "/";
+            console.log(res);
+        }
+    });
+});

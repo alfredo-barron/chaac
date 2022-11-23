@@ -28,6 +28,51 @@ body {
   color: var(--black);
   background: var(--grey-light);
 }
+header{
+	background: #619BE9;
+	height: 100px;
+    width: 100%;
+	padding: 10px 50px 20px;;
+}
+.subheader{
+	height: 71px;
+    background-color:#ABCBF6;
+    text-align: center;
+    align-items: center;
+    box-sizing: border-box;
+
+}
+.subheader h2{
+    color: white;
+}
+nav {
+	float: right;
+}
+nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	padding-right: 20px;
+}
+
+nav ul li {
+	display: inline-block;
+	line-height:auto;
+}
+			
+nav ul li a {
+	display: block;
+	padding: 0 10px;
+	color: white;
+	font-size: 20px;
+	text-decoration: none;
+	border-radius: 10px;
+}	
+nav ul li a:hover {
+	color: white;
+	font-size: 20px;
+	background: #0b76a6;
+}
 
 /* Typography */
 .center {
@@ -202,4 +247,40 @@ input[type=submit] {
 	font-size: 20px;
 	text-decoration: none;
 	border-radius: 10px;
+}
+.login{
+  height: 400px;
+  width: 400px;
+}
+.iconbutton{
+	background-color: #8ED8FA;
+	border-radius: 6px;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	padding: 3px 8px 2px 6px;
+	display: left;
+	width: auto;
+	height: 50px;
+	cursor: selection;
+}
+.iconbutton:hover {
+	background-color: #FB7E29;
+	color: #fff;
+}
+.icon{
+    width: 30px;
+    height: 30px;
+}
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+#logo-header {
+	width: 100px;
+	height: 90px;
 }
