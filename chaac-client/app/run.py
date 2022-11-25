@@ -47,7 +47,10 @@ nodes = {
 @app.route('/')
 @app.route('/index')
 def main():
-    return render_template('index.html')
+    if current_user.is_active:
+        return redirect('visualize')
+    else:
+        return render_template('index.html')
 
 
 @app.route('/creation')
@@ -87,7 +90,7 @@ def login():
         return jsonify({"status": 200,"user": user.to_json()})
     else:
         return jsonify({"status": 401,
-                        "reason": "Username or Password Error"})
+                        "data": "Username or Password Error"})
 #logout
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -98,10 +101,10 @@ def logout():
 @app.route('/user_info', methods=['POST'])
 def user_info():
     if current_user.is_authenticated:
-        resp = {"result": 200,
+        resp = {"status": 200,
                 "data": current_user.to_json()}
     else:
-        resp = {"result": 401,
+        resp = {"status": 401,
                 "data": {"message": "user no login"}}
     return jsonify(**resp)
 #class user in DB
@@ -164,7 +167,7 @@ def create_record():
 @app.route('/users', methods=['POST'])
 def create_user():
     record= json.loads(request.data)
-    user=User.objects(email=record['email'], user_name = record['user_name']).first()
+    user=User.objects(email=record['email']).first()
     if  not user :
         user=User.objects( user_name = record['user_name']).first()
         if not user:
@@ -172,12 +175,12 @@ def create_user():
             user_name=record['user_name'],
             password=record['password'],
             email=record['email'],
-            schemas=[])
+            schemas="")
             user.save()
-            return jsonify({'ok': 'the user created','status':"200"})
-        else: return jsonify({'error': 'the user name exist',"status":"400"})
+            return jsonify({'data': 'the user created','status':"200"})
+        else: return jsonify({'data': 'the user name exist',"status":"400"})
     else:
-        return jsonify({'error': 'the user exist',"el usuario": user,"status":"400"})
+        return jsonify({'data': 'the user exist',"el usuario": user,"status":"400"})
 
 #prueba para la interfaz
 @app.route('/prueba', methods=['POST'])
@@ -191,7 +194,7 @@ def delte_record():
     record = json.loads(request.data)
     user = User.objects(name=record['name']).first()
     if not user:
-        return jsonify({'error': 'data not found'})
+        return jsonify({'data': 'data not found'})
     else:
         user.delete()
     return jsonify(user.to_json())
@@ -201,7 +204,11 @@ def delte_record():
 @app.route('/users/schemas', methods=['GET'])
 @login_required
 def schemas():
-    return user.schemas
+    user = User.objects(id=current_user.id).first()
+    if user:
+        return user.schemas
+    else:
+        return jsonify({"status": 402, "data": "the user not have schemas"})
 
 @app.route('/users/schemas', methods=['POST'])
 @login_required
@@ -215,7 +222,9 @@ def createSchemas():
             "structure": record['structure'],
         }
         user.save()
-        return jsonify({"status" : 201, "schema": user.schemas})
+        return jsonify({"status" : 201, "data": "the schema created"})
+    else:
+        return jsonify({"status": 400,"data":"error saving schema"})
 
 @app.route('/monitor')
 def monitor():

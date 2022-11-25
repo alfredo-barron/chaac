@@ -20,25 +20,33 @@ $("#signup_form").submit(function(e){
             .then(response=>{
                 //get response the server
                 json= JSON.parse(response);
-                console.log(json);
                 if(json.status==200){
-                    fetch('/login',{
-                        "method":"POST",
-                        "headers":{
-                            "Content-Type":"application/json"
-                        },
-                        "body":JSON.stringify({
-                            "email": dataJson.email,
-                            "password": dataJson.password,
-                        })
-                    }).then(res=>{
-                        res.text()
-                    .then(res=>{
-                        const json2=JSON.parse(res);
-                        if(json2.status==200){
-                            window.location.href = "/visualize";
-                        }
-                    });})
+                    swal(json.data,{
+                        icon: "success",
+                    });
+                    setTimeout(function(){
+                        fetch('/login',{
+                            "method":"POST",
+                            "headers":{
+                                "Content-Type":"application/json"
+                            },
+                            "body":JSON.stringify({
+                                "email": dataJson.email,
+                                "password": dataJson.password,
+                            })
+                        }).then(res=>{
+                            res.text()
+                        .then(res=>{
+                            const json2=JSON.parse(res);
+                            if(json2.status==200){
+                                window.location.href = "/visualize";
+                            }
+                        });})
+                    },2000);
+                }else {
+                    swal(json.data,{
+                        icon: "error",
+                    });
                 }
             });
         }
@@ -64,7 +72,11 @@ $("#login").submit(function(e){
       const json = JSON.parse(data);
         if(json.status==200){
            window.location.href = "/visualize";
-        }else console.log(json);
+        }else{
+            swal(json.data,{
+                icon: "error",
+            });
+        };
     });
    
     e.preventDefault();
