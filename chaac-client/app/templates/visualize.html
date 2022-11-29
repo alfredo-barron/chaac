@@ -3,7 +3,7 @@
 {% endblock %} {% block content %}
 <section>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-4 center">
             <div class="subheader center">
                 <h2>schemas</h2>
                 <nav>
@@ -15,15 +15,17 @@
                     </ul>
                 </nav>
             </div>
-            <div id="blocklist">
+            <div id="blocklist" style="padding: 10%; max-height: 500px;  min-height: 150px;">
              <ul>
                     {%if current_user.schemas%}
                         {%for schemas in current_user.schemas%}
-                        <li>
+                        <li class="schema-list">
                             <div>
                                 <h1>
-                                    {{current_user.schemas.name}}
+                                    Name: {{schemas.schema_name}}
                                 </h1>
+                                <input type="hidden" name='schemaId' class="schemaId" value={{schemas.id}} >
+                                <span>id: {{schemas.id}}</span>
                             </div>
                         </li>
                         {%endfor%}
@@ -33,11 +35,26 @@
                 </ul>
             </div>
         </div>
-        <div class="col">
+        <div id="propwrap">
+            <div id="properties">
+                <div id="close">
+                    <img src="{{ url_for('static', filename='img/icons/close.svg') }}">
+                </div>
+                <div id="form">
+                    <div id="formulario"></div>
+                </div>
+                <button id="guardar" class="iconbutton" style="margin: 5px;"> save <nav > <ul>
+                        <li><img src="{{ url_for('static', filename='img/icons/editar.png') }}" class="icon"></li>
+                        </ul>
+                    </nav>
+                </button>
+            </div>
+        </div>
+        <div class="col center">
             <div class="subheader">
                 <h2>view schemas</h2>
             </div>
-            <div id="canvas"></div>
+            <div id="canvas" style="height: 100%;"></div>
         </div>
     </div>
 </section>

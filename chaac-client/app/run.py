@@ -10,6 +10,8 @@ from flask_login import current_user, LoginManager, login_user, logout_user, log
 from flask_mongoengine import MongoEngine
 import json
 import bson
+from bson import json_util
+from bson.json_util import dumps
 # Variables de configuracion
 # Middleware
 chaac_url = "chaac"
@@ -87,7 +89,7 @@ def login():
                         password=password).first()
     if user:
         login_user(user, remember= True)
-        return jsonify({"status": 200,"user": user.to_json()})
+        return jsonify({"status": 200,"user": json.loads(json_util.dumps(user))})
     else:
         return jsonify({"status": 401,
                         "data": "Username or Password Error"})
@@ -112,8 +114,8 @@ class User(db.Document):
     name = db.StringField()
     password = db.StringField()
     email = db.StringField() 
-    user_name=db.StringField()
-    schemas=db.StringField()                                                                                                
+    user_name=db.StringField()    
+    schemas=db.ListField()                                                                                            
     def to_json(self):        
         return {"name": self.name,
                 "email": self.email,
@@ -175,7 +177,7 @@ def create_user():
             user_name=record['user_name'],
             password=record['password'],
             email=record['email'],
-            schemas="")
+            schemas=[])
             user.save()
             return jsonify({'data': 'the user created','status':"200"})
         else: return jsonify({'data': 'the user name exist',"status":"400"})
@@ -197,7 +199,7 @@ def delte_record():
         return jsonify({'data': 'data not found'})
     else:
         user.delete()
-    return jsonify(user.to_json())
+    return json.loads(json_util.dumps(user.to_json()))
 
 
 #return schemas
@@ -206,9 +208,20 @@ def delte_record():
 def schemas():
     user = User.objects(id=current_user.id).first()
     if user:
-        return user.schemas
+        return json.loads(json_util.dumps(user.schemas))
     else:
         return jsonify({"status": 402, "data": "the user not have schemas"})
+
+@app.route('/users/schemas/<schemaId>', methods=['GET'])
+@login_required
+def getSchema(schemaId):
+    user=User.objects(id=current_user.id).first()
+    if user:
+        for n in range(len(user.schemas)):
+            print(schemaId==str( user.schemas[n].get('id')))
+            if schemaId == str(user.schemas[n].get('id')):
+                return jsonify({"status" : 200,"data": json.loads(json_util.dumps(user.schemas[n]))})
+        return jsonify({"status":400,"data":"the schema don't exist"})
 
 @app.route('/users/schemas', methods=['POST'])
 @login_required
@@ -216,11 +229,12 @@ def createSchemas():
     record= json.loads(request.data)
     user = User.objects(id=current_user.id).first()
     if user:
-        user.schemas={
+        user.schemas.append ( {
             "id": bson.ObjectId(),
             "schema_name": record['schema_name'],
+            "cenotes":record['cenotes'],
             "structure": record['structure'],
-        }
+        })
         user.save()
         return jsonify({"status" : 201, "data": "the schema created"})
     else:

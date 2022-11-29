@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function(){
-	var spacing_x = 1;
-	var spacing_y = 10;
+	var spacing_x = 20;
+	var spacing_y = 20;
 	var rightcard = false;
     var tempblock;
     var tempblock2;
-	var contBin=0;
-	var contCenote=0;
+	var contBin=[];
+	var contCenote=[];
 	let schema={
-		"schema_name":"schema-01",
+		"schema_name":"schema",
 		"cenotes": [], 
 	};
 // Initialize Flowy
-	flowy(document.getElementById("canvas"), onGrab, onRelease,onSnapping,spacing_x,spacing_y);
+	flowy(document.getElementById("canvas"), onGrab, onRelease,onSnapping,onRearrange,spacing_x,spacing_y);
 		function addEventListenerMulti(type, listener, capture, selector) {
         	var nodes = document.querySelectorAll(selector);
         	for (var i = 0; i < nodes.length; i++) {
@@ -57,10 +57,11 @@ document.addEventListener("DOMContentLoaded", function(){
 							<li><img class='blockicon icon' src='/static/img/icons/suelto.png'></li>\
 						</ul>\
 					</div>";
-					contCenote++;
+					contCenote.push(1);
         		}
         		if(drag.querySelector('.blockelemtype').value=="3"&&parent.querySelector('.blockelemtype').value!="3"&&parent.querySelector('.blockelemtype').value!="1"){
-					schema.cenotes[indexCenote(parent.querySelector('.blockid').value)].bins.push({
+					var indx=indexCenote(parent.querySelector('.blockid').value);
+					schema.cenotes[indx].bins.push({
 						"blockid": drag.querySelector('.blockid').value,
 						"parentid": parent.querySelector('.blockid').value,
 						"id":Math.floor(Math.random() * 999999),
@@ -83,7 +84,12 @@ document.addEventListener("DOMContentLoaded", function(){
 								<li><img class='icon' src='/static/img/icons/suelto.png'> </li>\
 							</ul>\
 						</div>";
-						contBin++;
+						if (contBin[indx]==null){
+							contBin.push(1);
+						}else{
+							contBin[indx]++;
+						}
+						console.log(contBin);
         		}
         		if(drag.querySelector('.blockelemtype').value=="1"&&parent.querySelector('.blockelemtype').value=="1"){
         			return false;
@@ -115,6 +121,15 @@ document.addEventListener("DOMContentLoaded", function(){
 			}
 			 
 		}
+		function isCenote(id){
+			var itis=false;
+			for(var j=0;j<=schema.cenotes.length;j++){
+				if(schema.cenotes[j].blockid==id){
+					itis= true;;
+				}
+			}
+			return itis; 
+		}
 		function returnBin(id){
 		 	for(var j=0;j<schema.cenotes.length;j++){
 				for(var k=0; k<schema.cenotes[j].bins.length;k++){
@@ -134,19 +149,50 @@ document.addEventListener("DOMContentLoaded", function(){
 				}
 			}
 		}
+		function isBin(id){
+			var itis=false;
+			for(var j=0;j<schema.cenotes.length;j++){
+				for(var k=0; k<schema.cenotes[j].bins.length;k++){
+					if(schema.cenotes[j].bins[k].blockid == id){
+						itis=true;
+					}
+				}
+			}
+			return itis;
+		}
 
 		// when grab a elemet
 		function onGrab(block){
 			block.classList.add("blockdisabled");
 		 	tempblock2 = block;
 		}
-		//reorganize the elemets
+		//when releasing the element
 		function onRelease(){
 			if (tempblock2) {
             	tempblock2.classList.remove("blockdisabled");
         	}
 		}
-		//metodos para dectectar click
+		// When a block is rearranged
+		function onRearrange(block, parent){
+			console.log(block,"es el bloque agarrado");
+			console.log(parent,"es el bloque padre");
+			console.log(contCenote);
+					console.log(contBin);
+				if (block.querySelector('.blockelemtype').value=="2"){
+					var indx=indexCenote(block.querySelector('.blockid').value);
+					contBin[indx]=contBin[indx]-schema.cenotes[indx].bins.length;
+					schema.cenotes.splice(indx,1);
+					contCenote.splice(indx,1);
+					console.log(contCenote);
+					console.log(contBin);
+				}if(block.querySelector('.blockelemtype').value=="3"){
+					index=indexBin(block.querySelector('.blockid').value);
+					contBin[index[0]]--;
+					schema.cenotes[index[0]].bins.splice(index[1],1);
+					console.log(contBin);
+				}
+		}
+		//methods to detect click on the blocks
 		var beginTouch = function (event) {
 			aclick = true;
 			noinfo = false;
@@ -160,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		addEventListenerMulti("touchstart", beginTouch, false, ".block");
 		var aclick = false;
 		var noinfo = false;
-		//insertar formularios
+		//insert forms
 		var doneTouch = function (event) {
 			if (event.type === "mouseup" && aclick && !noinfo) {
 			  if (!rightcard && event.target.closest(".block") && !event.target.closest(".block").classList.contains("dragging")) {
@@ -184,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function(){
     								<input type='text' id='schema_name' name='schema_name' value='"+schema.schema_name+"'>\
   								</li>\
 						</div>";
-						isSchema=true;
 					}
 					if(tempblock.querySelector('.blockelemtype').value=="2"){
 						propiedades.classList.add("expanded");
@@ -239,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function(){
 							  </li>\
 							  <li>\
 								<label for='name_bin'>Nombre:</label>\
-								<input type='text' id='name_bin' name='bin_cenote' value='"+bin.name+"' onchange>\
+								<input type='text' id='name_bin' name='name_bin' value='"+bin.name+"' onchange>\
 							  </li>\
 							  <li>\
 								<label for='host_id'>host id:</label>\
@@ -294,9 +339,54 @@ document.addEventListener("DOMContentLoaded", function(){
 			}
 			if(tempblock.querySelector('.blockelemtype').value=="2"){
 				cenote=schema.cenotes[indexCenote(tempblock.querySelector('.blockid').value)]
+				if(document.getElementById("name_cenote").value != cenote.name){
+					return true;
+				}
+				if(document.getElementById("image_cenote").value != cenote.image){
+					return true;
+				}
+				if(document.getElementById("network").value != cenote.network){
+					return true;
+				}
+				if(document.getElementById("port").value != cenote.publicPort){
+					return true;
+				}
+				if(document.getElementById("distribuidor").value != cenote.distribuitor){
+					return true;
+				}
 			}
 			if(tempblock.querySelector('.blockelemtype').value=="3"){
 				bin=returnBin(tempblock.querySelector('.blockid').value);
+				if(document.getElementById("name_bin").value != bin.name){
+					return true;
+				}
+				if(document.getElementById("host_id").value != bin.hostId){
+					return true;
+				}
+				if(document.getElementById("id_cenote").value != bin.cenoteId){
+					return true;
+				}
+				if(document.getElementById("image").value != bin.image){
+					return true;
+				}
+				if(document.getElementById("network").value != bin.network){
+					return true;
+				}
+				if(document.getElementById("cacheSize").value != bin.cacheSize){
+					return true;
+				}
+				if(document.getElementById("cachePolicy").value != bin.cachePolicy){
+					return true;
+				}
+				if(document.getElementById("levels").value != bin.levels){
+					return true;
+				}
+				if(document.getElementById("memory").value != bin.memory){
+					return true;
+				}
+				if(document.getElementById("capacity").value != bin.capacity){
+					return true;
+				}
 			}
 		}
 
@@ -355,7 +445,7 @@ document.addEventListener("DOMContentLoaded", function(){
  			flowy.deleteBlocks();
 			console.log(schema);
 			schema={
-				"schema_name":"schema-01",
+				"schema_name":"schema",
 				"cenotes": [], 
 			};
 			contBin=0;
@@ -367,35 +457,52 @@ document.addEventListener("DOMContentLoaded", function(){
 				icon: "success",
 			});
 		});
+		//save schema
 		document.getElementById("crear").addEventListener("click", function(){
-			if(contBin>0&&contCenote>0){
-				var structure=flowy.output();
-				crear={
-					"schema_name": schema.schema_name,
-					"cenotes": schema.cenotes,
-					"structure" : structure
-				}
-				fetch('/users/schemas',{
-					"method":"POST",
-					"headers":{
-						"Content-Type":"application/json"
-					},
-					"body":crear,
-				}).then(res=>{
-					res.text()
-				.then(res=>{
-					const json2=JSON.parse(res);
-					if(json2.status==201){
-						swal(json2.data,{
-							icon: "succes",
-						});
+			if(contCenote.length==schema.cenotes.length){
+				for(var i=0;i<schema.cenotes.length;i++){
+					if(contBin[i]>0&&contCenote[i]>0){
+						pasa=true;
 					}else{
-						swal(json2.data,{
-							icon: "error",
-						});
+						pasa=false;
 					}
-				});})
+				}
+				if(pasa){
+					var structure=JSON.stringify( flowy.output());
+					crear={
+						"schema_name": schema.schema_name,
+						"cenotes": schema.cenotes,
+						"structure" : structure
+					}
+					fetch('/users/schemas',{
+						"method":"POST",
+						"headers":{
+							"Content-Type":"application/json"
+						},
+						"body":JSON.stringify(crear),
+					}).then(res=>{
+						res.text()
+					.then(res=>{
+						const json2=JSON.parse(res);
+						if(json2.status==201){
+							swal(json2.data,{
+								icon: "success",
+							});
+							setTimeout(function(){
+							window.location.href = "/visualize";
+						},2000);
+						}else{
+							swal(json2.data,{
+								icon: "error",
+							});
+						}
+					});})
 			}else{
+				swal("each cenote must contain at least one bin",{
+					icon: "error",
+				});
+			}
+		}else{
 				swal("the scheme must contain at least one cenote and one bin",{
 					icon: "error",
 				});
