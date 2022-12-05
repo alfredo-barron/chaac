@@ -4,13 +4,14 @@
 <section>
     <div class="row">
         <div class="col-lg-4 center">
-            <div class="subheader center">
-                <h2>schemas</h2>
+            <div class="subheader">
+                <h2 style="margin: auto;">schemas</h2>
                 <nav>
                     <ul>
                         
                         <li>
                             <button type="submit" class="iconbutton" id="create"> create schema</button>
+                            <button type="submit" class="iconbutton" id="run"> run</button>
                         </li>
                     </ul>
                 </nav>
@@ -52,7 +53,15 @@
         </div>
         <div class="col center">
             <div class="subheader">
-                <h2>view schemas</h2>
+                <h2 style="margin:auto">view schemas</h2>
+                <nav>
+                    <ul>
+                        <li>
+                            <button type="submit" class="iconbutton" id="save_schema"> save schema</button>
+                            <button type="submit" class="iconbutton" id="remove_schema"> remove schema</button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div id="canvas" style="height: 100%;"></div>
         </div>

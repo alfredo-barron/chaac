@@ -35,11 +35,12 @@ header{
 	padding: 10px 50px 20px;;
 }
 .subheader{
-	height: 71px;
+	  height: 71px;
     background-color:#ABCBF6;
     text-align: center;
     align-items: center;
     box-sizing: border-box;
+    display: flex;
 
 }
 .subheader h2{
@@ -263,6 +264,7 @@ input[type=submit] {
 	width: auto;
 	height: 50px;
 	cursor: selection;
+  margin-left: auto;
 }
 .iconbutton:hover {
 	background-color: #FB7E29;

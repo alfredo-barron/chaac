@@ -14,7 +14,7 @@ from bson import json_util
 from bson.json_util import dumps
 # Variables de configuracion
 # Middleware
-chaac_url = "chaac"
+chaac_url = "http://chaac:8080"
 # DB
 db_name = 'chaacDB'
 db_url = "localhost"
@@ -262,7 +262,7 @@ def getNodes():
 @app.route('/gethostscpu/<int:id>', methods=['GET'])
 def getResults(id):
     try:
-        url = 'http://acquisition:45000/hosts/' + str(id) + '/cpu'
+        url = chaac_url+'/hosts/' + str(id)
         res = requests.get(url)
     except:
         res = None
@@ -276,7 +276,7 @@ def getResults(id):
 @app.route('/gethostsmemory/<int:id>', methods=['GET'])
 def getMemory(id):
     try:
-        url = 'http://acquisition:45000/hosts/' + str(id) + '/memory'
+        url = chaac_url+'/hosts/' + str(id) + '/memory'
         res = requests.get(url)
     except:
         res = None
@@ -288,7 +288,7 @@ def getMemory(id):
 
 #pools
 @app.route('/cenotes', methods=['GET'])
-def getPools ():
+def getCenotes ():
     try:
         url= chaac_url +'/cenotes'
         res= requests.get(url)
@@ -301,10 +301,10 @@ def getPools ():
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 
 @app.route('/cenotes', methods=['POST'])
-def createPools(json):
+def createCenote (json):
     try:
         
-        url='http://middleware:45000/api/v1/cenote/'
+        url=chaac_url+'/cenote'
         res=requests.post(url,json)
     except :
         res = None
@@ -315,9 +315,9 @@ def createPools(json):
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 
 @app.route('/cenotes/<int:idPool>/ delete',methods=['DELETE'])
-def deletePool(idPool):
+def deleteCenote (idPool):
     try:    
-        url='http://middleware:45000/api/v1/cenotes/'+idPool
+        url=chaac_url+'/cenotes/'+idPool
         res=requests.delete(url)
     except :
         res = None
@@ -327,10 +327,10 @@ def deletePool(idPool):
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, pools aren\'t available at this time :('})
 #containers / bins 
-@app.route('/middleware/pools/<int:idpool>/containers',methods=['Get'])
-def getContainers(idpool):
+@app.route('/cenotes/<int:idpool>/bins',methods=['Get'])
+def getBins (idpool):
     try:
-        url='http://middleware:45000/api/v1/pools/'+idpool
+        url=chaac_url+'/cenotes/'+idpool
         res=requests.get(url)
     except :
         res = None
@@ -340,10 +340,10 @@ def getContainers(idpool):
         status = (res.status_code if res != None and res.status_code else 500)
         return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
 
-@app.route('/middleware/pools/<int:idPool>/bins',methods=['POST'])
-def createContainers(json):
+@app.route('/cenotes/<int:idPool>/bins',methods=['POST'])
+def createBin(json):
     try:
-        url='http://middleware:45000/api/v1/bins'
+        url=chaac_url+'/bins'
         res=requests.post(url,json)
     except :
         res = None
@@ -354,10 +354,10 @@ def createContainers(json):
         return jsonify({'error': 'sorry, bins aren\'t available at this time :('})
 
 
-@app.route('/middleware/pools/<int:idpool>/containers/<int:idBin>',methods=['DELETE'])
-def deleteContainer(idBin):
+@app.route('/cenotes/<int:idpool>/bins/<int:idBin>',methods=['DELETE'])
+def deleteBin(idBin):
     try:
-        url='http://middleware:45000/api/v1/bins/'+idBin
+        url=chaac_url+'/bins/'+idBin
         res=requests.delete(url)
     except :
         res = None

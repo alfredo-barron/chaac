@@ -18,8 +18,7 @@ function addEventListenerMulti(type, listener, capture, selector) {
 $(".schema-list").click(function(){
     temp=this;
     if(schema==null){
-        console.log(temp);
-        visualizeScheme(temp.querySelector('.schemaId').value);
+        visualizeScheme(this.querySelector('.schemaId').value);
     }else{
         if(checkChanges()){
             swal("you have unsaved changes","Do you want to continue without saving?",{
@@ -39,7 +38,6 @@ $(".schema-list").click(function(){
                             swal("changes will not be saved","", "warning");
                             setTimeout(function(){
                                 visualizeScheme(temp.querySelector('.schemaId').value);
-                                console.log(temp.querySelector('.schemaId').value)
                             },300);
                             break;
                         case "not":
@@ -85,6 +83,47 @@ function checkChanges(){
         }
         if(resData.cenotes[i].name!=schema.cenotes[i].name){
             changes=true;
+        }
+        if(resData.cenotes[i].image!=schema.cenotes[i].image){
+            changes=true;
+        }
+        if(resData.cenotes[i].network!=schema.cenotes[i].network){
+            changes=true;
+        }
+        if(resData.cenotes[i].publicPort!=schema.cenotes[i].publicPort){
+            changes=true;
+        }
+        if(resData.cenotes[i].distribuitor!=schema.cenotes[i].distribuitor){
+            changes=true;
+        }
+        for(var j=0; j<schema.cenotes[i].bins.length;j++){
+            if(resData.cenotes[i].bins[j].name!=schema.cenotes[i].bins[j].name){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].hostId!=schema.cenotes[i].bins[j].hostId){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].image!=schema.cenotes[i].bins[j].image){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].network!=schema.cenotes[i].bins[j].network){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].cacheSize!=schema.cenotes[i].bins[j].cacheSize){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].cachePolicy!=schema.cenotes[i].bins[j].cachePolicy){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].levels!=schema.cenotes[i].bins[j].levels){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].memory!=schema.cenotes[i].bins[j].memory){
+                changes=true;
+            }
+            if(resData.cenotes[i].bins[j].capacity!=schema.cenotes[i].bins[j].capacity){
+                changes=true;
+            }
         }
     }
     return changes;
@@ -278,7 +317,6 @@ var doneTouch = function (event) {
 }
 function changeform(){
     if(tempblock.querySelector('.blockelemtype').value=="1"){
-        console.log(document.getElementById("schema_name").value);
         if(document.getElementById("schema_name").value != schema.schema_name){
             return true;
         }
