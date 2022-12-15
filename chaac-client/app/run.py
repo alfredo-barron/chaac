@@ -218,9 +218,32 @@ def getSchema(schemaId):
     user=User.objects(id=current_user.id).first()
     if user:
         for n in range(len(user.schemas)):
-            print(schemaId==str( user.schemas[n].get('id')))
             if schemaId == str(user.schemas[n].get('id')):
                 return jsonify({"status" : 200,"data": json.loads(json_util.dumps(user.schemas[n]))})
+        return jsonify({"status":400,"data":"the schema don't exist"})
+
+@app.route('/users/schemas/<schemaId>', methods=['DELETE'])
+@login_required
+def deleteSchema(schemaId):
+    user=User.objects(id=current_user.id).first()
+    if user:
+        for n in range(len(user.schemas)):
+            if schemaId == user.schemas[n].get('id'):
+                user
+                return jsonify({"status" : 200,"data": "schema delete"})
+        return jsonify({"status":400,"data":"the schema don't exist"})
+
+
+@app.route('/users/schemas', methods=['PUT'])
+@login_required
+def updateSchema():
+    user=User.objects(id=current_user.id).first()
+    record= json.loads(request.data)
+    if user:
+        for n in range(len(user.schemas)):
+            if record['id'] == user.schemas[n].get('id'):
+                user.update(schemas=({schema_name:record['schema_name'],cenotes:record['cenotes']}))
+                return jsonify({"status" : 200,"data": "schema update"})
         return jsonify({"status":400,"data":"the schema don't exist"})
 
 @app.route('/users/schemas', methods=['POST'])
@@ -230,7 +253,7 @@ def createSchemas():
     user = User.objects(id=current_user.id).first()
     if user:
         user.schemas.append ( {
-            "id": bson.ObjectId(),
+            "id": str(bson.ObjectId()),
             "schema_name": record['schema_name'],
             "cenotes":record['cenotes'],
             "structure": record['structure'],

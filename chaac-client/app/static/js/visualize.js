@@ -15,6 +15,55 @@ function addEventListenerMulti(type, listener, capture, selector) {
         nodes[i].addEventListener(type, listener, capture);
     }
 }
+$("#save_schema").click(function(){
+    console.log("se hizo click");
+    if(schema!=null){
+        fetch('/users/schemas',{
+            "method":"PUT",
+            "headers":{
+                "Content-Type":"application/json"
+            },
+            "body":JSON.stringify(schema),
+        }).then(response => response.text())
+        .then(res=>{
+            const json2=JSON.parse(res);
+            if(json2.status==200){
+                swal(json2.data,{
+                    icon: "success",}) 
+                }
+            if(json2.status==400){
+                swal(json2.data,{
+                    icon: "error",}) 
+                }
+            });
+
+    }
+});
+$("#remove_schema").click(function(){
+    console.log(resData.id);
+    if(schema!=null){
+        fetch('/users/schemas/'+resData.id,{
+            "method":"DELETE",
+            "headers":{
+                "Content-Type":"application/json"
+            },
+        }).then(response => response.text())
+        .then(res=>{
+            const json2=JSON.parse(res);
+            if(json2.status==200){
+                swal(json2.data,{
+                    icon: "success",}) 
+                }
+                flowy.remove();
+            if(json2.status==400){
+                swal(json2.data,{
+                    icon: "error",}) 
+                }
+            });
+
+    }
+});
+
 $(".schema-list").click(function(){
     temp=this;
     if(schema==null){
